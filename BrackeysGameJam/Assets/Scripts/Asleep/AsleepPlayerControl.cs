@@ -12,6 +12,7 @@ public class AsleepPlayerControl : MonoBehaviour
     [SerializeField] Transform playerTransform;
     [SerializeField] Transform cameraTransform;
     [SerializeField] Rigidbody playerRB;
+    [SerializeField] AsleepLucidControl lucidControl;
 
     InputController playerControls;
     InputAction move;
