@@ -19,14 +19,18 @@ public class MazeGeneration : MonoBehaviour
         Below
     }
 
+    private int startWallIndex = 103;
+    private int endWallIndex = -10;
+
     // A Maze is represented as a dictionary where:
     // Key - Node index
     // Value - Connecting nodes
 
     // TODO: Load maze from file
-    private Dictionary<int, HashSet<int>> maze = new()
+    // TODO: Remove duplicate walls
+    private Dictionary<int, HashSet<int>> maze_1 = new()
     {
-        { 0, new HashSet<int> { 10 } },
+        { 0, new HashSet<int> { 10, -10 } }, // Exit is on the north wall, i.e. index -10
         { 1, new HashSet<int> { 2 } },
         { 2, new HashSet<int> { 1, 3 } },
         { 3, new HashSet<int> { 2, 4 } },
@@ -119,7 +123,7 @@ public class MazeGeneration : MonoBehaviour
         { 90, new HashSet<int> { 80, 91 } },
         { 91, new HashSet<int> { 90, 92 } },
         { 92, new HashSet<int> { 91, 93 } },
-        { 93, new HashSet<int> { 92, 83, 94 } },
+        { 93, new HashSet<int> { 92, 83, 94, 103 } }, // Entry is on the south wall, i.e. index 103
         { 94, new HashSet<int> { 93, 95 } },
         { 95, new HashSet<int> { 94, 96 } },
         { 96, new HashSet<int> { 95, 97 } },
@@ -127,6 +131,75 @@ public class MazeGeneration : MonoBehaviour
         { 98, new HashSet<int> { 88, 99 } },
         { 99, new HashSet<int> { 98 } },
     };
+
+    private Dictionary<int, HashSet<int>> maze_2 = new()
+    {
+        { 0, new HashSet<int> { 8 } },
+        { 1, new HashSet<int> { 9, 2 } },
+        { 2, new HashSet<int> { 1, 3 } },
+        { 3, new HashSet<int> { 2, 4, 11 } },
+        { 4, new HashSet<int> { 3, 5 } },
+        { 5, new HashSet<int> { 4, 6 } },
+        { 6, new HashSet<int> { 5, 7 } },
+        { 7, new HashSet<int> { 6, 15 } },
+        { 8, new HashSet<int> { 0, 9 } },
+        { 9, new HashSet<int> { 8, 1, 10 } },
+        { 10, new HashSet<int> { 9, 18 } },
+        { 11, new HashSet<int> { 3, 19 } },
+        { 12, new HashSet<int> { 20, 13 } },
+        { 13, new HashSet<int> { 12, 21, 14 } },
+        { 14, new HashSet<int> { 13, 15 } },
+        { 15, new HashSet<int> { 7, 14, 23 } },
+        { 16, new HashSet<int> { 24, 17 } },
+        { 17, new HashSet<int> { 16, 25, 18 } },
+        { 18, new HashSet<int> { 17, 10, 26 } },
+        { 19, new HashSet<int> { 11, 27 } },
+        { 20, new HashSet<int> { 12 } },
+        { 21, new HashSet<int> { 13, 29 } },
+        { 22, new HashSet<int> { 30, 23 } },
+        { 23, new HashSet<int> { 15, 22 } },
+        { 24, new HashSet<int> { 16, 32 } },
+        { 25, new HashSet<int> { 17, 33 } },
+        { 26, new HashSet<int> { 18, 34 } },
+        { 27, new HashSet<int> { 19, 28 } },
+        { 28, new HashSet<int> { 27, 29 } },
+        { 29, new HashSet<int> { 28, 21 } },
+        { 30, new HashSet<int> { 22, 31 } },
+        { 31, new HashSet<int> { 30 } }, //exitEastWall
+        { 32, new HashSet<int> { 24, 40 } },
+        { 33, new HashSet<int> { 25, 41 } },
+        { 34, new HashSet<int> { 26, 35 } },
+        { 35, new HashSet<int> { 34, 36 } },
+        { 36, new HashSet<int> { 35, 37, 44 } },
+        { 37, new HashSet<int> { 36, 38 } },
+        { 38, new HashSet<int> { 37, 39 } },
+        { 39, new HashSet<int> { 38, 47 } },
+        { 40, new HashSet<int> { 32 } },
+        { 41, new HashSet<int> { 33, 49 } },
+        { 42, new HashSet<int> { 50, 43 } },
+        { 43, new HashSet<int> { 42, 44 } },
+        { 44, new HashSet<int> { 43, 36 } },
+        { 45, new HashSet<int> { 53, 46 } },
+        { 46, new HashSet<int> { 45 } },
+        { 47, new HashSet<int> { 39, 55 } },
+        { 48, new HashSet<int> { 56, 49 } },
+        { 49, new HashSet<int> { 48, 41 } },
+        { 50, new HashSet<int> { 42, 58 } },
+        { 51, new HashSet<int> { 59, 52 } },
+        { 52, new HashSet<int> { 51, 53 } },
+        { 53, new HashSet<int> { 52, 45, 54 } },
+        { 54, new HashSet<int> { 53, 62 } },
+        { 55, new HashSet<int> { 47, 63 } },
+        { 56, new HashSet<int> { 48, 57 } },
+        { 57, new HashSet<int> { 56, 58 } },
+        { 58, new HashSet<int> { 57, 50, 59 } },
+        { 59, new HashSet<int> { 58, 51 } },
+        { 60, new HashSet<int> { 61 } }, //entrySouthWall
+        { 61, new HashSet<int> { 60, 62 } },
+        { 62, new HashSet<int> { 61, 54, 63 } },
+        { 63, new HashSet<int> { 62, 55 } },
+    };
+
 
     private void CreateWall(int row, int col, WallDirection direction)
     {
@@ -156,16 +229,17 @@ public class MazeGeneration : MonoBehaviour
 
         GameObject wallInstance = Instantiate(wallGameObject, transform);
 
-        wallInstance.transform.localPosition = new Vector3(wallX, wallY, 0);
+        wallInstance.transform.localPosition = new Vector3(wallX, wallY, -cellWidth / 2.0f);
         wallInstance.transform.localRotation = wallRotation;
-        wallInstance.transform.localScale = new Vector3(cellWidth, cellWidth, wallInstance.transform.localScale.z);
+        wallInstance.transform.localScale = new Vector3(cellWidth, wallInstance.transform.localScale.y,
+            wallInstance.transform.localScale.z);
     }
 
     private void CreateWalls()
     {
-        const int mazeSize = 10; // The width/height of the maze
+        const int mazeSize = 8; // The width/height of the maze
 
-        foreach (var node in maze)
+        foreach (var node in maze_2)
         {
             // Key is the node index
             // Value is the connected nodes
