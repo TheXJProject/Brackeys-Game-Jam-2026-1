@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8306597788644785093
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5127075528363332172}
+  - component: {fileID: 1154810367233674687}
+  - component: {fileID: 7421538237480895637}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5127075528363332172
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8306597788644785093}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1154810367233674687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8306597788644785093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c4f11c09140a34eb6f549cdb64904a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Msg: 0
+  removeWarningMsgs: 0
+  nonPriorityVolume: 0.8
+  musicSounds: []
+  sfxSounds: []
+  sfxLoopedSounds: []
+  musicSourceList: []
+  sfxSourceList: []
+  sfxLoopingSourceList: []
+--- !u!114 &7421538237480895637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8306597788644785093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9d98b070f229b54c9369275ccc27bfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Msg: 0
+  removeWarningMsgs: 0
+  audioMixer: {fileID: 24100000, guid: 30c4e80f1c9e614499090cc08f21eb5b, type: 2}
+  playerGroups:
+    masterPlayer: {fileID: 0}
+    musicPlayer: {fileID: 0}
+    sfxPlayer: {fileID: 0}
+  mainGroups:
+    sfxOverall: []
+    loopingSfx: []
+    musicOverall: []
+    musicCollection: []
+  groupInfo: []
