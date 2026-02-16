@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2787738258745383194}
   - component: {fileID: 5089783049745013529}
   m_Layer: 0
-  m_Name: GlobalFX
+  m_Name: MazeHazePrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
