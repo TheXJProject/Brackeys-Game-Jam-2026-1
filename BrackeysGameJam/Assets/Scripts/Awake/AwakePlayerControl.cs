@@ -38,6 +38,5 @@ public class AwakePlayerControl : MonoBehaviour
     private void FixedUpdate()
     {
         playerRB.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
-        Debug.Log(moveDirection.x * moveSpeed);
     }
 }
