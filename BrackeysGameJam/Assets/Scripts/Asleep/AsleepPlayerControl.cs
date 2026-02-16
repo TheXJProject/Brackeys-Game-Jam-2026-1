@@ -42,30 +42,56 @@ public class AsleepPlayerControl : MonoBehaviour
 
     private void Update()
     {
-        { // Code for looking
-            Vector2 inputValue = look.ReadValue<Vector2>();
-
-            // Affect Left-Right Rotation
-            Quaternion turnRot = Quaternion.Euler(0, inputValue.x * mouseSensitivity, 0);
-            playerTransform.forward = turnRot * playerTransform.forward;
-            Quaternion nodRot = Quaternion.Euler(inputValue.y * -mouseSensitivity, 0, 0);
-            cameraTransform.forward = nodRot * Vector3.forward;
-            //localForward = transform.worldToLocalMatrix.MultiplyVector( transform.forward );
-
-            if (cameraTransform.rotation.eulerAngles.x > 90 || cameraTransform.rotation.eulerAngles.x < -90)
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (UnityEngine.Cursor.visible)
             {
-                Debug.Log("Crying about it");
+                UnityEngine.Cursor.visible = false;
+                UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+            }
+            else
+            {
+                UnityEngine.Cursor.visible = true;
+                UnityEngine.Cursor.lockState = CursorLockMode.None;
             }
         }
 
-        { // Code for movement
-            lookDirection = playerTransform.forward;
-            Vector2 inputValue = move.ReadValue<Vector2>();
-            Vector3 moveScaler = new Vector3(inputValue.x, 0, inputValue.y);
-            Quaternion moveRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
-            moveVector = moveRotation * moveScaler;
+
+        DetermineLookDirection();
+        DetermineMoveDirection();
+    }
+
+    private void DetermineLookDirection()
+    {
+        Vector2 inputValue = look.ReadValue<Vector2>();
+
+        // Affect Left-Right Rotation
+        Quaternion turnRot = Quaternion.Euler(0, inputValue.x * mouseSensitivity, 0);
+        playerTransform.forward = turnRot * playerTransform.forward;
+
+        // Affect up-down rotation
+        Quaternion nodRot = Quaternion.Euler(inputValue.y * -mouseSensitivity, 0, 0);
+        cameraTransform.localRotation = nodRot * cameraTransform.localRotation;
+
+        if (Vector3.Angle(cameraTransform.forward, playerTransform.forward) > 90)
+        {
+            if (Vector3.Dot(Vector3.up, cameraTransform.forward) >= 0)
+                cameraTransform.localRotation = Quaternion.Euler(-90,0,0);
+            else
+                cameraTransform.localRotation = Quaternion.Euler(90, 0, 0);
         }
     }
+
+    private void DetermineMoveDirection()
+    {
+        lookDirection = playerTransform.forward;
+        Vector2 inputValue = move.ReadValue<Vector2>();
+        Vector3 moveScaler = new Vector3(inputValue.x, 0, inputValue.y);
+        Quaternion moveRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
+        moveVector = moveRotation * moveScaler;
+    }
+
+
 
     private void FixedUpdate()
     {
