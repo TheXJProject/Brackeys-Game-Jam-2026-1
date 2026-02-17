@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class Maze
@@ -33,20 +34,20 @@ public class Maze
     }
 }
 
-public class MazeGeneration : MonoBehaviour
+public class MazeGenerator : MonoBehaviour
 {
+    public NavMeshSurface surface;
+
     public GameObject wallGameObject;
     public GameObject exitDoorGameObject;
     public int cellWidth;
 
     private float wallOffset;
-    private Quaternion aboveBelowRotation = Quaternion.Euler(90, 0, 0);
-    private Quaternion leftRightRotation = Quaternion.Euler(0, 90, 0);
-
-    private int wallCount = 0;
+    private Quaternion northSouthRotation = Quaternion.Euler(90, 0, 0);
+    private Quaternion eastWestRotation = Quaternion.Euler(0, 90, 0);
 
     // TODO: Load maze from file
-    private Maze maze_1 = new(nodeConnections: new Dictionary<int, HashSet<int>>
+    public static Maze maze_1 = new(nodeConnections: new Dictionary<int, HashSet<int>>
         {
             { 0, new HashSet<int> { 10 } },
             { 1, new HashSet<int> { 2 } },
@@ -154,7 +155,7 @@ public class MazeGeneration : MonoBehaviour
         endNode: (0, Maze.WallDirection.North)
     );
 
-    private Maze maze_2 = new(nodeConnections: new Dictionary<int, HashSet<int>>
+    public static Maze maze_2 = new(nodeConnections: new Dictionary<int, HashSet<int>>
         {
             { 0, new HashSet<int> { 8 } },
             { 1, new HashSet<int> { 9, 2 } },
@@ -238,19 +239,19 @@ public class MazeGeneration : MonoBehaviour
         {
             case Maze.WallDirection.North:
                 wallY += wallOffset;
-                wallRotation = aboveBelowRotation;
+                wallRotation = northSouthRotation;
                 break;
             case Maze.WallDirection.South:
                 wallY -= wallOffset;
-                wallRotation = aboveBelowRotation;
+                wallRotation = northSouthRotation;
                 break;
             case Maze.WallDirection.West:
                 wallX -= wallOffset;
-                wallRotation = leftRightRotation;
+                wallRotation = eastWestRotation;
                 break;
             case Maze.WallDirection.East:
                 wallX += wallOffset;
-                wallRotation = leftRightRotation;
+                wallRotation = eastWestRotation;
                 break;
         }
 
@@ -309,12 +310,14 @@ public class MazeGeneration : MonoBehaviour
                 }
             }
         }
+
+        surface.BuildNavMesh();
     }
 
     void Awake()
     {
         Maze[] mazes = { maze_1, maze_2 };
         wallOffset = cellWidth / 2.0f;
-        CreateMaze(mazes[1]);
+        CreateMaze(mazes[0]);
     }
 }
