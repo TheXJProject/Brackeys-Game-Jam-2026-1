@@ -30,6 +30,15 @@ public class AsleepLucidControl : MonoBehaviour
         lucidTimeRemaining = maxLucidTime;
     }
 
+    private void Start()
+    {
+        TransitionBeginLucid();
+        TransitionEndLucid();
+        TransitionBeginLucid();
+        //TransitionEndLucid();
+
+    }
+
     private void Update()
     {
         // Update lucid logic
@@ -80,6 +89,7 @@ public class AsleepLucidControl : MonoBehaviour
     public void lucidOn()
     {
         isLucid = true;
+        startLucidTriggered = true;
         onLucidToggled?.Invoke(isLucid);
         TransitionAnimControl.onBlinkMiddle -= lucidOn;
     }

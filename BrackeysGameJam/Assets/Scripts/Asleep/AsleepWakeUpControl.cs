@@ -15,6 +15,15 @@ public class AsleepWakeUpControl : MonoBehaviour
     private float wakeUpRecharge = 0;
     private bool canWakeUp = false;
 
+    private void OnEnable()
+    {
+        AsleepWakeUpDisplay.onFinishWakeUpVisual += LoadAwakeScene;
+    }
+
+    private void OnDisable()
+    {
+        AsleepWakeUpDisplay.onFinishWakeUpVisual -= LoadAwakeScene;
+    }
 
     private void Update()
     {
@@ -51,5 +60,10 @@ public class AsleepWakeUpControl : MonoBehaviour
     public void CancelWakeUp()
     {
         onCancelWakeUpSequence?.Invoke();
+    }
+
+    private void LoadAwakeScene()
+    {
+        TransitionManager.instance.WakeUpFromPinch();
     }
 }
