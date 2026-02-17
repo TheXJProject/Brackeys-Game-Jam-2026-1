@@ -14,12 +14,16 @@ public class AsleepPlayerControl : MonoBehaviour
     [SerializeField] Rigidbody playerRB;
     [SerializeField] AsleepLucidControl lucidControl;
 
+    // Input control
     InputController playerControls;
     InputAction move;
     InputAction look;
+    InputAction toggleLucid;
     
+    // Movement and look control
     Vector3 moveVector;
     Vector3 lookDirection = Vector3.forward;
+    bool stopMovement = false;
 
 
     private void Awake()
@@ -33,12 +37,27 @@ public class AsleepPlayerControl : MonoBehaviour
         look.Enable();
         move = playerControls.Player.Move;
         move.Enable();
+
+        toggleLucid = playerControls.Player.Visor;
+        toggleLucid.Enable();
+        toggleLucid.started += StartLucidFromInput;
+        toggleLucid.canceled += EndLucidFromInput;
+
+        // Non Input events
+        AsleepLucidControl.onLucidToggled += ToggleStopMoving;
     }
 
     private void OnDisable()
     {
         look.Disable();
         move.Disable();
+        toggleLucid.Disable();
+
+        toggleLucid.started -= StartLucidFromInput;
+        toggleLucid.canceled -= EndLucidFromInput;
+
+        // Non input events
+        AsleepLucidControl.onLucidToggled -= ToggleStopMoving;
     }
 
     private void Update()
@@ -60,6 +79,21 @@ public class AsleepPlayerControl : MonoBehaviour
 
         DetermineLookDirection();
         DetermineMoveDirection();
+    }
+
+    private void FixedUpdate()
+    {
+        playerRB.velocity = new Vector3(moveVector.x * moveSpeed, 0, moveVector.z * moveSpeed);
+    }
+
+    private void StartLucidFromInput(InputAction.CallbackContext context)
+    {
+        lucidControl.TransitionBeginLucid();
+    }
+
+    private void EndLucidFromInput(InputAction.CallbackContext context)
+    {
+        lucidControl.TransitionEndLucid();
     }
 
     private void DetermineLookDirection()
@@ -85,6 +119,11 @@ public class AsleepPlayerControl : MonoBehaviour
 
     private void DetermineMoveDirection()
     {
+        if (stopMovement)
+        {
+            moveVector = Vector3.zero;
+            return;
+        }
         lookDirection = playerTransform.forward;
         Vector2 inputValue = move.ReadValue<Vector2>();
         Vector3 moveScaler = new Vector3(inputValue.x, 0, inputValue.y);
@@ -92,10 +131,5 @@ public class AsleepPlayerControl : MonoBehaviour
         moveVector = moveRotation * moveScaler;
     }
 
-
-
-    private void FixedUpdate()
-    {
-        playerRB.velocity = new Vector3(moveVector.x * moveSpeed, 0, moveVector.z * moveSpeed);
-    }
+    private void ToggleStopMoving(bool isLucid) => stopMovement = isLucid;
 }

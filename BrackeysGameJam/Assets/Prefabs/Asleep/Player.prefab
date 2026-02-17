@@ -213,6 +213,7 @@ GameObject:
   - component: {fileID: 6473284754000131024}
   - component: {fileID: 872695525522137414}
   - component: {fileID: 4651925424808504130}
+  - component: {fileID: 337101682105391407}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -339,6 +340,20 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &337101682105391407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4683110927495596862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e1553b93539f8e4da20b116a08d856d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LayerToToggle: Walls
+  cam: {fileID: 6473284754000131024}
 --- !u!1 &5089059956230966257
 GameObject:
   m_ObjectHideFlags: 0
@@ -435,6 +450,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4594813572967666967}
   - component: {fileID: 7399085867330389801}
+  - component: {fileID: 7891561074413624765}
   m_Layer: 0
   m_Name: Logic
   m_TagString: Untagged
@@ -474,4 +490,16 @@ MonoBehaviour:
   playerTransform: {fileID: 2224862592584903121}
   cameraTransform: {fileID: 1277117405159625988}
   playerRB: {fileID: 1089743945357076857}
-  lucidControl: {fileID: 0}
+  lucidControl: {fileID: 7891561074413624765}
+--- !u!114 &7891561074413624765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7105768510874030691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c29badb0a1155b4db32c643eb302e6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
