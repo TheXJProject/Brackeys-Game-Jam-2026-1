@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3540955348603286971}
   - component: {fileID: 3935475577483327222}
   m_Layer: 0
-  m_Name: Maze
+  m_Name: Maze Generator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,4 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wallGameObject: {fileID: 1163777725093958344, guid: e4763a63417295e4a86881d2bb6f2ad4, type: 3}
+  exitDoorGameObject: {fileID: 1163777725093958344, guid: f160de96851cdb74dacf196747532dbe, type: 3}
   cellWidth: 2
