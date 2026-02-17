@@ -61,7 +61,6 @@ public class TransitionAnimControl : MonoBehaviour
             return;
         }
         inTransition = true;
-        // Do Coroutine
 
         StartCoroutine(BlinkTransition());
     }

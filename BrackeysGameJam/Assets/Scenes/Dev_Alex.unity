@@ -503,14 +503,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1203781626212509529, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: m_Range
-      value: 4.2736626
-      objectReference: {fileID: 0}
-    - target: {fileID: 1203781626212509529, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: m_Intensity
-      value: 66.8
-      objectReference: {fileID: 0}
     - target: {fileID: 2224862592584903121, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -551,57 +543,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4775978195587878674, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: m_Enabled
-      value: 1
+    - target: {fileID: 3670678780890823200, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4775978195587878674, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: m_fontSize
-      value: 28.5
+    - target: {fileID: 3670678780890823200, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4775978195587878674, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: m_margin.z
-      value: 98.57715
+    - target: {fileID: 5053151378822930444, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4775978195587878674, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: m_fontSizeBase
-      value: 28.5
+    - target: {fileID: 5053151378822930444, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4775978195587878674, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: m_isRightToLeft
+    - target: {fileID: 5053151378822930444, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5089059956230966257, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 6090720709210428814, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6473284754000131024, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: m_ClearFlags
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6473284754000131024, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.3207547
-      objectReference: {fileID: 0}
-    - target: {fileID: 6473284754000131024, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.3207547
-      objectReference: {fileID: 0}
-    - target: {fileID: 6473284754000131024, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.3207547
-      objectReference: {fileID: 0}
-    - target: {fileID: 6473284754000131024, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 7791363772459880742, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 314.09
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

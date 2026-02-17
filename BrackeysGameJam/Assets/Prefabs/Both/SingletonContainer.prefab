@@ -47,9 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topBlink: {fileID: 1662020242120831697}
   botBlink: {fileID: 3426146474427202096}
-  closingEyesBlinkTime: 0.3
-  openingEyesBlinkTime: 0.3
-  shutEyesBlinkTime: 0.1
+  closingEyesBlinkTime: 0.1
+  openingEyesBlinkTime: 0.4
+  shutEyesBlinkTime: 0.2
   middleHeight: -60
   middleAnchorCaps: {x: 0.5, y: 0.5}
 --- !u!1 &1798673757426908009
