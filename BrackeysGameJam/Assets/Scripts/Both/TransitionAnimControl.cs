@@ -28,9 +28,10 @@ public class TransitionAnimControl : MonoBehaviour
     private float startEndHeight;
     private Vector2 topStartEndAnchorCaps;
     private Vector2 botStartEndAnchorCaps;
-    private float curEndHeight;
-    private Vector2 curAnchorCaps;
     private bool inTransition = false;
+    private bool reachMidThisTransition = false;
+    private bool reverseTransition = false;
+    private float percentIn = 0;
 
     
     private void Awake()
@@ -53,7 +54,10 @@ public class TransitionAnimControl : MonoBehaviour
     {
         if (inTransition)
         {
-            //TODO finish quicker somehow
+            if (reachMidThisTransition)
+            {
+                reverseTransition = true;
+            }
             return;
         }
         inTransition = true;
@@ -65,6 +69,12 @@ public class TransitionAnimControl : MonoBehaviour
     private IEnumerator BlinkTransition()
     {
         float elapsedTime = 0;
+
+        if (reverseTransition)
+        {
+            elapsedTime = closingEyesBlinkTime * (1-percentIn);
+            reverseTransition = false;
+        }
 
         // Blink eyes are closing ------------------------------------------------------------------------
         while (elapsedTime < closingEyesBlinkTime)
@@ -89,6 +99,7 @@ public class TransitionAnimControl : MonoBehaviour
         botBlink.anchorMin = new Vector2(middleAnchorCap, middleAnchorCaps.x);
         botBlink.anchorMax = new Vector2(middleAnchorCap, middleAnchorCaps.y);
         onBlinkMiddle?.Invoke();
+        reachMidThisTransition = true;
 
         // Blink eyes are closed and waiting ------------------------------------------------------------------------
         while (elapsedTime < shutEyesBlinkTime)
@@ -101,6 +112,8 @@ public class TransitionAnimControl : MonoBehaviour
         // Blink eyes are opening ------------------------------------------------------------------------
         while (elapsedTime < openingEyesBlinkTime)
         {
+            if (reverseTransition)
+                break;
             topBlink.anchoredPosition = new Vector2(0, Mathf.Lerp(middleHeight, startEndHeight, elapsedTime / openingEyesBlinkTime));
             botBlink.anchoredPosition = topBlink.anchoredPosition * -1;
             Vector2 newTopAnchorCap = Vector2.Lerp(middleAnchorCaps, topStartEndAnchorCaps, elapsedTime / openingEyesBlinkTime);
@@ -113,14 +126,24 @@ public class TransitionAnimControl : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        topBlink.anchoredPosition = new Vector2(0, startEndHeight);
-        botBlink.anchoredPosition = topBlink.anchoredPosition * -1;
-        topBlink.anchorMin = new Vector2(middleAnchorCap, topStartEndAnchorCaps.x);
-        topBlink.anchorMax = new Vector2(middleAnchorCap, topStartEndAnchorCaps.y);
-        botBlink.anchorMin = new Vector2(middleAnchorCap, botStartEndAnchorCaps.x);
-        botBlink.anchorMax = new Vector2(middleAnchorCap, botStartEndAnchorCaps.y);
+        if (reverseTransition)
+        {
+            percentIn = elapsedTime / openingEyesBlinkTime;
+            reachMidThisTransition = false;
+            StartCoroutine(BlinkTransition());
+        }
+        else
+        {
+            topBlink.anchoredPosition = new Vector2(0, startEndHeight);
+            botBlink.anchoredPosition = topBlink.anchoredPosition * -1;
+            topBlink.anchorMin = new Vector2(middleAnchorCap, topStartEndAnchorCaps.x);
+            topBlink.anchorMax = new Vector2(middleAnchorCap, topStartEndAnchorCaps.y);
+            botBlink.anchorMin = new Vector2(middleAnchorCap, botStartEndAnchorCaps.x);
+            botBlink.anchorMax = new Vector2(middleAnchorCap, botStartEndAnchorCaps.y);
+            reachMidThisTransition = false;
+            inTransition = false;
+        }
         onBlinkFinished?.Invoke();
-        inTransition = false;
         yield return null;
     }
 }
