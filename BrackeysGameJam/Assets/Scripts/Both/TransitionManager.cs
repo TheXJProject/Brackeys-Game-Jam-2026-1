@@ -21,6 +21,13 @@ public class TransitionManager : MonoBehaviour
 
     public void WakeUpFromPinch()
     {
+        TransitionAnimControl.onBlinkMiddle += LoadAwakeScene;
+        TransitionAnimControl.instance.StartBlinkTransition();
+    }
+
+    private void LoadAwakeScene()
+    {
+        TransitionAnimControl.onBlinkMiddle -= LoadAwakeScene;
         SceneManager.LoadScene(awakeSceneName);
         UnityEngine.Cursor.visible = true;
         UnityEngine.Cursor.lockState = CursorLockMode.None;
