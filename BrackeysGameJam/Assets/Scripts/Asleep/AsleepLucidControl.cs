@@ -69,7 +69,7 @@ public class AsleepLucidControl : MonoBehaviour
     }
     public void TransitionBeginLucid()
     {
-        if (canGoLucid)// && !isLucid)
+        if (canGoLucid)
         {
             startLucidTriggered = true;
             TransitionAnimControl.onBlinkMiddle += lucidOn;
@@ -80,6 +80,7 @@ public class AsleepLucidControl : MonoBehaviour
     public void lucidOn()
     {
         isLucid = true;
+        startLucidTriggered = true;
         onLucidToggled?.Invoke(isLucid);
         TransitionAnimControl.onBlinkMiddle -= lucidOn;
     }

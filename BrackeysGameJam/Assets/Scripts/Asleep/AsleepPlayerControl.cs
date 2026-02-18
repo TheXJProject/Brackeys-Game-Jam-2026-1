@@ -13,12 +13,14 @@ public class AsleepPlayerControl : MonoBehaviour
     [SerializeField] Transform cameraTransform;
     [SerializeField] Rigidbody playerRB;
     [SerializeField] AsleepLucidControl lucidControl;
+    [SerializeField] AsleepWakeUpControl wakeUpControl;
 
     // Input control
     InputController playerControls;
     InputAction move;
     InputAction look;
-    InputAction toggleLucid;
+    InputAction lucid;
+    InputAction wakeUp;
     
     // Movement and look control
     Vector3 moveVector;
@@ -38,10 +40,17 @@ public class AsleepPlayerControl : MonoBehaviour
         move = playerControls.Player.Move;
         move.Enable();
 
-        toggleLucid = playerControls.Player.Visor;
-        toggleLucid.Enable();
-        toggleLucid.started += StartLucidFromInput;
-        toggleLucid.canceled += EndLucidFromInput;
+        lucid = playerControls.Player.Visor;
+        lucid.Enable();
+        lucid.started += StartLucidFromInput;
+        lucid.canceled += EndLucidFromInput;
+        
+        wakeUp = playerControls.Player.ToggleSleep;
+        wakeUp.Enable();
+        wakeUp.started += StartHeldWakeUp;
+        wakeUp.canceled += EndHeldWakeUp;
+
+        //lucid =
 
         // Non Input events
         AsleepLucidControl.onLucidToggled += ToggleStopMoving;
@@ -51,10 +60,13 @@ public class AsleepPlayerControl : MonoBehaviour
     {
         look.Disable();
         move.Disable();
-        toggleLucid.Disable();
+        lucid.Disable();
+        wakeUp.Disable();
 
-        toggleLucid.started -= StartLucidFromInput;
-        toggleLucid.canceled -= EndLucidFromInput;
+        lucid.started -= StartLucidFromInput;
+        lucid.canceled -= EndLucidFromInput;
+        wakeUp.started -= StartHeldWakeUp;
+        wakeUp.canceled -= EndHeldWakeUp;
 
         // Non input events
         AsleepLucidControl.onLucidToggled -= ToggleStopMoving;
@@ -94,6 +106,15 @@ public class AsleepPlayerControl : MonoBehaviour
     private void EndLucidFromInput(InputAction.CallbackContext context)
     {
         lucidControl.TransitionEndLucid();
+    }
+
+    private void StartHeldWakeUp(InputAction.CallbackContext context)
+    {
+        wakeUpControl.AttemptWakeUp();
+    }
+    private void EndHeldWakeUp(InputAction.CallbackContext context)
+    {
+        wakeUpControl.CancelWakeUp();
     }
 
     private void DetermineLookDirection()
