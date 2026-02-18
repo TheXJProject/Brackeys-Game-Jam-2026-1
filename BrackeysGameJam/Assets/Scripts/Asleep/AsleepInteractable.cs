@@ -3,30 +3,53 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+public class Button
+{
+    public int ButtonID;
+}
 
 public class AsleepInteractable : MonoBehaviour
 {
+    public delegate void OnPuzzlePieceAdded();
+    public static OnPuzzlePieceAdded onPuzzlePieceAdded;
+
     public static event Action onLevelCollectablePickedUp;
+    public static event Action<int> onButtonPressed;
 
     public enum InteractableType
     {
         COLLECTABLE,
-        USABLE,
+        BUTTON,
         OPENABLE,
         LOCKEDOPENABLE
     }
-    private readonly string[] interactActionName = { "Pick up", "Interact", "Open", "LOCKED" };
+
+    [SerializeField] Button buttonInfo;
+    private int numberOfPuzzlesToSolve = 0;
+    private int numberOfPuzzlesSolved = 0;
 
     public InteractableType interactType = InteractableType.COLLECTABLE;
+    private readonly string[] interactActionName = { "Pick up", "Press", "Open", "LOCKED" };
+
 
     private void OnEnable()
     {
         AsleepInteractable.onLevelCollectablePickedUp += Unlock;
+        AsleepButtonManager.onButtonSequenceSolved += Unlock;
+        AsleepInteractable.onPuzzlePieceAdded += AddToPuzzlesToUnlock;
     }
 
     private void OnDisable()
     {
         AsleepInteractable.onLevelCollectablePickedUp -= Unlock;
+        AsleepButtonManager.onButtonSequenceSolved -= Unlock;
+        AsleepInteractable.onPuzzlePieceAdded -= AddToPuzzlesToUnlock;
+    }
+
+    private void Start()
+    {
+        if (interactType == InteractableType.COLLECTABLE) AsleepInteractable.onPuzzlePieceAdded?.Invoke();
     }
 
     public void Interact()
@@ -36,7 +59,8 @@ public class AsleepInteractable : MonoBehaviour
             case InteractableType.COLLECTABLE:
                 Collect();
                 break;
-            case InteractableType.USABLE:
+            case InteractableType.BUTTON:
+                Press();
                 break;
             case InteractableType.OPENABLE:
                 Open();
@@ -54,16 +78,29 @@ public class AsleepInteractable : MonoBehaviour
         return interactActionName[(int)interactType];
     }
 
+    private void Press()
+    {
+        onButtonPressed?.Invoke(buttonInfo.ButtonID);
+    }
+
     private void Collect()
     {
         onLevelCollectablePickedUp?.Invoke();
         gameObject.SetActive(false);
     }
 
+    private void AddToPuzzlesToUnlock()
+    {
+        ++numberOfPuzzlesToSolve;
+    }
+
     private void Unlock()
     {
         if (interactType == InteractableType.LOCKEDOPENABLE)
-            interactType = InteractableType.OPENABLE;
+        {
+            if (numberOfPuzzlesToSolve == ++numberOfPuzzlesSolved)
+                interactType = InteractableType.OPENABLE;
+        }
     }
 
     private void Open()
