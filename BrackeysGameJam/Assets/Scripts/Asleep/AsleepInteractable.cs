@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class AsleepInteractable : MonoBehaviour
 {
-    public static event Action<AsleepInteractable> onInteractableCollected;
+    public static event Action onLevelCollectablePickedUp;
 
     public enum InteractableType
     {
@@ -41,7 +42,7 @@ public class AsleepInteractable : MonoBehaviour
 
     public void Collect()
     {
-        onInteractableCollected?.Invoke(this);
+        onLevelCollectablePickedUp?.Invoke();
         gameObject.SetActive(false);
     }
 }
