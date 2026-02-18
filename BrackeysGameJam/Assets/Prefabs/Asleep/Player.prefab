@@ -806,7 +806,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e1553b93539f8e4da20b116a08d856d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LayerToToggle: Walls
+  layersHiddenOnLucid:
+  - Walls
+  layersShownOnLucid:
+  - Enemies
   cam: {fileID: 6473284754000131024}
 --- !u!1 &5089059956230966257
 GameObject:
@@ -819,6 +822,7 @@ GameObject:
   - component: {fileID: 2224862592584903121}
   - component: {fileID: 1089743945357076857}
   - component: {fileID: 2010450449032865492}
+  - component: {fileID: 5457205451821265596}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -895,6 +899,25 @@ CapsuleCollider:
   m_Height: 1.6662148
   m_Direction: 1
   m_Center: {x: 0, y: 0.9500151, z: 0}
+--- !u!114 &5457205451821265596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5089059956230966257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 1
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &6090720709210428814
 GameObject:
   m_ObjectHideFlags: 0
