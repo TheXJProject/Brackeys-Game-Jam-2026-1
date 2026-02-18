@@ -14,7 +14,6 @@ public class AsleepInteractable : MonoBehaviour
     }
     private readonly string[] interactActionName = { "Pick up", "Interact" };
 
-    public string name = "RENAME_INTERACTABLE";
     public InteractableType interactType = InteractableType.COLLECTABLE;
 
     public void Interact()
