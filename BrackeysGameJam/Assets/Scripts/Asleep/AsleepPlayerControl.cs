@@ -1,19 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UIElements;
 
 public class AsleepPlayerControl : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 2;
     [SerializeField] float mouseSensitivity = 0.1f;
+    [SerializeField] float detectionRange = 5f;
 
     [SerializeField] Transform playerTransform;
     [SerializeField] Transform cameraTransform;
     [SerializeField] Rigidbody playerRB;
     [SerializeField] AsleepLucidControl lucidControl;
     [SerializeField] AsleepWakeUpControl wakeUpControl;
+    [SerializeField] TextMeshProUGUI interactText;
 
     // Input control
     InputController playerControls;
@@ -21,16 +21,19 @@ public class AsleepPlayerControl : MonoBehaviour
     InputAction look;
     InputAction lucid;
     InputAction wakeUp;
+    InputAction interact;
     
     // Movement and look control
     Vector3 moveVector;
     Vector3 lookDirection = Vector3.forward;
     bool stopMovement = false;
-
+    bool lookingAtInteractable = false;
+    AsleepInteractable curInteractable;
 
     private void Awake()
     {
         playerControls = new InputController();
+        interactText.text = "";
     }
 
     private void OnEnable()
@@ -50,7 +53,9 @@ public class AsleepPlayerControl : MonoBehaviour
         wakeUp.started += StartHeldWakeUp;
         wakeUp.canceled += EndHeldWakeUp;
 
-        //lucid =
+        interact = playerControls.Player.Interact;
+        interact.Enable();
+        interact.started += Interact;
 
         // Non Input events
         AsleepLucidControl.onLucidToggled += ToggleStopMoving;
@@ -62,11 +67,13 @@ public class AsleepPlayerControl : MonoBehaviour
         move.Disable();
         lucid.Disable();
         wakeUp.Disable();
+        interact.Disable();
 
         lucid.started -= StartLucidFromInput;
         lucid.canceled -= EndLucidFromInput;
         wakeUp.started -= StartHeldWakeUp;
         wakeUp.canceled -= EndHeldWakeUp;
+        interact.started -= Interact;
 
         // Non input events
         AsleepLucidControl.onLucidToggled -= ToggleStopMoving;
@@ -117,6 +124,13 @@ public class AsleepPlayerControl : MonoBehaviour
         wakeUpControl.CancelWakeUp();
     }
 
+    private void Interact(InputAction.CallbackContext context)
+    {
+        if (lookingAtInteractable)
+        {
+            curInteractable.Interact();
+        }
+    }
     private void DetermineLookDirection()
     {
         Vector2 inputValue = look.ReadValue<Vector2>();
@@ -135,6 +149,27 @@ public class AsleepPlayerControl : MonoBehaviour
                 cameraTransform.localRotation = Quaternion.Euler(-90,0,0);
             else
                 cameraTransform.localRotation = Quaternion.Euler(90, 0, 0);
+        }
+
+        bool hit = Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit lineOfSightRay, detectionRange);
+        if (hit && lineOfSightRay.transform.gameObject.tag == "Interactable")
+        {
+            GameObject obj = lineOfSightRay.transform.gameObject;
+            AsleepInteractable interactable = obj.GetComponent<AsleepInteractable>();
+            if (interactable)
+            {
+                interactText.text = interactable.GetInteractText();
+                curInteractable = interactable;
+                lookingAtInteractable = true;
+            }
+            else
+                Debug.LogWarning("Object marked interactable has not interactable script");
+        }
+        else
+        {
+            interactText.text = "";
+            curInteractable = null;
+            lookingAtInteractable = false;
         }
     }
 
