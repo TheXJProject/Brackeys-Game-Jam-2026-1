@@ -12,11 +12,22 @@ public class AsleepInteractable : MonoBehaviour
     {
         COLLECTABLE,
         USABLE,
-        OPENABLE
+        OPENABLE,
+        LOCKEDOPENABLE
     }
-    private readonly string[] interactActionName = { "Pick up", "Interact", "Open" };
+    private readonly string[] interactActionName = { "Pick up", "Interact", "Open", "LOCKED" };
 
     public InteractableType interactType = InteractableType.COLLECTABLE;
+
+    private void OnEnable()
+    {
+        AsleepInteractable.onLevelCollectablePickedUp += Unlock;
+    }
+
+    private void OnDisable()
+    {
+        AsleepInteractable.onLevelCollectablePickedUp -= Unlock;
+    }
 
     public void Interact()
     {
@@ -28,7 +39,10 @@ public class AsleepInteractable : MonoBehaviour
             case InteractableType.USABLE:
                 break;
             case InteractableType.OPENABLE:
-                print("YOU WIN");
+                Open();
+                break;
+            case InteractableType.LOCKEDOPENABLE:
+                
                 break;
             default:
                 break;
@@ -40,9 +54,20 @@ public class AsleepInteractable : MonoBehaviour
         return interactActionName[(int)interactType];
     }
 
-    public void Collect()
+    private void Collect()
     {
         onLevelCollectablePickedUp?.Invoke();
         gameObject.SetActive(false);
+    }
+
+    private void Unlock()
+    {
+        if (interactType == InteractableType.LOCKEDOPENABLE)
+            interactType = InteractableType.OPENABLE;
+    }
+
+    private void Open()
+    {
+        print("Door opened");
     }
 }
