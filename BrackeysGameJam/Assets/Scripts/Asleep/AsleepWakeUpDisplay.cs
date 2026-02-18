@@ -29,6 +29,8 @@ public class AsleepWakeUpDisplay : MonoBehaviour
     {
         AsleepWakeUpControl.onStartWakeUpSequence -= BeginWakingUp;
         AsleepWakeUpControl.onCancelWakeUpSequence -= StopWakingUp;
+
+        StopWakingUp(); // Because being disabled means that lucid mode was turned on
     }
 
     private void Update()

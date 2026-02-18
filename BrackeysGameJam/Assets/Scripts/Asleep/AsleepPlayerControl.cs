@@ -26,7 +26,7 @@ public class AsleepPlayerControl : MonoBehaviour
     // Movement and look control
     Vector3 moveVector;
     Vector3 lookDirection = Vector3.forward;
-    bool stopMovement = false;
+    bool checkIsLucid = false;
     bool lookingAtInteractable = false;
     AsleepInteractable curInteractable;
 
@@ -58,7 +58,7 @@ public class AsleepPlayerControl : MonoBehaviour
         interact.started += Interact;
 
         // Non Input events
-        AsleepLucidControl.onLucidToggled += ToggleStopMoving;
+        AsleepLucidControl.onLucidToggled += ToggleIsLucidCheck;
     }
 
     private void OnDisable()
@@ -76,7 +76,7 @@ public class AsleepPlayerControl : MonoBehaviour
         interact.started -= Interact;
 
         // Non input events
-        AsleepLucidControl.onLucidToggled -= ToggleStopMoving;
+        AsleepLucidControl.onLucidToggled -= ToggleIsLucidCheck;
     }
 
     private void Update()
@@ -126,7 +126,7 @@ public class AsleepPlayerControl : MonoBehaviour
 
     private void Interact(InputAction.CallbackContext context)
     {
-        if (lookingAtInteractable)
+        if (lookingAtInteractable && !checkIsLucid)
         {
             curInteractable.Interact();
         }
@@ -175,7 +175,7 @@ public class AsleepPlayerControl : MonoBehaviour
 
     private void DetermineMoveDirection()
     {
-        if (stopMovement)
+        if (checkIsLucid)
         {
             moveVector = Vector3.zero;
             return;
@@ -187,5 +187,5 @@ public class AsleepPlayerControl : MonoBehaviour
         moveVector = moveRotation * moveScaler;
     }
 
-    private void ToggleStopMoving(bool isLucid) => stopMovement = isLucid;
+    private void ToggleIsLucidCheck(bool isLucid) => checkIsLucid = isLucid;
 }
