@@ -27,6 +27,7 @@ public class AsleepInteractable : MonoBehaviour
             case InteractableType.USABLE:
                 break;
             case InteractableType.OPENABLE:
+                print("YOU WIN");
                 break;
             default:
                 break;
