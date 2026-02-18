@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 
+[Serializable]
+public class gameObjectSpawnInfo
+{
+    public GameObject gameObject;
+    public int nodeIndex;
+}
+
 public class Maze
 {
     public enum WallDirection
@@ -23,14 +30,26 @@ public class Maze
     public int size;
     public (int nodeIndex, WallDirection direction) startNode;
     public (int nodeIndex, WallDirection direction) endNode;
+    public float cellWidth;
+    public Vector3 startNodePosition;
 
-    public Maze(Dictionary<int, HashSet<int>> nodeConnections, int size, (int, WallDirection) startNode,
-        (int, WallDirection) endNode)
+    public Maze(Dictionary<int, HashSet<int>> nodeConnections, int size,
+        (int nodeIndex, WallDirection direction) startNode,
+        (int nodeIndex, WallDirection direction) endNode)
     {
         this.nodeConnections = nodeConnections;
         this.size = size;
         this.startNode = startNode;
         this.endNode = endNode;
+    }
+
+    public void SetupStartNodePosition(Vector3 mazeScale)
+    {
+        int startNodeRow = startNode.nodeIndex / size;
+        int startNodeCol = startNode.nodeIndex % size;
+
+        this.startNodePosition =
+            new Vector3(startNodeCol * cellWidth * mazeScale.x, 0, -startNodeRow * cellWidth * mazeScale.z);
     }
 }
 
@@ -40,13 +59,15 @@ public class MazeGenerator : MonoBehaviour
 
     public GameObject wallGameObject;
     public GameObject exitDoorGameObject;
-    [HideInInspector] public float cellWidth = 0;
 
     private float wallOffset;
     private Quaternion northSouthRotation = Quaternion.Euler(0, 0, 0);
     private Quaternion eastWestRotation = Quaternion.Euler(0, 90, 0);
 
-    public static event Action onMazeGenerated;
+    public static event Action<Maze> onMazeGenerated;
+
+    public Maze selectedMaze;
+    public List<gameObjectSpawnInfo> objectsToSpawn;
 
     // TODO: Load maze from file
     public static Maze maze_1 = new(nodeConnections: new Dictionary<int, HashSet<int>>
@@ -232,14 +253,31 @@ public class MazeGenerator : MonoBehaviour
     private void Awake()
     {
         Maze[] mazes = { maze_1, maze_2 };
-        cellWidth = wallGameObject.transform.localScale.x;
-        wallOffset = cellWidth / 2.0f;
+        selectedMaze = mazes[0];
+
+        selectedMaze.cellWidth = wallGameObject.transform.localScale.x - wallGameObject.transform.localScale.z;
+        wallOffset = selectedMaze.cellWidth / 2.0f;
+
+        selectedMaze.SetupStartNodePosition(transform.localScale);
         CreateMaze(mazes[0]);
     }
 
     private void Start()
     {
-        onMazeGenerated?.Invoke();
+        onMazeGenerated?.Invoke(selectedMaze);
+        SpawnGameObjects();
+    }
+
+    private void SpawnGameObjects()
+    {
+        foreach (var objectInfo in objectsToSpawn)
+        {
+            int row = objectInfo.nodeIndex / selectedMaze.size;
+            int col = objectInfo.nodeIndex % selectedMaze.size;
+
+            Instantiate(objectInfo.gameObject,
+                new Vector3(col * selectedMaze.cellWidth, 0, -row * selectedMaze.cellWidth), Quaternion.identity);
+        }
     }
 
     private void CreateWall(int row, int col, Maze.WallDirection direction, Maze.WallType type)
@@ -255,9 +293,9 @@ public class MazeGenerator : MonoBehaviour
                 break;
         }
 
-        float wallX = col * cellWidth;
-        float wallY = cellWidth / 2.0f;
-        float wallZ = -row * cellWidth;
+        float wallX = col * selectedMaze.cellWidth;
+        float wallY = selectedMaze.cellWidth / 2.0f;
+        float wallZ = -row * selectedMaze.cellWidth;
         Quaternion wallRotation = new Quaternion();
 
         switch (direction)

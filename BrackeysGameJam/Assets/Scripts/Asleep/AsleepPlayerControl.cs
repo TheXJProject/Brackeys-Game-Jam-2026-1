@@ -25,13 +25,18 @@ public class AsleepPlayerControl : MonoBehaviour
     InputAction lucid;
     InputAction wakeUp;
     InputAction interact;
-    
+
     // Movement and look control
     Vector3 moveVector;
     Vector3 lookDirection = Vector3.forward;
     bool checkIsLucid = false;
     bool lookingAtInteractable = false;
     AsleepInteractable curInteractable;
+
+    private void MoveToMazeStart(Maze maze)
+    {
+        playerTransform.position = maze.startNodePosition;
+    }
 
     private void Awake()
     {
@@ -50,7 +55,7 @@ public class AsleepPlayerControl : MonoBehaviour
         lucid.Enable();
         lucid.started += StartLucidFromInput;
         lucid.canceled += EndLucidFromInput;
-        
+
         wakeUp = playerControls.Player.ToggleSleep;
         wakeUp.Enable();
         wakeUp.started += StartHeldWakeUp;
@@ -62,6 +67,7 @@ public class AsleepPlayerControl : MonoBehaviour
 
         // Non Input events
         AsleepLucidControl.onLucidToggled += ToggleIsLucidCheck;
+        MazeGenerator.onMazeGenerated += MoveToMazeStart;
     }
 
     private void OnDisable()
@@ -80,6 +86,7 @@ public class AsleepPlayerControl : MonoBehaviour
 
         // Non input events
         AsleepLucidControl.onLucidToggled -= ToggleIsLucidCheck;
+        MazeGenerator.onMazeGenerated -= MoveToMazeStart;
     }
 
     private void Update()
@@ -122,6 +129,7 @@ public class AsleepPlayerControl : MonoBehaviour
     {
         wakeUpControl.AttemptWakeUp();
     }
+
     private void EndHeldWakeUp(InputAction.CallbackContext context)
     {
         wakeUpControl.CancelWakeUp();
@@ -134,6 +142,7 @@ public class AsleepPlayerControl : MonoBehaviour
             curInteractable.Interact();
         }
     }
+
     private void DetermineLookDirection()
     {
         Vector2 inputValue = look.ReadValue<Vector2>();
@@ -149,12 +158,13 @@ public class AsleepPlayerControl : MonoBehaviour
         if (Vector3.Angle(cameraTransform.forward, playerTransform.forward) > 90)
         {
             if (Vector3.Dot(Vector3.up, cameraTransform.forward) >= 0)
-                cameraTransform.localRotation = Quaternion.Euler(-90,0,0);
+                cameraTransform.localRotation = Quaternion.Euler(-90, 0, 0);
             else
                 cameraTransform.localRotation = Quaternion.Euler(90, 0, 0);
         }
 
-        bool hit = Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit lineOfSightRay, detectionRange);
+        bool hit = Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit lineOfSightRay,
+            detectionRange);
         if (hit && lineOfSightRay.transform.gameObject.tag == "Interactable")
         {
             GameObject obj = lineOfSightRay.transform.gameObject;
@@ -183,6 +193,7 @@ public class AsleepPlayerControl : MonoBehaviour
             moveVector = Vector3.zero;
             return;
         }
+
         lookDirection = playerTransform.forward;
         Vector2 inputValue = move.ReadValue<Vector2>();
         Vector3 moveScaler = new Vector3(inputValue.x, 0, inputValue.y);

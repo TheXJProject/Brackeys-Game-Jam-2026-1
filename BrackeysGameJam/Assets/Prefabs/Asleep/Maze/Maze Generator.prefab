@@ -28,7 +28,7 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2978703063628357608}
   m_Father: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   surface: {fileID: 6832940989219050038}
   wallGameObject: {fileID: 1163777725093958344, guid: e4763a63417295e4a86881d2bb6f2ad4, type: 3}
   exitDoorGameObject: {fileID: 1163777725093958344, guid: f160de96851cdb74dacf196747532dbe, type: 3}
-  cellWidth: 2
+  objectsToSpawn: []
 --- !u!1 &5989921149808422185
 GameObject:
   m_ObjectHideFlags: 0
