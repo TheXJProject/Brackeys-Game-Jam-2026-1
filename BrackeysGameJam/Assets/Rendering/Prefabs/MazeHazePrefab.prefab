@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2787738258745383194}
   - component: {fileID: 5089783049745013529}
+  - component: {fileID: 5379525629579154492}
   m_Layer: 0
   m_Name: MazeHazePrefab
   m_TagString: Untagged
@@ -49,3 +50,16 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   sharedProfile: {fileID: 11400000, guid: 515c6c75667ebc64fa996e03ff57031a, type: 2}
+--- !u!114 &5379525629579154492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3417910678977182043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52fd610ea634d724892f2a965cf39c82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  volume: {fileID: 5089783049745013529}
