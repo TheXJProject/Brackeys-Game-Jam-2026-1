@@ -4,10 +4,18 @@ using Unity.AI.Navigation;
 using UnityEngine;
 
 [Serializable]
-public class gameObjectSpawnInfo
+public class GameObjectSpawnInfo
 {
     public GameObject gameObject;
     public int nodeIndex;
+}
+
+[Serializable]
+public class EnemySpawnInfo
+{
+    public GameObject gameObject;
+    public int startNodeIndex;
+    public List<int> allowedTargetNodes;
 }
 
 public class Maze
@@ -32,6 +40,7 @@ public class Maze
     public (int nodeIndex, WallDirection direction) endNode;
     public float cellWidth;
     public Vector3 startNodePosition;
+    public Vector3 scale;
 
     public Maze(Dictionary<int, HashSet<int>> nodeConnections, int size,
         (int nodeIndex, WallDirection direction) startNode,
@@ -48,7 +57,9 @@ public class Maze
         int startNodeRow = startNode.nodeIndex / size;
         int startNodeCol = startNode.nodeIndex % size;
 
-        this.startNodePosition =
+        scale = mazeScale;
+
+        startNodePosition =
             new Vector3(startNodeCol * cellWidth * mazeScale.x, 0, -startNodeRow * cellWidth * mazeScale.z);
     }
 }
@@ -67,7 +78,8 @@ public class MazeGenerator : MonoBehaviour
     public static event Action<Maze> onMazeGenerated;
 
     public Maze selectedMaze;
-    public List<gameObjectSpawnInfo> objectsToSpawn;
+    public List<EnemySpawnInfo> enemiesToSpawn;
+    public List<GameObjectSpawnInfo> objectsToSpawn;
 
     // TODO: Load maze from file
     public static Maze maze_1 = new(nodeConnections: new Dictionary<int, HashSet<int>>
@@ -264,8 +276,24 @@ public class MazeGenerator : MonoBehaviour
 
     private void Start()
     {
-        onMazeGenerated?.Invoke(selectedMaze);
+        SpawnEnemies();
         SpawnGameObjects();
+
+        onMazeGenerated?.Invoke(selectedMaze);
+    }
+
+    private void SpawnEnemies()
+    {
+        foreach (var enemy in enemiesToSpawn)
+        {
+            int row = enemy.startNodeIndex / selectedMaze.size;
+            int col = enemy.startNodeIndex % selectedMaze.size;
+
+            GameObject newEnemy = Instantiate(enemy.gameObject,
+                new Vector3(col * selectedMaze.scale.x, 0, -row * selectedMaze.scale.z), Quaternion.identity);
+
+            newEnemy.GetComponent<AsleepEnemy>().SetAllowedTargetNodes(enemy.allowedTargetNodes);
+        }
     }
 
     private void SpawnGameObjects()
