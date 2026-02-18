@@ -40,11 +40,13 @@ public class MazeGenerator : MonoBehaviour
 
     public GameObject wallGameObject;
     public GameObject exitDoorGameObject;
-    public int cellWidth;
+    [HideInInspector] public float cellWidth = 0;
 
     private float wallOffset;
-    private Quaternion northSouthRotation = Quaternion.Euler(90, 0, 0);
+    private Quaternion northSouthRotation = Quaternion.Euler(0, 0, 0);
     private Quaternion eastWestRotation = Quaternion.Euler(0, 90, 0);
+
+    public static event Action onMazeGenerated;
 
     // TODO: Load maze from file
     public static Maze maze_1 = new(nodeConnections: new Dictionary<int, HashSet<int>>
@@ -227,22 +229,45 @@ public class MazeGenerator : MonoBehaviour
         endNode: (31, Maze.WallDirection.East)
     );
 
+    private void Awake()
+    {
+        Maze[] mazes = { maze_1, maze_2 };
+        cellWidth = wallGameObject.transform.localScale.x;
+        wallOffset = cellWidth / 2.0f;
+        CreateMaze(mazes[0]);
+    }
+
+    private void Start()
+    {
+        onMazeGenerated?.Invoke();
+    }
 
     private void CreateWall(int row, int col, Maze.WallDirection direction, Maze.WallType type)
     {
-        float wallX = col * cellWidth;
-        float wallY = -row * cellWidth;
-        Quaternion wallRotation = new Quaternion();
         GameObject wallObject = wallGameObject;
+        switch (type)
+        {
+            case Maze.WallType.Wall:
+                wallObject = Instantiate(wallGameObject, transform);
+                break;
+            case Maze.WallType.ExitDoor:
+                wallObject = Instantiate(exitDoorGameObject, transform);
+                break;
+        }
+
+        float wallX = col * cellWidth;
+        float wallY = cellWidth / 2.0f;
+        float wallZ = -row * cellWidth;
+        Quaternion wallRotation = new Quaternion();
 
         switch (direction)
         {
             case Maze.WallDirection.North:
-                wallY += wallOffset;
+                wallZ += wallOffset;
                 wallRotation = northSouthRotation;
                 break;
             case Maze.WallDirection.South:
-                wallY -= wallOffset;
+                wallZ -= wallOffset;
                 wallRotation = northSouthRotation;
                 break;
             case Maze.WallDirection.West:
@@ -255,23 +280,10 @@ public class MazeGenerator : MonoBehaviour
                 break;
         }
 
-        switch (type)
-        {
-            case Maze.WallType.Wall:
-                wallObject = Instantiate(wallGameObject, transform);
-                break;
-            case Maze.WallType.ExitDoor:
-                wallObject = Instantiate(exitDoorGameObject, transform);
-                break;
-        }
-
         wallObject.name = $"{type} ({row}, {col}) {direction.ToString()}";
 
-        wallObject.transform.localPosition = new Vector3(wallX, wallY, -cellWidth / 2.0f);
+        wallObject.transform.localPosition = new Vector3(wallX, wallY, wallZ);
         wallObject.transform.localRotation = wallRotation;
-        wallObject.transform.localScale = new Vector3(cellWidth + wallObject.transform.localScale.z,
-            wallObject.transform.localScale.y + wallObject.transform.localScale.z,
-            wallObject.transform.localScale.z);
     }
 
     private void CreateMaze(Maze maze)
@@ -312,12 +324,5 @@ public class MazeGenerator : MonoBehaviour
         }
 
         surface.BuildNavMesh();
-    }
-
-    void Awake()
-    {
-        Maze[] mazes = { maze_1, maze_2 };
-        wallOffset = cellWidth / 2.0f;
-        CreateMaze(mazes[0]);
     }
 }

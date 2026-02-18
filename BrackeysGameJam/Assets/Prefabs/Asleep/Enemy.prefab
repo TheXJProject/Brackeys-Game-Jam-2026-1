@@ -124,6 +124,7 @@ MonoBehaviour:
   roamSpeed: 2
   chaseSpeed: 1
   viewDistance: 5
+  killDistance: 0.2
 --- !u!195 &7564224492984416347
 NavMeshAgent:
   m_ObjectHideFlags: 0

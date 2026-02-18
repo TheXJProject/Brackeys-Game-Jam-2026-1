@@ -8,6 +8,7 @@ public class AsleepEnemy : MonoBehaviour
     public float roamSpeed;
     public float chaseSpeed;
     public float viewDistance;
+    public float killDistance;
 
     private Maze maze;
 
@@ -15,6 +16,8 @@ public class AsleepEnemy : MonoBehaviour
     private NavMeshAgent navMeshAgent;
     private Collider playerCollider;
     private MeshRenderer meshRenderer;
+
+    private void stop() => setStopped(true);
 
     private void setStopped(bool frozen)
     {
@@ -24,11 +27,13 @@ public class AsleepEnemy : MonoBehaviour
     private void OnEnable()
     {
         AsleepLucidControl.onLucidToggled += setStopped;
+        AsleepPlayerControl.onPlayerKilled += stop;
     }
 
     private void OnDisable()
     {
         AsleepLucidControl.onLucidToggled -= setStopped;
+        AsleepPlayerControl.onPlayerKilled -= stop;
     }
 
     private void Start()
@@ -60,6 +65,11 @@ public class AsleepEnemy : MonoBehaviour
 
         if (playerSeen)
         {
+            if (lineOfSightRay.distance <= killDistance)
+            {
+                AsleepPlayerControl.killPlayer();
+            }
+
             meshRenderer.material.color = Color.red;
             navMeshAgent.speed = chaseSpeed;
             navMeshAgent.SetDestination(player.transform.position);

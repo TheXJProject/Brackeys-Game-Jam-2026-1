@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,6 +15,8 @@ public class AsleepPlayerControl : MonoBehaviour
     [SerializeField] AsleepLucidControl lucidControl;
     [SerializeField] AsleepWakeUpControl wakeUpControl;
     [SerializeField] TextMeshProUGUI interactText;
+
+    public static event Action onPlayerKilled;
 
     // Input control
     InputController playerControls;
@@ -188,4 +191,10 @@ public class AsleepPlayerControl : MonoBehaviour
     }
 
     private void ToggleIsLucidCheck(bool isLucid) => checkIsLucid = isLucid;
+
+    public static void killPlayer()
+    {
+        onPlayerKilled?.Invoke();
+        print("Dead!");
+    }
 }
