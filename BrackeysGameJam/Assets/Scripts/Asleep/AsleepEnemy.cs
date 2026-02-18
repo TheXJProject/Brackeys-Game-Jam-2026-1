@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -12,11 +13,25 @@ public class AsleepEnemy : MonoBehaviour
 
     private GameObject player;
     private NavMeshAgent navMeshAgent;
-    // private bool chasingPlayer = false;
     private Collider playerCollider;
     private MeshRenderer meshRenderer;
 
-    void Start()
+    private void setStopped(bool frozen)
+    {
+        navMeshAgent.isStopped = frozen;
+    }
+
+    private void OnEnable()
+    {
+        AsleepLucidControl.onLucidToggled += setStopped;
+    }
+
+    private void OnDisable()
+    {
+        AsleepLucidControl.onLucidToggled -= setStopped;
+    }
+
+    private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
@@ -28,8 +43,10 @@ public class AsleepEnemy : MonoBehaviour
         navMeshAgent.speed = roamSpeed;
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
+        if (navMeshAgent.isStopped) return;
+
         Vector3 rayDirection = player.transform.position - transform.position;
         rayDirection.y = 0;
 

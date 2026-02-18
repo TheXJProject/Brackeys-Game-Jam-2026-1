@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AsleepCameraControl : MonoBehaviour
 {
-    [SerializeField] string LayerToToggle = "Walls";
+    [SerializeField] List<string> layersHiddenOnLucid = new() { "Walls" };
+    [SerializeField] List<string> layersShownOnLucid = new() { "Enemies" };
     [SerializeField] Camera cam;
 
     private void OnEnable()
@@ -19,13 +20,28 @@ public class AsleepCameraControl : MonoBehaviour
 
     private void ToggleLayersToShow(bool isLucid)
     {
-        if (isLucid)
+        foreach (string layer in layersHiddenOnLucid)
         {
-            cam.cullingMask &= ~(1 << LayerMask.NameToLayer(LayerToToggle));
+            if (isLucid)
+            {
+                cam.cullingMask &= ~(1 << LayerMask.NameToLayer(layer));
+            }
+            else
+            {
+                cam.cullingMask |= (1 << LayerMask.NameToLayer(layer));
+            }
         }
-        else
+
+        foreach (string layer in layersShownOnLucid)
         {
-            cam.cullingMask |= (1 << LayerMask.NameToLayer(LayerToToggle));
+            if (!isLucid)
+            {
+                cam.cullingMask &= ~(1 << LayerMask.NameToLayer(layer));
+            }
+            else
+            {
+                cam.cullingMask |= (1 << LayerMask.NameToLayer(layer));
+            }
         }
     }
 }
