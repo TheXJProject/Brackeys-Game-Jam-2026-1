@@ -10,9 +10,10 @@ public class AsleepInteractable : MonoBehaviour
     public enum InteractableType
     {
         COLLECTABLE,
-        USABLE
+        USABLE,
+        OPENABLE
     }
-    private readonly string[] interactActionName = { "Pick up", "Interact" };
+    private readonly string[] interactActionName = { "Pick up", "Interact", "Open" };
 
     public InteractableType interactType = InteractableType.COLLECTABLE;
 
@@ -24,6 +25,8 @@ public class AsleepInteractable : MonoBehaviour
                 Collect();
                 break;
             case InteractableType.USABLE:
+                break;
+            case InteractableType.OPENABLE:
                 break;
             default:
                 break;
