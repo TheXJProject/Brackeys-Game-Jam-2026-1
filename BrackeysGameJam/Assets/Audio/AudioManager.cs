@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
 
     // Inspector Adjustable Values:
     [Header("Prevent error messages if audio not in use")][SerializeField] bool removeWarningMsgs;
+    [Header("Prevent caution messages")][SerializeField] bool removeCautionMsgs;
 
     // Initialise In Inspector:
     [Header("(Reduce Non-priority sounds to prevent clipping)\n")]
@@ -234,9 +235,9 @@ public class AudioManager : MonoBehaviour
         }
 
         // Throw error if no source was playing anything
-        if (!playingCheck)
+        if (!playingCheck && !removeCautionMsgs)
         {
-            if (!removeWarningMsgs) Debug.LogWarning("Error, no music was playing!");
+            if (!removeWarningMsgs) Debug.LogWarning("Caution, no music was playing!");
         }
     }
 
@@ -365,7 +366,7 @@ public class AudioManager : MonoBehaviour
         {
             if (!removeWarningMsgs) Debug.LogWarning("Error, no music source available!");
         }
-        else if (timeTillPlay < 0.05f && timeTillPlay.HasValue)
+        else if (timeTillPlay.HasValue && timeTillPlay < 0.05f)
         {
             if (!removeWarningMsgs) Debug.LogWarning("Warning, May fail to play track if time is less than 0.05!");
         }
@@ -499,7 +500,7 @@ public class AudioManager : MonoBehaviour
         }
 
         // Throw error if no source has been used since game load or the last stopSFX() call
-        if (playingCheck)
+        if (playingCheck && !removeCautionMsgs)
         {
             if (!removeWarningMsgs) Debug.LogWarning("Caution, no SFX have been played since start or last 'StopSFX()' call!");
         }
