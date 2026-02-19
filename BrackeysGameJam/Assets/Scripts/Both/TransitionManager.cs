@@ -4,27 +4,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum SceneNames
+public enum SceneName // MAKES SURE THIS ENUM MATCHES UP WITH THE ORDERING OF SCENES IN THE SCENE BUILD
 {
-    AWAKE,
+    AWAKEBEGINNING,
+    AWAKEPARALYZED1,
+    AWAKEPARALYZED2,
+    AWAKEPARALYZED3,
+    AWAKEPARALYZED4,
+    AWAKEPARALYZED5,
     MAZE1,
     MAZE2,
     MAZE3,
     MAZE4,
-    MAZE5
+    MAZE5,
+    LOST,
+    WON
 }
 
 public class TransitionManager : MonoBehaviour
 {
-    public static event Action<SceneNames> onLoadingNextScene;
+    public static TransitionManager instance;
 
-    [SerializeField] private string awakeSceneName = "Main_AwakeScene";
+    public static event Action<SceneName> onLoadingNextScene;
+
+    [Header("Order the indicies for awake scenes in order of play")]
+    [SerializeField] List<int> orderedAwakeScenesToLoad;
 
     [Header("Order the indicies for asleep scenes in order of play")]
     [SerializeField] List<int> orderedAsleepScenesToLoad;
-    private int currentDreamSceneIndex = 0;
+    private int currentLevelSceneIndex = 0;
 
-    public static TransitionManager instance;
 
     private void Awake()
     {
@@ -36,49 +45,68 @@ public class TransitionManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void WakeUpFromPinch() // TODO: LINK UP THESE FUNCTION CALLS TO DIFFERENT SCENES
+    public void WakeUpFromPinch()
     {
-        onLoadingNextScene?.Invoke(SceneNames.AWAKE);
-        TransitionAnimControl.onBlinkMiddle += LoadAwakeScene;
+        TransitionAnimControl.onBlinkMiddle += LoadCurrentAwakeScene;
         TransitionAnimControl.instance.StartBlinkTransition();
     }
     public void FallAsleep()
     {
-        SceneNames sceneName = (SceneNames)orderedAsleepScenesToLoad[currentDreamSceneIndex];
-        onLoadingNextScene?.Invoke(sceneName);
         TransitionAnimControl.onBlinkMiddle += LoadCurrentAsleepScene;
         TransitionAnimControl.instance.StartBlinkTransition();
     }
 
     public void LoadNextSleepLevel()
     {
-        SceneNames sceneName = (SceneNames)orderedAsleepScenesToLoad[currentDreamSceneIndex+1];
-        onLoadingNextScene?.Invoke(sceneName);
         TransitionAnimControl.onBlinkMiddle += LoadNextAsleepScene;
         TransitionAnimControl.instance.StartBlinkTransition();
     }
 
-    private void LoadAwakeScene()
+    private void LoadCurrentAwakeScene()
     {
-        TransitionAnimControl.onBlinkMiddle -= LoadAwakeScene;
-        SceneManager.LoadScene(awakeSceneName);
-        UnityEngine.Cursor.visible = true;
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        TransitionAnimControl.onBlinkMiddle -= LoadCurrentAwakeScene;
+        SceneManager.LoadScene(currentLevelSceneIndex);
+        SendStartedAwakeScene(currentLevelSceneIndex);
+        ToggleMouseOn();
     }
 
     private void LoadCurrentAsleepScene()
     {
         TransitionAnimControl.onBlinkMiddle -= LoadCurrentAsleepScene;
         GameManager.instance.awakeState = GameManager.AwakeState.FROMWAKEUP;
-        SceneManager.LoadScene(currentDreamSceneIndex);
-        UnityEngine.Cursor.visible = false;
-        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        SceneManager.LoadScene(currentLevelSceneIndex);
+        SendStartedAsleepScene(currentLevelSceneIndex);
+        ToggleMouseOff();
     }
     private void LoadNextAsleepScene()
     {
         TransitionAnimControl.onBlinkMiddle -= LoadNextAsleepScene;
-        SceneManager.LoadScene(++currentDreamSceneIndex);
+        SceneManager.LoadScene(++currentLevelSceneIndex);
+        SendStartedAsleepScene(currentLevelSceneIndex);
+        ToggleMouseOff();
+    }
+
+    private void SendStartedAsleepScene(int indexForAsleepScene)
+    {
+        SceneName sceneName = (SceneName)orderedAsleepScenesToLoad[indexForAsleepScene];
+        onLoadingNextScene?.Invoke(sceneName);
+    }
+
+    private void SendStartedAwakeScene(int indexForAwakeScene)
+    {
+        SceneName sceneName = (SceneName)orderedAwakeScenesToLoad[indexForAwakeScene];
+        onLoadingNextScene?.Invoke(sceneName);
+    }
+
+    private void ToggleMouseOff()
+    {
         UnityEngine.Cursor.visible = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+    }
+    private void ToggleMouseOn()
+    {
+        UnityEngine.Cursor.visible = true;
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+
     }
 }

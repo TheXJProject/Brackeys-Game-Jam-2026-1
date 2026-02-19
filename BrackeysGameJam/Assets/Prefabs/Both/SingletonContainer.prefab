@@ -67,7 +67,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   awakeSceneName: Main_AwakeScene
-  orderedAsleepScenesToLoad: 01000000
+  orderedAwakeScenesToLoad: 0100000002000000030000000400000005000000
+  orderedAsleepScenesToLoad: 060000000700000008000000090000000a000000
 --- !u!114 &5039102755390685239
 MonoBehaviour:
   m_ObjectHideFlags: 0
