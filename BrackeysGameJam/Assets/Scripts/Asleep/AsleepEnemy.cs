@@ -10,6 +10,7 @@ public class AsleepEnemy : MonoBehaviour
     public float chaseSpeed;
     public float viewDistance;
     public float killDistance;
+    public int enemyID;
 
     private List<int> allowedTargetNodes;
 
