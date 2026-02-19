@@ -3675,6 +3675,111 @@ MonoBehaviour:
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: 30d9ea997be702948b073d6b1a5ddec1, type: 3}
     looped: 0
+  - name: BreathChange
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 4db8f21aeaf2c524aa27ce9a5e3b3600, type: 3}
+    looped: 0
+  - name: BuildupOfNo
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: a4e5bbce653d1d54da742e636b117527, type: 3}
+    looped: 0
+  - name: BuildupOfNoEnd
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: de64d1141e15d5a4781cfef530dc74d6, type: 3}
+    looped: 0
+  - name: CharacterInteract
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 9d97ac0a22ab2064b81f5d5c544c7f2c, type: 3}
+    looped: 0
+  - name: ComputerBeep
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: ad675a28b99806b438f5188b597ec33d, type: 3}
+    looped: 0
+  - name: GaspAwake
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 9694385cf9029c64cad13353cef98168, type: 3}
+    looped: 0
+  - name: GlitchSound
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 6da4f2139b27fe340a5c5428890ea2e6, type: 3}
+    looped: 0
+  - name: GoToBed
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: c9e9067a48a2be848a6264412b7a82c3, type: 3}
+    looped: 0
+  - name: GoToSleep
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 86fbf69218fdc3147ae2cc7d50a723b6, type: 3}
+    looped: 0
+  - name: KeyPress
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: a9c515b5be9c9af47a98b9695350b84e, type: 3}
+    looped: 0
+  - name: LightsOff
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: b00065fafbe178b49a614b88e8022fe1, type: 3}
+    looped: 0
+  - name: PlayerInteract
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: b979240af1be53342ab954cb5c8f789d, type: 3}
+    looped: 0
+  - name: SingleFootstep
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: b404b47de73db524c9d3a7543699295b, type: 3}
+    looped: 0
+  - name: SingleFootstepLight
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 71afb1a2fb7302740a5906cc8ced0c9b, type: 3}
+    looped: 0
+  - name: SingleHeartbeat
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 0c68db3e618e34640b00449005afbce1, type: 3}
+    looped: 0
   sfxLoopedSounds:
   - name: Dripping
     volume: 0.8
