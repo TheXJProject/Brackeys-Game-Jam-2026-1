@@ -1,7 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AllSoundsController : MonoBehaviour
@@ -38,7 +37,6 @@ public class AllSoundsController : MonoBehaviour
         AsleepEnemy.onPlayerSeen += EnemySeenPlayer;
         //+= StartWalking;
         //+= StopWalking;
-        //+= FadeOut;
     }
 
     private void OnDisable()
@@ -48,7 +46,6 @@ public class AllSoundsController : MonoBehaviour
         AsleepEnemy.onPlayerSeen -= EnemySeenPlayer;
         //-= StartWalking;
         //-= StopWalking;
-        //-= FadeOut;
     }
 
     private void Start()
@@ -108,10 +105,26 @@ public class AllSoundsController : MonoBehaviour
     {
         currentScene = name;
 
-        // If we need to mute everything first
-        if (true)
+        // If we need to mute sounds before we go into the new scene
+        switch (currentScene)
         {
-            FullResetToNothing();
+            case SceneName.AWAKEPARALYZED1:
+            case SceneName.AWAKEPARALYZED2:
+            case SceneName.AWAKEPARALYZED3:
+            case SceneName.AWAKEPARALYZED4:
+            case SceneName.AWAKEPARALYZED5:
+            case SceneName.LOST:
+            case SceneName.WON:
+            case SceneName.AWAKEBEGINNING:
+                FullResetToNothing();
+                break;
+            case SceneName.MAZE1:
+            case SceneName.MAZE2:
+            case SceneName.MAZE3:
+            case SceneName.MAZE4:
+            case SceneName.MAZE5:
+            default:
+                break;
         }
 
         // Kick off ambience
@@ -123,7 +136,7 @@ public class AllSoundsController : MonoBehaviour
 
     void FullResetToNothing()
     {
-        // Reset all volumes and SFX
+        // Set every volume to zero
         MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.MUSIC_OVERALL, EX_PARA.VOLUME, 0);
         MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.MUSIC_COLLECTION, EX_PARA.VOLUME, 0);
         MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.SFX_OVERALL, EX_PARA.VOLUME, 0);
@@ -139,38 +152,54 @@ public class AllSoundsController : MonoBehaviour
         switch (currentScene)
         {
             case SceneName.AWAKEBEGINNING:
-                AudioManager.instance.PlayLoopingSFX("GeneralWhispers");
+                if (!AlreadyPlaying("GeneralWhispers")) AudioManager.instance.PlayLoopingSFX("GeneralWhispers");
                 AudioManager.instance.PlayLoopingSFX("ElectricHum", null, 0.2f);
+                AudioManager.instance.PlayLoopingSFX("WindOutside", null, 0.5f);
                 break;
 
-            case SceneName.AWAKEPARALYZED5:
             case SceneName.AWAKEPARALYZED4:
+            case SceneName.AWAKEPARALYZED3:
                 AudioManager.instance.PlayLoopingSFX("Scratching N");
                 goto case SceneName.AWAKEPARALYZED3;
-            case SceneName.AWAKEPARALYZED3:
+            case SceneName.AWAKEPARALYZED5:
             case SceneName.AWAKEPARALYZED2:
             case SceneName.AWAKEPARALYZED1:
                 AudioManager.instance.PlayLoopingSFX("ElectricHum");
                 AudioManager.instance.PlayLoopingSFX("FloorCreaking");
-                AudioManager.instance.PlayLoopingSFX("ElectricHum");
+                AudioManager.instance.PlayLoopingSFX("WindOutside");
                 break;
 
             case SceneName.MAZE4:
             case SceneName.MAZE3:
                 // play general whispers
+                if (!AlreadyPlaying("GeneralWhispers")) AudioManager.instance.PlayLoopingSFX("GeneralWhispers");
+                goto case SceneName.MAZE5;
             case SceneName.MAZE5:
             case SceneName.MAZE2:
             case SceneName.MAZE1:
                 // play ambience
+                AudioManager.instance.PlayLoopingSFX("Dripping");
+                AudioManager.instance.PlayLoopingSFX("RacingHeartbeat");
                 break;
 
             case SceneName.LOST:
+                if (!AlreadyPlaying("GeneralWhispers")) AudioManager.instance.PlayLoopingSFX("GeneralWhispers");
                 break;
+
             case SceneName.WON:
-                break;
             default:
+                // If we won, don't play any ambience
                 break;
         }
+    }
+
+    bool AlreadyPlaying(string name)
+    {
+        // Find the looping source that's currently playing that sound
+        SoundSource source = Array.Find(AudioManager.instance.sfxLoopingSourceList, y => y.soundName == name);
+
+        // Return true if we're already playing the SFX loop
+        return source != null;
     }
 
     void FadeIn()
@@ -313,14 +342,14 @@ public class AllSoundsController : MonoBehaviour
             case SceneName.AWAKEPARALYZED3:
             case SceneName.AWAKEPARALYZED4:
             case SceneName.AWAKEPARALYZED5:
-                playWhisper = (Random.Range(0, randomWhisperFrequencyBedroom) < timeWhispers);
+                playWhisper = (UnityEngine.Random.Range(0, randomWhisperFrequencyBedroom) < timeWhispers);
                 break;
             case SceneName.MAZE1:
             case SceneName.MAZE2:
             case SceneName.MAZE3:
             case SceneName.MAZE4:
             case SceneName.MAZE5:
-                playWhisper = (Random.Range(0, randomWhisperFrequencyDream) < timeWhispers);
+                playWhisper = (UnityEngine.Random.Range(0, randomWhisperFrequencyDream) < timeWhispers);
                 break;
             default:
                 Debug.LogWarning("Errror, shouldn't be able to get here!");
@@ -331,7 +360,7 @@ public class AllSoundsController : MonoBehaviour
         if (playWhisper)
         {
             timeWhispers = 0;
-            int index = Random.Range(0, whispers.Length - 1);
+            int index = UnityEngine.Random.Range(0, whispers.Length - 1);
             AudioManager.instance.PlaySFX(whispers[index]);
         }
     }
