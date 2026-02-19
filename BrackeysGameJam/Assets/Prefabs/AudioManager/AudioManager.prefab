@@ -2278,7 +2278,42 @@ MonoBehaviour:
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: 3bc2f23e2b7692940a1219f760d5f039, type: 3}
     looped: 0
-  sfxSounds: []
+  - name: WinMusic
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 9785941e009820043a7652315cb7fd68, type: 3}
+    looped: 0
+  - name: MPianoSFX
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: f7559d41b3b168d4cb78593cbc30fb41, type: 3}
+    looped: 0
+  - name: MMusicBoxAndGong
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 1b6438d20541f23409793eba5f53f484, type: 3}
+    looped: 0
+  - name: MChords
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: f71d20819bcb3184190bb84866c49730, type: 3}
+    looped: 0
+  sfxSounds:
+  - name: DeathMusic
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 35e107da3e5c6104ba4106f9386e9b14, type: 3}
+    looped: 0
   sfxLoopedSounds: []
   musicSourceList:
   - audioSource: {fileID: 2330991598732220418}
@@ -2479,7 +2514,7 @@ MonoBehaviour:
   - name: Music Collection
     group: {fileID: -5712398626711352647, guid: 30e3a62b36f317442b9db35864b01c71, type: 2}
     parameters:
-      volume: 
+      volume: MOverallVolume
       lowPassEQ: 
       highPassEQ: 
       pitchShift: 
