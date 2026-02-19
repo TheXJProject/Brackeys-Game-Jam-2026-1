@@ -3539,6 +3539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Msg: 0
   removeWarningMsgs: 0
+  removeCautionMsgs: 1
   nonPriorityVolume: 0.8
   musicSounds:
   - name: BChoir
@@ -4056,20 +4057,6 @@ MonoBehaviour:
       - {fileID: 3117949328656944112}
       - {fileID: 9165291284004402909}
       - {fileID: 8143689944508745049}
-  - name: ' LoopSFX'
-    group: {fileID: 5275248481432129821, guid: 30e3a62b36f317442b9db35864b01c71, type: 2}
-    parameters:
-      volume: 
-      lowPassEQ: 
-      highPassEQ: 
-      pitchShift: 
-      startVolume: 0
-      startLowPassEQ: 0
-      startHighPassEQ: 0
-      startPitchShift: 0
-    linkedAudioSources:
-      audioSources:
-      - {fileID: 4347461474738330335}
   - name: Music Collection
     group: {fileID: -5712398626711352647, guid: 30e3a62b36f317442b9db35864b01c71, type: 2}
     parameters:

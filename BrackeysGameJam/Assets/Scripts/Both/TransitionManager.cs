@@ -27,6 +27,7 @@ public class TransitionManager : MonoBehaviour
     public static TransitionManager instance;
 
     public static event Action<SceneName> onLoadingNextScene;
+    public static event Action onBeginFadeOut;
 
     [Header("Order the indicies for awake scenes in order of play")]
     [SerializeField] List<int> orderedAwakeScenesToLoad;
@@ -58,22 +59,38 @@ public class TransitionManager : MonoBehaviour
     {
         TransitionAnimControl.onBlinkMiddle += LoadCurrentAwakeScene;
         TransitionAnimControl.instance.StartBlinkTransition();
+        onBeginFadeOut.Invoke();
     }
     public void FallAsleep()
     {
         TransitionAnimControl.onBlinkMiddle += LoadCurrentAsleepScene;
         TransitionAnimControl.instance.StartBlinkTransition();
+        onBeginFadeOut.Invoke();
     }
 
     public void LoadNextSleepLevel()
     {
         TransitionAnimControl.onBlinkMiddle += LoadNextAsleepScene;
         TransitionAnimControl.instance.StartBlinkTransition();
+        onBeginFadeOut.Invoke();
     }
     public void LoadVictoryLevel()
     {
         //TransitionAnimControl.onBlinkMiddle += LoadNextAsleepScene;
         //TransitionAnimControl.instance.StartBlinkTransition();
+        onBeginFadeOut.Invoke();
+    }
+    public void LoadDeathLevel()
+    {
+        //TransitionAnimControl.onBlinkMiddle += LoadNextAsleepScene;
+        //TransitionAnimControl.instance.StartBlinkTransition();
+        onBeginFadeOut.Invoke();
+    }
+    public void LoadSceneRestartGame()
+    {
+        //TransitionAnimControl.onBlinkMiddle += LoadNextAsleepScene;
+        //TransitionAnimControl.instance.StartBlinkTransition();
+        onBeginFadeOut.Invoke();
     }
 
     private void LoadCurrentAwakeScene()

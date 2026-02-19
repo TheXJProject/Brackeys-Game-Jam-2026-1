@@ -604,7 +604,7 @@ public class MixerFXManager : MonoBehaviour
                 if (!audioMixer.SetFloat(exParam, ConvertType(param, true, targetValue)))
                 {
                     // Throw error if this fails
-                    if (!removeWarningMsgs) Debug.LogWarning("Error, failed to set target value for " + param);
+                    if (!removeWarningMsgs) Debug.LogWarning("Error, failed to set target value for " + param + ", " + collection);
                 }
             }
         }

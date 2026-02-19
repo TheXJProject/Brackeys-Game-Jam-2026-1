@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class AllSoundsController : MonoBehaviour
 {
     const float newEnemy = -1;
 
+    public SceneName startScene;
     public AudioClip buttonPress;
     public AudioClip doorLocked;
     public AudioClip doorOpens;
@@ -21,15 +23,18 @@ public class AllSoundsController : MonoBehaviour
     [SerializeField] float minWhisperTime;
     [SerializeField] float timeBetweenBeingSpotted;
     [SerializeField] double musicStartTime = 0.5f;
-    public SceneName currentScene;
+    [SerializeField] float fadeInTime = 1;
+    [SerializeField] float fadeOutTime = 1;
+    SceneName currentScene;
     bool walking = false;
     float timeWalking = 0f;
     float timeWhispers = 0f;
-    Dictionary<int, float> dreamonSpottedTimes = new();
+    private Dictionary<int, float> dreamonSpottedTimes = new();
 
     private void OnEnable()
     {
         TransitionManager.onLoadingNextScene += NewScene;
+        TransitionManager.onBeginFadeOut += FadeOut;
         AsleepEnemy.onPlayerSeen += EnemySeenPlayer;
         //+= StartWalking;
         //+= StopWalking;
@@ -39,6 +44,7 @@ public class AllSoundsController : MonoBehaviour
     private void OnDisable()
     {
         TransitionManager.onLoadingNextScene -= NewScene;
+        TransitionManager.onBeginFadeOut -= FadeOut;
         AsleepEnemy.onPlayerSeen -= EnemySeenPlayer;
         //-= StartWalking;
         //-= StopWalking;
@@ -47,6 +53,7 @@ public class AllSoundsController : MonoBehaviour
 
     private void Start()
     {
+        // Start game with nothing playing
         FullResetToNothing();
 
         // BedRoom
@@ -63,8 +70,8 @@ public class AllSoundsController : MonoBehaviour
         // Victory
         AudioManager.instance.PlayMusic("WinMusic", musicStartTime);
 
-        // Kick off ambience
-        PlayAmbience();
+        // Enter the start scene
+        NewScene(startScene);
     }
 
     private void Update()
@@ -107,8 +114,11 @@ public class AllSoundsController : MonoBehaviour
             FullResetToNothing();
         }
 
-        // Use PlayAmbience()
-        // Use FullReset() with if statements
+        // Kick off ambience
+        PlayAmbience();
+
+        // Fade in required tracks
+        FadeIn();
     }
 
     void FullResetToNothing()
@@ -123,8 +133,49 @@ public class AllSoundsController : MonoBehaviour
         AudioManager.instance.StopAllSFX();
     }
 
-    void FadeOut()
+    void PlayAmbience()
     {
+        // Depending what scene we're in play looped SFX
+        switch (currentScene)
+        {
+            case SceneName.AWAKEBEGINNING:
+                AudioManager.instance.PlayLoopingSFX("GeneralWhispers");
+                AudioManager.instance.PlayLoopingSFX("ElectricHum", null, 0.2f);
+                break;
+
+            case SceneName.AWAKEPARALYZED5:
+            case SceneName.AWAKEPARALYZED4:
+                AudioManager.instance.PlayLoopingSFX("Scratching N");
+                goto case SceneName.AWAKEPARALYZED3;
+            case SceneName.AWAKEPARALYZED3:
+            case SceneName.AWAKEPARALYZED2:
+            case SceneName.AWAKEPARALYZED1:
+                AudioManager.instance.PlayLoopingSFX("ElectricHum");
+                AudioManager.instance.PlayLoopingSFX("FloorCreaking");
+                AudioManager.instance.PlayLoopingSFX("ElectricHum");
+                break;
+
+            case SceneName.MAZE4:
+            case SceneName.MAZE3:
+                // play general whispers
+            case SceneName.MAZE5:
+            case SceneName.MAZE2:
+            case SceneName.MAZE1:
+                // play ambience
+                break;
+
+            case SceneName.LOST:
+                break;
+            case SceneName.WON:
+                break;
+            default:
+                break;
+        }
+    }
+
+    void FadeIn()
+    {
+        // Different depending what new scene we're in
         switch (currentScene)
         {
             case SceneName.AWAKEBEGINNING:
@@ -159,28 +210,44 @@ public class AllSoundsController : MonoBehaviour
         }
     }
 
-    void PlayAmbience()
+    void FadeOut()
     {
-        //switch (currentScene)
-        //{
-        //    case SceneNames.AWAKE:
-        //        break;
-        //    case SceneNames.MAZE1:
-        //        break;
-        //    case SceneNames.MAZE2:
-        //        break;
-        //    case SceneNames.MAZE3:
-        //        break;
-        //    case SceneNames.MAZE4:
-        //        break;
-        //    case SceneNames.MAZE5:
-        //        break;
-        //    default:
-        //        break;
-        //} TODO: this
-
-
+        // Different depending what scene we're currently in
+        switch (currentScene)
+        {
+            case SceneName.AWAKEBEGINNING:
+                break;
+            case SceneName.AWAKEPARALYZED1:
+                break;
+            case SceneName.AWAKEPARALYZED2:
+                break;
+            case SceneName.AWAKEPARALYZED3:
+                break;
+            case SceneName.AWAKEPARALYZED4:
+                break;
+            case SceneName.AWAKEPARALYZED5:
+                break;
+            case SceneName.MAZE1:
+                break;
+            case SceneName.MAZE2:
+                break;
+            case SceneName.MAZE3:
+                break;
+            case SceneName.MAZE4:
+                break;
+            case SceneName.MAZE5:
+                break;
+            case SceneName.LOST:
+                break;
+            case SceneName.WON:
+                break;
+            default:
+                Debug.LogWarning("Error, couldn't find scene!");
+                break;
+        }
     }
+
+    // ++++++++ Unique functionality +++++++++
 
     void StartWalking()
     {
@@ -202,6 +269,7 @@ public class AllSoundsController : MonoBehaviour
                 AudioManager.instance.PlaySFX("SingleFootstep", false, null, true);
             }
         }
+        StartCoroutine(Walking());
     }
 
     void StopWalking()
