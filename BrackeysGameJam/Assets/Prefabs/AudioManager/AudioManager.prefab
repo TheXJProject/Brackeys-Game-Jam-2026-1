@@ -3828,6 +3828,10 @@ MonoBehaviour:
       - {fileID: 7989943359264447758}
       - {fileID: 8095699920737484482}
       - {fileID: 5184578104362969801}
+      - {fileID: 4982215502356875416}
+      - {fileID: 3117949328656944112}
+      - {fileID: 9165291284004402909}
+      - {fileID: 8143689944508745049}
   - name: ' LoopSFX'
     group: {fileID: 5275248481432129821, guid: 30e3a62b36f317442b9db35864b01c71, type: 2}
     parameters:
