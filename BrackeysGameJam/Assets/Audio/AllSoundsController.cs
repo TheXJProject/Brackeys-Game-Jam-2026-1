@@ -42,7 +42,7 @@ public class AllSoundsController : MonoBehaviour
         AudioManager.instance.PlayMusic("WinMusic", randomStartTime);
 
         // Mute all individual Music tracks
-        //MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.MUSIC_COLLECTION, EX_PARA.VOLUME, 0);
+        MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.MUSIC_COLLECTION, EX_PARA.VOLUME, 0);
 
         // Kick off ambience
         PlayAmbience();
@@ -63,22 +63,24 @@ public class AllSoundsController : MonoBehaviour
 
     void PlayAmbience()
     {
-        switch (currentScene)
-        {
-            case SceneNames.AWAKE:
-                break;
-            case SceneNames.MAZE1:
-                break;
-            case SceneNames.MAZE2:
-                break;
-            case SceneNames.MAZE3:
-                break;
-            case SceneNames.MAZE4:
-                break;
-            case SceneNames.MAZE5:
-                break;
-            default:
-                break;
-        }
+        //switch (currentScene)
+        //{
+        //    case SceneNames.AWAKE:
+        //        break;
+        //    case SceneNames.MAZE1:
+        //        break;
+        //    case SceneNames.MAZE2:
+        //        break;
+        //    case SceneNames.MAZE3:
+        //        break;
+        //    case SceneNames.MAZE4:
+        //        break;
+        //    case SceneNames.MAZE5:
+        //        break;
+        //    default:
+        //        break;
+        //} TODO: this
+
+
     }
 }
