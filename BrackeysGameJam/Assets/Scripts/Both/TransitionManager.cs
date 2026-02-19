@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -45,6 +46,14 @@ public class TransitionManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    public bool IsThisLastLevel()
+    {
+        if (currentLevelSceneIndex == orderedAsleepScenesToLoad.Count - 1)
+            return true;
+        else 
+            return false;
+    }
+
     public void WakeUpFromPinch()
     {
         TransitionAnimControl.onBlinkMiddle += LoadCurrentAwakeScene;
@@ -61,11 +70,16 @@ public class TransitionManager : MonoBehaviour
         TransitionAnimControl.onBlinkMiddle += LoadNextAsleepScene;
         TransitionAnimControl.instance.StartBlinkTransition();
     }
+    public void LoadVictoryLevel()
+    {
+        //TransitionAnimControl.onBlinkMiddle += LoadNextAsleepScene;
+        //TransitionAnimControl.instance.StartBlinkTransition();
+    }
 
     private void LoadCurrentAwakeScene()
     {
         TransitionAnimControl.onBlinkMiddle -= LoadCurrentAwakeScene;
-        SceneManager.LoadScene(currentLevelSceneIndex);
+        SceneManager.LoadScene(orderedAwakeScenesToLoad[currentLevelSceneIndex]);
         SendStartedAwakeScene(currentLevelSceneIndex);
         ToggleMouseOn();
     }
@@ -74,14 +88,14 @@ public class TransitionManager : MonoBehaviour
     {
         TransitionAnimControl.onBlinkMiddle -= LoadCurrentAsleepScene;
         GameManager.instance.awakeState = GameManager.AwakeState.FROMWAKEUP;
-        SceneManager.LoadScene(currentLevelSceneIndex);
+        SceneManager.LoadScene(orderedAsleepScenesToLoad[currentLevelSceneIndex]);
         SendStartedAsleepScene(currentLevelSceneIndex);
         ToggleMouseOff();
     }
     private void LoadNextAsleepScene()
     {
         TransitionAnimControl.onBlinkMiddle -= LoadNextAsleepScene;
-        SceneManager.LoadScene(++currentLevelSceneIndex);
+        SceneManager.LoadScene(orderedAsleepScenesToLoad[++currentLevelSceneIndex]);
         SendStartedAsleepScene(currentLevelSceneIndex);
         ToggleMouseOff();
     }

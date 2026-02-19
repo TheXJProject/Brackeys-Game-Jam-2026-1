@@ -105,6 +105,9 @@ public class AsleepInteractable : MonoBehaviour
 
     private void Open()
     {
-        print("Door opened");
+        if(TransitionManager.instance.IsThisLastLevel())
+            TransitionManager.instance.LoadVictoryLevel();
+        else
+            TransitionManager.instance.LoadNextSleepLevel();
     }
 }

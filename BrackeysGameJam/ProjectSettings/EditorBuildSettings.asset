@@ -9,7 +9,34 @@ EditorBuildSettings:
     path: Assets/Scenes/Main_AwakeOpening.unity
     guid: 119749c6230820a469d522c35622ff4e
   - enabled: 1
+    path: Assets/Scenes/Main_AwakeParalyze1.unity
+    guid: d4897a9ca3647a940873e52c54c4b3ca
+  - enabled: 1
+    path: Assets/Scenes/Main_AwakeParalyze2.unity
+    guid: 8988c500250ca3a4c8d4fd16967eb19e
+  - enabled: 1
+    path: Assets/Scenes/Main_AwakeParalyze3.unity
+    guid: 480eb55c39ae32e45b7217f92c67e434
+  - enabled: 1
+    path: Assets/Scenes/Main_AwakeParalyze4.unity
+    guid: 2c1d3b39a60eb8f4cbef7a387ead4da2
+  - enabled: 1
+    path: Assets/Scenes/Main_AwakeParalyze5.unity
+    guid: 167e92e5d4a495246bcfffc2b1bfa5c4
+  - enabled: 1
     path: Assets/Scenes/Main_AsleepMaze1.unity
     guid: 979b61546e9726e4e88630db944e4898
+  - enabled: 1
+    path: Assets/Scenes/Main_AsleepMaze2.unity
+    guid: 315eeca9a70a6624d8b09eb92f21fc6f
+  - enabled: 1
+    path: Assets/Scenes/Main_AsleepMaze3.unity
+    guid: 45cba44c2f3f5ea478013044aa8dc76a
+  - enabled: 1
+    path: Assets/Scenes/Main_AsleepMaze4.unity
+    guid: b03d202d1ec916444950edc508d78294
+  - enabled: 1
+    path: Assets/Scenes/Main_AsleepMaze5.unity
+    guid: 9ac19aa530d20924daf11e2260b96a6a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: ab6465ecf049f374c96caacd97e0d8e5, type: 3}
