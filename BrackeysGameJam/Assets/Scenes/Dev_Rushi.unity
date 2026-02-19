@@ -321,6 +321,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3935475577483327222, guid: 443473b9484d2b0439945b73aea7c192, type: 3}
+      propertyPath: lucidMazeLayer.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3935475577483327222, guid: 443473b9484d2b0439945b73aea7c192, type: 3}
       propertyPath: enemiesToSpawn.Array.size
       value: 3
       objectReference: {fileID: 0}
