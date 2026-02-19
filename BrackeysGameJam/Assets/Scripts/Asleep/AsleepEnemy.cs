@@ -10,6 +10,7 @@ public class AsleepEnemy : MonoBehaviour
     public float chaseSpeed;
     public float viewDistance;
     public float killDistance;
+    public int enemyID;
 
     private List<int> allowedTargetNodes;
 
@@ -19,6 +20,9 @@ public class AsleepEnemy : MonoBehaviour
     private NavMeshAgent navMeshAgent;
     private Collider playerCollider;
     private MeshRenderer meshRenderer;
+    private AudioSource audioSource;
+
+    public static event Action<int, AudioSource> onPlayerSeen;
 
     private void Stop() => SetStopped(true);
 
@@ -53,6 +57,7 @@ public class AsleepEnemy : MonoBehaviour
         playerCollider = player.GetComponent<Collider>();
         meshRenderer = GetComponent<MeshRenderer>();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        audioSource = GetComponent<AudioSource>();
 
         navMeshAgent.speed = roamSpeed;
     }
@@ -78,6 +83,8 @@ public class AsleepEnemy : MonoBehaviour
             {
                 AsleepPlayerControl.killPlayer();
             }
+
+            onPlayerSeen?.Invoke(enemyID, audioSource);
 
             meshRenderer.material.color = Color.red;
             navMeshAgent.speed = chaseSpeed;

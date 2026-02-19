@@ -5,15 +5,12 @@ using UnityEngine;
 
 public class AllSoundsController : MonoBehaviour
 {
-    const float musicStartTimeMin = 0.5f;
-    const float musicStartTimeMax = 50f;
-
     [SerializeField] string[] whispers;
     [SerializeField] float footStepFrequencyBedroom;
     [SerializeField] float footStepFrequencyDream;
     [SerializeField] float randomWhisperFrequencyBedroom;
     [SerializeField] float randomWhisperFrequencyDream;
-    [SerializeField][Range(musicStartTimeMin, musicStartTimeMax)] float musicStartTimeMaxForRandom = 0.5f;
+    [SerializeField] double musicStartTime = 0.5f;
     public SceneName currentScene;
     bool walking = false;
     float timeWalking = 0f;
@@ -24,38 +21,34 @@ public class AllSoundsController : MonoBehaviour
         TransitionManager.onLoadingNextScene += NewScene;
         //+= StartWalking;
         //+= StopWalking;
+        //+= FadeOut;
     }
 
     private void OnDisable()
     {
         TransitionManager.onLoadingNextScene -= NewScene;
-        //+= StartWalking;
-        //+= StopWalking;
+        //-= StartWalking;
+        //-= StopWalking;
+        //-= FadeOut;
     }
 
     private void Start()
     {
-        double randomStartTime = AudioSettings.dspTime + Random.Range(musicStartTimeMin, musicStartTimeMaxForRandom);
-
-        //  Mute the music collection then play all tracks
-        MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.MUSIC_OVERALL, EX_PARA.VOLUME, 0);
+        FullResetToNothing();
 
         // BedRoom
-        AudioManager.instance.PlayMusic("BChoir", randomStartTime);
-        AudioManager.instance.PlayMusic("BDeepChords", randomStartTime);
-        AudioManager.instance.PlayMusic("BMusicBox", randomStartTime);
-        AudioManager.instance.PlayMusic("BPianoSFX", randomStartTime);
+        AudioManager.instance.PlayMusic("BChoir", musicStartTime);
+        AudioManager.instance.PlayMusic("BDeepChords", musicStartTime);
+        AudioManager.instance.PlayMusic("BMusicBox", musicStartTime);
+        AudioManager.instance.PlayMusic("BPianoSFX", musicStartTime);
 
         // Main
-        AudioManager.instance.PlayMusic("MPianoSFX", randomStartTime);
-        AudioManager.instance.PlayMusic("MMusicBoxAndGong", randomStartTime);
-        AudioManager.instance.PlayMusic("MChords", randomStartTime);
+        AudioManager.instance.PlayMusic("MPianoSFX", musicStartTime);
+        AudioManager.instance.PlayMusic("MMusicBoxAndGong", musicStartTime);
+        AudioManager.instance.PlayMusic("MChords", musicStartTime);
 
         // Victory
-        AudioManager.instance.PlayMusic("WinMusic", randomStartTime);
-
-        // Mute all individual Music tracks
-        MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.MUSIC_COLLECTION, EX_PARA.VOLUME, 0);
+        AudioManager.instance.PlayMusic("WinMusic", musicStartTime);
 
         // Kick off ambience
         PlayAmbience();
@@ -63,6 +56,7 @@ public class AllSoundsController : MonoBehaviour
 
     private void Update()
     {
+        // WHISPERS
         // If we're in any of the current scenes
         switch (currentScene)
         {
@@ -85,36 +79,68 @@ public class AllSoundsController : MonoBehaviour
                 // Don't try to play whispers
                 break;
         }
-
-        timeWhispers += Time.deltaTime;
-        if (currentScene == SceneName.AWAKEBEGINNING)
-        {
-            if (timeWalking > footStepFrequencyBedroom)
-            {
-                timeWalking = 0;
-                //AudioManager.instance.PlaySFX("")
-            }
-        }
-        else
-        {
-            if (timeWalking > footStepFrequencyDream)
-            {
-                timeWalking = 0;
-            }
-        }
     }
 
     void NewScene(SceneName name)
     {
         currentScene = name;
 
+        // If we need to mute everything first
+        if ()
+        {
+            FullResetToNothing();
+        }
+
         // Use PlayAmbience()
         // Use FullReset() with if statements
     }
 
-    void FullReset()
+    void FullResetToNothing()
     {
         // Reset all volumes and SFX
+        MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.MUSIC_OVERALL, EX_PARA.VOLUME, 0);
+        MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.MUSIC_COLLECTION, EX_PARA.VOLUME, 0);
+        MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.SFX_OVERALL, EX_PARA.VOLUME, 0);
+        MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.LOOPING_SFX, EX_PARA.VOLUME, 0);
+
+        // Stops all SFX
+        AudioManager.instance.StopAllSFX();
+    }
+
+    void FadeOut()
+    {
+        switch (currentScene)
+        {
+            case SceneName.AWAKEBEGINNING:
+                break;
+            case SceneName.AWAKEPARALYZED1:
+                break;
+            case SceneName.AWAKEPARALYZED2:
+                break;
+            case SceneName.AWAKEPARALYZED3:
+                break;
+            case SceneName.AWAKEPARALYZED4:
+                break;
+            case SceneName.AWAKEPARALYZED5:
+                break;
+            case SceneName.MAZE1:
+                break;
+            case SceneName.MAZE2:
+                break;
+            case SceneName.MAZE3:
+                break;
+            case SceneName.MAZE4:
+                break;
+            case SceneName.MAZE5:
+                break;
+            case SceneName.LOST:
+                break;
+            case SceneName.WON:
+                break;
+            default:
+                Debug.LogWarning("Error, couldn't find scene!");
+                break;
+        }
     }
 
     void PlayAmbience()
@@ -148,14 +174,16 @@ public class AllSoundsController : MonoBehaviour
         {
             if (timeWalking > footStepFrequencyBedroom / 2)
             {
-                //AudioManager.instance.PlaySFX("")
+                timeWalking = 0;
+                AudioManager.instance.PlaySFX("SingleFootstepLight", false, null, true);
             }
         }
         else
         {
             if (timeWalking > footStepFrequencyDream / 2)
             {
-                //AudioManager.instance.PlaySFX("")
+                timeWalking = 0;
+                AudioManager.instance.PlaySFX("SingleFootstep", false, null, true);
             }
         }
     }
@@ -175,7 +203,7 @@ public class AllSoundsController : MonoBehaviour
                 if (timeWalking > footStepFrequencyBedroom)
                 {
                     timeWalking = 0;
-                    //AudioManager.instance.PlaySFX("")
+                    AudioManager.instance.PlaySFX("SingleFootstepLight", false, null, true);
                 }
             }
             else
@@ -183,6 +211,7 @@ public class AllSoundsController : MonoBehaviour
                 if (timeWalking > footStepFrequencyDream)
                 {
                     timeWalking = 0;
+                    AudioManager.instance.PlaySFX("SingleFootstep", false, null, true);
                 }
             }
 
