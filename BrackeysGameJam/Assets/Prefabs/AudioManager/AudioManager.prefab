@@ -3605,7 +3605,126 @@ MonoBehaviour:
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: 35e107da3e5c6104ba4106f9386e9b14, type: 3}
     looped: 0
-  sfxLoopedSounds: []
+  - name: Whisper11
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 4fef74952f68f4347b13e5a7d7196819, type: 3}
+    looped: 0
+  - name: Whisper12
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 2be1fef80f3b1ea4296ad711c96a563c, type: 3}
+    looped: 0
+  - name: Whisper21
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 1d8dcd88f278bfb418b98f3db54a539a, type: 3}
+    looped: 0
+  - name: Whisper22
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: ca87130842d1b8547b4b48a775ba9e11, type: 3}
+    looped: 0
+  - name: Whisper31
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 5e397149e81e9364c978be9156ff7355, type: 3}
+    looped: 0
+  - name: Whisper32
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 9044e752bae8e254d9738c9a7b8d66e0, type: 3}
+    looped: 0
+  - name: Whisper41
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: af1ae83fd1cc67941aed1a7ec03fdfd9, type: 3}
+    looped: 0
+  - name: Whisper42
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 8f8b44d8ccf99bc488a59a727d717d90, type: 3}
+    looped: 0
+  - name: Whisper51
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 77acb85baeaafb7498d2bce81b3fe613, type: 3}
+    looped: 0
+  - name: Whisper52
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 30d9ea997be702948b073d6b1a5ddec1, type: 3}
+    looped: 0
+  sfxLoopedSounds:
+  - name: Dripping
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: b5afa0e910460c34fa717b9a400be612, type: 3}
+    looped: 1
+  - name: ElectricHum
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 3000f44bee472bc4db0b60912de90566, type: 3}
+    looped: 1
+  - name: FloorCreaking
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: b3909252722c5764fbf5ebf80c6815ea, type: 3}
+    looped: 1
+  - name: GeneralWhispers
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 9c10794c62de7ec4da359c03122f9cb4, type: 3}
+    looped: 1
+  - name: RacingHeartbeat
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: c827be9a745736049b4655da9a8b52b7, type: 3}
+    looped: 1
+  - name: ScratchingNails
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 1ff9be4106f29f44095021427f64c020, type: 3}
+    looped: 1
+  - name: WindOutside
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 3b55cb72f89de414f9a87d7d6ad942d8, type: 3}
+    looped: 1
   musicSourceList:
   - audioSource: {fileID: 2330991598732220418}
     soundName: 
