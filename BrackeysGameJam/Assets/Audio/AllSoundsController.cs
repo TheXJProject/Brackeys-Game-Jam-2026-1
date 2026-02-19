@@ -65,7 +65,17 @@ public class AllSoundsController : MonoBehaviour
     {
         switch (currentScene)
         {
-            case SceneName.AWAKE:
+            case SceneName.AWAKEBEGINNING:
+                break;
+            case SceneName.AWAKEPARALYZED1:
+                break;
+            case SceneName.AWAKEPARALYZED2:
+                break;
+            case SceneName.AWAKEPARALYZED3:
+                break;
+            case SceneName.AWAKEPARALYZED4:
+                break;
+            case SceneName.AWAKEPARALYZED5:
                 break;
             case SceneName.MAZE1:
                 break;
