@@ -71,6 +71,11 @@ public class MazeGenerator : MonoBehaviour
     public GameObject wallGameObject;
     public GameObject exitDoorGameObject;
 
+    private GameObject lucidMazeOutline;
+    public Material lucidWallMaterial;
+    public float lucidMazePercentInFloor;
+    public string lucidMazeLayerName;
+
     private float wallOffset;
     private Quaternion northSouthRotation = Quaternion.Euler(0, 0, 0);
     private Quaternion eastWestRotation = Quaternion.Euler(0, 90, 0);
@@ -350,10 +355,33 @@ public class MazeGenerator : MonoBehaviour
 
         wallObject.transform.localPosition = new Vector3(wallX, wallY, wallZ);
         wallObject.transform.localRotation = wallRotation;
+
+        if (type == Maze.WallType.Wall)
+        {
+            GameObject lucidWallObject = Instantiate(wallObject, lucidMazeOutline.transform);
+            lucidWallObject.transform.localPosition =
+                new Vector3(wallX, wallY - selectedMaze.cellWidth * lucidMazePercentInFloor, wallZ);
+            lucidWallObject.transform.localRotation = wallRotation;
+            lucidWallObject.layer = LayerMask.NameToLayer(lucidMazeLayerName);
+
+            lucidWallObject.GetComponent<MeshRenderer>().material = lucidWallMaterial;
+        }
     }
 
     private void CreateMaze(Maze maze)
     {
+        // Parent GameObject for the lucid maze outline
+        lucidMazeOutline = new GameObject
+        {
+            name = "LucidMazeOutline",
+            transform =
+            {
+                position = transform.localPosition,
+                rotation = transform.rotation,
+                localScale = transform.localScale
+            }
+        };
+
         foreach (var (node, connectingNodes) in maze.nodeConnections)
         {
             int row = node / maze.size;
