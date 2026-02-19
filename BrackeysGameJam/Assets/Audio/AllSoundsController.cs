@@ -8,7 +8,7 @@ public class AllSoundsController : MonoBehaviour
     const float musicStartTimeMax = 50f;
     
     [SerializeField][Range(musicStartTimeMin, musicStartTimeMax)] float musicStartTimeMaxForRandom = 0.5f;
-    public SceneNames currentScene;
+    public SceneName currentScene;
 
     private void OnEnable()
     {
@@ -48,7 +48,7 @@ public class AllSoundsController : MonoBehaviour
         PlayAmbience();
     }
 
-    void NewScene(SceneNames name)
+    void NewScene(SceneName name)
     {
         currentScene = name;
 
@@ -65,17 +65,17 @@ public class AllSoundsController : MonoBehaviour
     {
         switch (currentScene)
         {
-            case SceneNames.AWAKE:
+            case SceneName.AWAKE:
                 break;
-            case SceneNames.MAZE1:
+            case SceneName.MAZE1:
                 break;
-            case SceneNames.MAZE2:
+            case SceneName.MAZE2:
                 break;
-            case SceneNames.MAZE3:
+            case SceneName.MAZE3:
                 break;
-            case SceneNames.MAZE4:
+            case SceneName.MAZE4:
                 break;
-            case SceneNames.MAZE5:
+            case SceneName.MAZE5:
                 break;
             default:
                 break;
