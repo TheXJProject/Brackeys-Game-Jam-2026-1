@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -10,6 +11,8 @@ public class AsleepEnemy : MonoBehaviour
     public float viewDistance;
     public float killDistance;
 
+    private List<int> allowedTargetNodes;
+
     private Maze maze;
 
     private GameObject player;
@@ -17,23 +20,30 @@ public class AsleepEnemy : MonoBehaviour
     private Collider playerCollider;
     private MeshRenderer meshRenderer;
 
-    private void stop() => setStopped(true);
+    private void Stop() => SetStopped(true);
 
-    private void setStopped(bool frozen)
+    private void SetStopped(bool frozen)
     {
         navMeshAgent.isStopped = frozen;
     }
 
+    private void SetMaze(Maze newMaze)
+    {
+        maze = newMaze;
+    }
+
     private void OnEnable()
     {
-        AsleepLucidControl.onLucidToggled += setStopped;
-        AsleepPlayerControl.onPlayerKilled += stop;
+        AsleepLucidControl.onLucidToggled += SetStopped;
+        AsleepPlayerControl.onPlayerKilled += Stop;
+        MazeGenerator.onMazeGenerated += SetMaze;
     }
 
     private void OnDisable()
     {
-        AsleepLucidControl.onLucidToggled -= setStopped;
-        AsleepPlayerControl.onPlayerKilled -= stop;
+        AsleepLucidControl.onLucidToggled -= SetStopped;
+        AsleepPlayerControl.onPlayerKilled -= Stop;
+        MazeGenerator.onMazeGenerated -= SetMaze;
     }
 
     private void Start()
@@ -44,7 +54,6 @@ public class AsleepEnemy : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        maze = MazeGenerator.maze_2;
         navMeshAgent.speed = roamSpeed;
     }
 
@@ -82,10 +91,17 @@ public class AsleepEnemy : MonoBehaviour
 
         if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
         {
-            int row = Random.Range(0, maze.size);
-            int col = Random.Range(0, maze.size);
+            int targetNodeIndex = allowedTargetNodes[Random.Range(0, allowedTargetNodes.Count)];
 
-            navMeshAgent.SetDestination(new Vector3(col * 2, 0, -row * 2));
+            int row = targetNodeIndex / maze.size;
+            int col = targetNodeIndex % maze.size;
+
+            navMeshAgent.SetDestination(new Vector3(col * maze.scale.x, 0, -row * maze.scale.z));
         }
+    }
+
+    public void SetAllowedTargetNodes(List<int> targetNodes)
+    {
+        allowedTargetNodes = targetNodes;
     }
 }
