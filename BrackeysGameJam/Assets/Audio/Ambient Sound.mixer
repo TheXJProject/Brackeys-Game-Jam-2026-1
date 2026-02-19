@@ -298,6 +298,8 @@ AudioMixerController:
     name: MVolume9
   - guid: 458f2fda951ebe044a688e969f0edc50
     name: MVolume
+  - guid: 94521bb1c7090e14eb260a6701a2e75e
+    name: MOverallVolume
   m_AudioMixerGroupViews:
   - guids:
     - ae61d95ed07be4841820808114976a60
