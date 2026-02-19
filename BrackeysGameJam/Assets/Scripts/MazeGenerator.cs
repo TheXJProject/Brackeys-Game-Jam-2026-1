@@ -289,6 +289,8 @@ public class MazeGenerator : MonoBehaviour
 
     private void SpawnEnemies()
     {
+        int enemyCount = 0;
+
         foreach (var enemy in enemiesToSpawn)
         {
             int row = enemy.startNodeIndex / selectedMaze.size;
@@ -297,7 +299,10 @@ public class MazeGenerator : MonoBehaviour
             GameObject newEnemy = Instantiate(enemy.gameObject,
                 new Vector3(col * selectedMaze.scale.x, 0, -row * selectedMaze.scale.z), Quaternion.identity);
 
-            newEnemy.GetComponent<AsleepEnemy>().SetAllowedTargetNodes(enemy.allowedTargetNodes);
+            AsleepEnemy enemyScript = newEnemy.GetComponent<AsleepEnemy>();
+
+            enemyScript.SetAllowedTargetNodes(enemy.allowedTargetNodes);
+            enemyScript.enemyID = enemyCount++;
         }
     }
 
