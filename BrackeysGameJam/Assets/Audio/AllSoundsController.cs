@@ -8,6 +8,7 @@ public class AllSoundsController : MonoBehaviour
     const float musicStartTimeMin = 0.5f;
     const float musicStartTimeMax = 50f;
 
+    [SerializeField] string[] whispers;
     [SerializeField] float footStepFrequencyBedroom;
     [SerializeField] float footStepFrequencyDream;
     [SerializeField] float randomWhisperFrequencyBedroom;
@@ -15,8 +16,8 @@ public class AllSoundsController : MonoBehaviour
     [SerializeField][Range(musicStartTimeMin, musicStartTimeMax)] float musicStartTimeMaxForRandom = 0.5f;
     public SceneName currentScene;
     bool walking = false;
-    float timeWalking = 0;
-    float timeWhispers = 0;
+    float timeWalking = 0f;
+    float timeWhispers = 0f;
 
     private void OnEnable()
     {
@@ -216,8 +217,9 @@ public class AllSoundsController : MonoBehaviour
         // If we want to play a whisper
         if (playWhisper)
         {
-
+            timeWhispers = 0;
+            int index = Random.Range(0, whispers.Length - 1);
+            AudioManager.instance.PlaySFX(whispers[index]);
         }
-        // pick whisper to play
     }
 }

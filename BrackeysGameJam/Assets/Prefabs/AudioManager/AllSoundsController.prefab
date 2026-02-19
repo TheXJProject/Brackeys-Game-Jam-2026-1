@@ -44,3 +44,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 439e952820dff634cb0f879f1f50b01a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whispers:
+  - Whisper11
+  - Whisper12
+  - Whisper21
+  - Whisper22
+  - Whisper31
+  - Whisper32
+  - Whisper41
+  - Whisper42
+  - Whisper51
+  - Whisper52
+  footStepFrequencyBedroom: 0.3
+  footStepFrequencyDream: 0.9
+  randomWhisperFrequencyBedroom: 25
+  randomWhisperFrequencyDream: 15
+  musicStartTimeMaxForRandom: 3
+  currentScene: 0

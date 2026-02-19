@@ -395,19 +395,19 @@ AudioMixerController:
   m_UpdateMode: 0
   m_ExposedParameters:
   - guid: f39c4617a0a6f2748b2d59656c64d9e9
-    name: LSFXVolume 1
+    name: LSFXVolume1
   - guid: 3a47043867797014182e36ee7ff00703
-    name: LSFXVolume 2
+    name: LSFXVolume2
   - guid: 17120b18bd69fe84aaa17b46ff1c9006
-    name: LSFXVolume 3
+    name: LSFXVolume3
   - guid: 11a0dd4c4e5cfc140906cfc69cadc6eb
-    name: LSFXVolume 4
+    name: LSFXVolume4
   - guid: 26c0ffb3e551b60498cf81612a32bde2
-    name: LSFXVolume 5
+    name: LSFXVolume5
   - guid: aafa43fb1ecc9694e92be801f9b12073
-    name: LSFXVolume 6
+    name: LSFXVolume6
   - guid: 3d4312d6cf485264781f5ac8a72f3c02
-    name: LSFXVolume 7
+    name: LSFXVolume7
   - guid: fe45217a6e119b8469440f85c2225aff
     name: LSFXVolume
   - guid: f95c7910b2dcd1c4fa78790130c4c4bb
