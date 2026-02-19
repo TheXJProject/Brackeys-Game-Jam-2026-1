@@ -59,38 +59,38 @@ public class TransitionManager : MonoBehaviour
     {
         TransitionAnimControl.onBlinkMiddle += LoadCurrentAwakeScene;
         TransitionAnimControl.instance.StartBlinkTransition();
-        onBeginFadeOut.Invoke();
+        onBeginFadeOut?.Invoke();
     }
     public void FallAsleep()
     {
         TransitionAnimControl.onBlinkMiddle += LoadCurrentAsleepScene;
         TransitionAnimControl.instance.StartBlinkTransition();
-        onBeginFadeOut.Invoke();
+        onBeginFadeOut?.Invoke();
     }
 
     public void LoadNextSleepLevel()
     {
         TransitionAnimControl.onBlinkMiddle += LoadNextAsleepScene;
         TransitionAnimControl.instance.StartBlinkTransition();
-        onBeginFadeOut.Invoke();
+        onBeginFadeOut?.Invoke();
     }
     public void LoadVictoryLevel()
     {
         //TransitionAnimControl.onBlinkMiddle += LoadNextAsleepScene;
         //TransitionAnimControl.instance.StartBlinkTransition();
-        onBeginFadeOut.Invoke();
+        onBeginFadeOut?.Invoke();
     }
     public void LoadDeathLevel()
     {
         //TransitionAnimControl.onBlinkMiddle += LoadNextAsleepScene;
         //TransitionAnimControl.instance.StartBlinkTransition();
-        onBeginFadeOut.Invoke();
+        onBeginFadeOut?.Invoke();
     }
     public void LoadSceneRestartGame()
     {
         //TransitionAnimControl.onBlinkMiddle += LoadNextAsleepScene;
         //TransitionAnimControl.instance.StartBlinkTransition();
-        onBeginFadeOut.Invoke();
+        onBeginFadeOut?.Invoke();
     }
 
     private void LoadCurrentAwakeScene()
