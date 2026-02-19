@@ -44,6 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 439e952820dff634cb0f879f1f50b01a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonPress: {fileID: 8300000, guid: 252b3a81855bffd48afcb1db2e6e3278, type: 3}
+  doorLocked: {fileID: 8300000, guid: e01947f6746f9b34d8dfdce5eda65205, type: 3}
+  doorOpens: {fileID: 8300000, guid: 2350caf90846ff345a90beef667246fd, type: 3}
+  spottedClip: {fileID: 8300000, guid: 4b1aff7b20fc13542afb1dee8ab8d65d, type: 3}
+  pickUpKey: {fileID: 8300000, guid: e1554e2b5d22107418991b9426a98b24, type: 3}
+  unlockDoor: {fileID: 8300000, guid: 4f91b030e31207d4baca289ee734868b, type: 3}
   whispers:
   - Whisper11
   - Whisper12
@@ -59,5 +65,7 @@ MonoBehaviour:
   footStepFrequencyDream: 0.9
   randomWhisperFrequencyBedroom: 25
   randomWhisperFrequencyDream: 15
-  musicStartTimeMaxForRandom: 2
+  minWhisperTime: 8
+  timeBetweenBeingSpotted: 10
+  musicStartTime: 3
   currentScene: 0

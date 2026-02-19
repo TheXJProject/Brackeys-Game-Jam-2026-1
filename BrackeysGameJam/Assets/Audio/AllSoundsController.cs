@@ -5,20 +5,32 @@ using UnityEngine;
 
 public class AllSoundsController : MonoBehaviour
 {
+    const float newEnemy = -1;
+
+    public AudioClip buttonPress;
+    public AudioClip doorLocked;
+    public AudioClip doorOpens;
+    public AudioClip spottedClip;
+    public AudioClip pickUpKey;
+    public AudioClip unlockDoor;
     [SerializeField] string[] whispers;
     [SerializeField] float footStepFrequencyBedroom;
     [SerializeField] float footStepFrequencyDream;
     [SerializeField] float randomWhisperFrequencyBedroom;
     [SerializeField] float randomWhisperFrequencyDream;
+    [SerializeField] float minWhisperTime;
+    [SerializeField] float timeBetweenBeingSpotted;
     [SerializeField] double musicStartTime = 0.5f;
     public SceneName currentScene;
     bool walking = false;
     float timeWalking = 0f;
     float timeWhispers = 0f;
+    Dictionary<int, float> dreamonSpottedTimes = new();
 
     private void OnEnable()
     {
         TransitionManager.onLoadingNextScene += NewScene;
+        AsleepEnemy.onPlayerSeen += EnemySeenPlayer;
         //+= StartWalking;
         //+= StopWalking;
         //+= FadeOut;
@@ -27,6 +39,7 @@ public class AllSoundsController : MonoBehaviour
     private void OnDisable()
     {
         TransitionManager.onLoadingNextScene -= NewScene;
+        AsleepEnemy.onPlayerSeen -= EnemySeenPlayer;
         //-= StartWalking;
         //-= StopWalking;
         //-= FadeOut;
@@ -72,7 +85,10 @@ public class AllSoundsController : MonoBehaviour
             case SceneName.MAZE5:
                 // Randomly Play Whispers
                 timeWhispers += Time.deltaTime;
-                PlayRandomWhisper();
+                if (timeWhispers > minWhisperTime)
+                {
+                    PlayRandomWhisper();
+                }
                 break;
 
             default:
@@ -86,7 +102,7 @@ public class AllSoundsController : MonoBehaviour
         currentScene = name;
 
         // If we need to mute everything first
-        if ()
+        if (true)
         {
             FullResetToNothing();
         }
@@ -249,6 +265,25 @@ public class AllSoundsController : MonoBehaviour
             timeWhispers = 0;
             int index = Random.Range(0, whispers.Length - 1);
             AudioManager.instance.PlaySFX(whispers[index]);
+        }
+    }
+
+    void EnemySeenPlayer(int enemy, AudioSource source)
+    {
+        // Add to map if needed
+        if (!dreamonSpottedTimes.ContainsKey(enemy))
+        {
+            dreamonSpottedTimes[enemy] = newEnemy;
+            source.clip = spottedClip;
+        }
+
+        float timeDifference = Time.time - dreamonSpottedTimes[enemy];
+        
+        // Check time
+        if ((timeDifference > timeBetweenBeingSpotted) || (dreamonSpottedTimes[enemy] == newEnemy))
+        {
+            dreamonSpottedTimes[enemy] = Time.time;
+            source.Play();
         }
     }
 }
