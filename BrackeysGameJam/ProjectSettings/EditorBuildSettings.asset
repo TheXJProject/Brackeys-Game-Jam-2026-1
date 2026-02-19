@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Main_AwakeScene.unity
+    path: Assets/Scenes/Main_AwakeOpening.unity
     guid: 119749c6230820a469d522c35622ff4e
   - enabled: 1
     path: Assets/Scenes/Main_AsleepMaze1.unity
