@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4831689492002668961}
   - component: {fileID: 7614581652985096431}
   - component: {fileID: 7053546469763047907}
+  - component: {fileID: 5039102755390685239}
   m_Layer: 0
   m_Name: SingletonContainer
   m_TagString: Untagged
@@ -66,6 +67,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   awakeSceneName: Main_AwakeScene
+  orderedAsleepScenesToLoad: 01000000
+--- !u!114 &5039102755390685239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3176557265293653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc563e65344d7134685c4fbb7ae8389d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  awakeState: 0
 --- !u!1 &1798673757426908009
 GameObject:
   m_ObjectHideFlags: 0

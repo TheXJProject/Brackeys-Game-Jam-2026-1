@@ -37,6 +37,7 @@ public class AwakePlayerControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        playerRB.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+        if (GameManager.instance.awakeState == GameManager.AwakeState.BEGINNING)
+            playerRB.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
     }
 }

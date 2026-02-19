@@ -8,5 +8,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main_AwakeScene.unity
     guid: 119749c6230820a469d522c35622ff4e
+  - enabled: 1
+    path: Assets/Scenes/Main_AsleepMaze1.unity
+    guid: 979b61546e9726e4e88630db944e4898
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: ab6465ecf049f374c96caacd97e0d8e5, type: 3}
