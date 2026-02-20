@@ -193,12 +193,18 @@ public class AsleepPlayerControl : MonoBehaviour
 
     private void DetermineMoveDirection()
     {
+
         if (checkIsLucid)
         {
+            if (sentStartedMoving && playerRB.velocity.magnitude < 0.0001f)
+            {
+                print("Stopped moving");
+                sentStartedMoving = false;
+                onPlayer3DStoppedMoving?.Invoke();
+            }
             moveVector = Vector3.zero;
             return;
         }
-
         lookDirection = playerTransform.forward;
         Vector2 inputValue = move.ReadValue<Vector2>();
         Vector3 moveScaler = new Vector3(inputValue.x, 0, inputValue.y);
@@ -206,17 +212,18 @@ public class AsleepPlayerControl : MonoBehaviour
         moveVector = moveRotation * moveScaler;
 
         playerRB.velocity = new Vector2(moveVector.x * moveSpeed, moveVector.y * moveSpeed);
-        if (!sentStartedMoving && playerRB.velocity.magnitude > 0.1f)
+        if (!sentStartedMoving && playerRB.velocity.magnitude > 0.0001f)
         {
+            print("Started moving");
             sentStartedMoving = true;
             onPlayer3DStartedMoving?.Invoke();
         }
-        else if (sentStartedMoving && playerRB.velocity.magnitude < 0.1f)
+        else if (sentStartedMoving && playerRB.velocity.magnitude < 0.0001f)
         {
+            print("Stopped moving");
             sentStartedMoving = false;
             onPlayer3DStoppedMoving?.Invoke();
         }
-
     }
 
     private void ToggleIsLucidCheck(bool isLucid) => checkIsLucid = isLucid;
