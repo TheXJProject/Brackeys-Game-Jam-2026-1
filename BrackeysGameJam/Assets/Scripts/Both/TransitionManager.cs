@@ -88,8 +88,8 @@ public class TransitionManager : MonoBehaviour
     }
     public void LoadSceneRestartGame()
     {
-        //TransitionAnimControl.onBlinkMiddle += LoadNextAsleepScene;
-        //TransitionAnimControl.instance.StartBlinkTransition();
+        TransitionAnimControl.onBlinkMiddle += LoadOpeningScene;
+        TransitionAnimControl.instance.StartBlinkTransition();
         onBeginFadeOut?.Invoke();
     }
 
@@ -115,6 +115,14 @@ public class TransitionManager : MonoBehaviour
         SceneManager.LoadScene(orderedAsleepScenesToLoad[++currentLevelSceneIndex]);
         SendStartedAsleepScene(currentLevelSceneIndex);
         ToggleMouseOff();
+    }
+
+    private void LoadOpeningScene()
+    {
+        TransitionAnimControl.onBlinkMiddle -= LoadOpeningScene;
+        SceneManager.LoadScene((int)SceneName.AWAKEBEGINNING);
+        SendStartedAwakeScene(currentLevelSceneIndex);
+        ToggleMouseOn();
     }
 
     private void SendStartedAsleepScene(int indexForAsleepScene)
