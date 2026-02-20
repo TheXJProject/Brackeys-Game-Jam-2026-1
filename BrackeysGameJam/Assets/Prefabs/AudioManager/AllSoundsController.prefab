@@ -63,11 +63,12 @@ MonoBehaviour:
   - Whisper51
   - Whisper52
   footStepFrequencyBedroom: 0.4
-  footStepFrequencyDream: 0.9
-  randomWhisperFrequencyBedroom: 25
-  randomWhisperFrequencyDream: 15
-  minWhisperTime: 8
-  timeBetweenBeingSpotted: 10
+  footStepFrequencyDream: 0.6
+  randomWhisperFrequencyBedroom: 40
+  randomWhisperFrequencyDream: 25
+  minWhisperTime: 12
+  timeBetweenBeingSpotted: 8
   musicStartTime: 3
-  fadeInTime: 2.5
-  fadeOutTime: 1.5
+  fadeInTime: 1.5
+  fadeOutTime: 0.5
+  heartbeatTimeUntilFadeOut: 3
