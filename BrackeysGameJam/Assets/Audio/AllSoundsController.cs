@@ -156,7 +156,7 @@ public class AllSoundsController : MonoBehaviour
     void NewScene(SceneName name)
     {
         currentScene = name;
-        Debug.LogWarning("Now in: " + name);
+        //Debug.LogWarning("Now in: " + name);
 
         // If we need to mute sounds before we go into the new scene
         switch (currentScene)
@@ -272,6 +272,7 @@ public class AllSoundsController : MonoBehaviour
 
                 MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.3f);
                 break;
+
             case SceneName.AWAKEPARALYZED1:
                 break;
             case SceneName.AWAKEPARALYZED2:
@@ -283,15 +284,33 @@ public class AllSoundsController : MonoBehaviour
             case SceneName.AWAKEPARALYZED5:
                 break;
             case SceneName.MAZE1:
+                MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
                 break;
+
             case SceneName.MAZE2:
+                MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("MPianoSFX", EX_PARA.VOLUME, fadeInTime);
                 break;
+
             case SceneName.MAZE3:
+                MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("MPianoSFX", EX_PARA.VOLUME, fadeInTime);
+
+                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.3f);
                 break;
+
             case SceneName.MAZE4:
+                MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
+
+                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.4f);
                 break;
+
             case SceneName.MAZE5:
+                MixerFXManager.instance.SetMusicParam("", EX_PARA.VOLUME, fadeInTime);
+
+                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.5f);
                 break;
+
             case SceneName.LOST:
                 break;
             case SceneName.WON:
@@ -304,7 +323,6 @@ public class AllSoundsController : MonoBehaviour
 
     void FadeOut()
     {
-        Debug.Log("Fadeout" + currentScene);
         // Different depending what scene we're currently in
         switch (currentScene)
         {
@@ -441,7 +459,7 @@ public class AllSoundsController : MonoBehaviour
 
     void EnemySeenPlayer(int enemy, AudioSource source)
     {
-        Debug.Log("Enemyspots" + enemy);
+        //Debug.Log("Enemyspots" + enemy);
         // Add to map if needed
         if (!dreamonSpottedTimes.ContainsKey(enemy))
         {
@@ -454,7 +472,7 @@ public class AllSoundsController : MonoBehaviour
         // Check time
         if ((timeDifference > timeBetweenBeingSpotted) || (dreamonSpottedTimes[enemy] == newEnemy))
         {
-            Debug.Log("Enemy screams" + enemy + spottedClip);
+            //Debug.Log("Enemy screams" + enemy + spottedClip);
             dreamonSpottedTimes[enemy] = Time.time;
             source.Play();
             if (!playingHeartBeat)
