@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -68,7 +69,8 @@ public class StartGame : MonoBehaviour
     {
         if (time > playerCanStartTime)
         {
-            // Show press E to play
+            // Show press Space to play
+            gameObject.GetComponent<TextMeshPro>().enabled = true;
             inStartTransistion = false;
         }
         else
