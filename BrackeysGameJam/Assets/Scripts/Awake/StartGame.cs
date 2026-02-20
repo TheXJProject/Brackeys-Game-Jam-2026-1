@@ -1,0 +1,108 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class StartGame : MonoBehaviour
+{
+    [SerializeField] GameObject cameraObject;
+    [SerializeField] Vector3 cameraFinalPos;
+    public float size;
+    public float playerCanStartTime;
+    public float cameraMoveTime;
+    static float time = 0;
+    float timeTransition = 0;
+    bool inStartTransistion = true;
+    bool startedCameraMove = false;
+    float currentCameraSize = 0;
+    float donePercentage = 0;
+
+    public static event Action startGameNow;
+
+    InputController playerControls;
+    InputAction interact;
+
+    private void Awake()
+    {
+        playerControls = new InputController();
+    }
+
+    private void OnEnable()
+    {
+        interact = playerControls.Player.ToggleSleep;
+        interact.Enable();
+
+        interact.started += DoAdamsthing;
+    }
+
+    private void OnDisable()
+    {
+        interact.Disable();
+        interact.started -= DoAdamsthing;
+    }
+
+    private void Start()
+    {
+        startedCameraMove = false;
+    }
+
+    private void DoAdamsthing(InputAction.CallbackContext context)
+    {
+        if (!inStartTransistion && !startedCameraMove)
+        {
+            startedCameraMove = true;
+            StartCoroutine(MoveCamera());
+        }
+    }
+
+    void Update()
+    {
+        if (time > playerCanStartTime)
+        {
+            // Show press E to play
+            inStartTransistion = false;
+        }
+        else
+        {
+            time += Time.deltaTime;
+        }
+    }
+
+    IEnumerator MoveCamera()
+    {
+        if (startedCameraMove)
+        {
+            // Is the camera in the correct position
+            while (!((Vector3.Distance(cameraFinalPos, cameraObject.transform.position) < 0.005f) && (size - currentCameraSize) < 0.005f))
+            {
+                timeTransition += Time.deltaTime;
+                donePercentage = timeTransition / cameraMoveTime;
+
+                // Move camera a bit
+                ChangeCameraPositionAndSize();
+                yield return null;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Error, how heree??");
+        }
+
+        cameraObject.transform.position = cameraFinalPos;
+        cameraObject.GetComponent<Camera>().orthographicSize = size;
+        startGameNow?.Invoke();
+        this.enabled = false;
+    }
+
+    void ChangeCameraPositionAndSize()
+    {
+        Camera camera = cameraObject.GetComponent<Camera>();
+
+        currentCameraSize = camera.orthographicSize;
+        camera.orthographicSize = Mathf.Lerp(currentCameraSize, size, donePercentage / 2f);
+
+        cameraObject.transform.position = Vector3.Lerp(cameraObject.transform.position, cameraFinalPos, donePercentage / 2f);
+    }
+}

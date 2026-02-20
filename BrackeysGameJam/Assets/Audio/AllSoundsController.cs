@@ -22,8 +22,8 @@ public class AllSoundsController : MonoBehaviour
     [SerializeField] float minWhisperTime;
     [SerializeField] float timeBetweenBeingSpotted;
     [SerializeField] double musicStartTime = 0.5f;
-    [SerializeField] float fadeInTime = 1;
-    [SerializeField] float fadeOutTime = 1;
+    //[SerializeField] float fadeInTime = 1;
+    //[SerializeField] float fadeOutTime = 1;
     SceneName currentScene;
     bool walking = false;
     float timeWalking = 0f;
@@ -278,33 +278,33 @@ public class AllSoundsController : MonoBehaviour
 
     // ++++++++ Unique functionality +++++++++
 
-    void StartWalking()
-    {
-        walking = true;
+    //void StartWalking()
+    //{
+    //    walking = true;
 
-        if (currentScene == SceneName.AWAKEBEGINNING)
-        {
-            if (timeWalking > footStepFrequencyBedroom / 2)
-            {
-                timeWalking = 0;
-                AudioManager.instance.PlaySFX("SingleFootstepLight", false, null, true);
-            }
-        }
-        else
-        {
-            if (timeWalking > footStepFrequencyDream / 2)
-            {
-                timeWalking = 0;
-                AudioManager.instance.PlaySFX("SingleFootstep", false, null, true);
-            }
-        }
-        StartCoroutine(Walking());
-    }
+    //    if (currentScene == SceneName.AWAKEBEGINNING)
+    //    {
+    //        if (timeWalking > footStepFrequencyBedroom / 2)
+    //        {
+    //            timeWalking = 0;
+    //            AudioManager.instance.PlaySFX("SingleFootstepLight", false, null, true);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (timeWalking > footStepFrequencyDream / 2)
+    //        {
+    //            timeWalking = 0;
+    //            AudioManager.instance.PlaySFX("SingleFootstep", false, null, true);
+    //        }
+    //    }
+    //    StartCoroutine(Walking());
+    //}
 
-    void StopWalking()
-    {
-        walking = false;
-    }
+    //void StopWalking()
+    //{
+    //    walking = false;
+    //}
 
     IEnumerator Walking()
     {
