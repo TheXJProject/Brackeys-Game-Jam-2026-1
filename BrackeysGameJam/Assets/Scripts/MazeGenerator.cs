@@ -31,6 +31,7 @@ public class Maze
     public (int nodeIndex, WallDirection direction) startNode;
     public (int nodeIndex, WallDirection direction) endNode;
     public float cellWidth;
+    public float wallOffset;
     public Vector3 startNodePosition;
     public Vector3 scale;
 
@@ -58,21 +59,20 @@ public class Maze
 
 public class MazeGenerator : MonoBehaviour
 {
-    public NavMeshSurface surface;
-
     public GameObject wallGameObject;
     public GameObject exitDoorGameObject;
 
-    private GameObject lucidMazeOutline;
     public Material lucidWallMaterial;
     public float lucidMazePercentInFloor;
     public string lucidMazeLayerName;
 
-    private float wallOffset;
     private Quaternion northSouthRotation = Quaternion.Euler(0, 0, 0);
     private Quaternion eastWestRotation = Quaternion.Euler(0, 90, 0);
 
     public static event Action<Maze> onMazeGenerated;
+
+    public List<int> mazeIndexes;
+    private List<GameObject> generatedMazesObjects = new();
 
     public Maze selectedMaze;
     public List<GameObjectSpawnInfo> objectsToSpawn;
@@ -261,25 +261,30 @@ public class MazeGenerator : MonoBehaviour
         endNode: (31, Maze.WallDirection.East)
     );
 
+    public static Maze[] mazes = { maze_1, maze_2 };
+
     private void Awake()
     {
-        Maze[] mazes = { maze_1, maze_2 };
-        selectedMaze = mazes[0];
+        foreach (int mazeIndex in mazeIndexes)
+        {
+            Maze maze = mazes[mazeIndex];
+            GameObject generatedMazeObject = CreateMaze(maze);
+            generatedMazesObjects.Add(generatedMazeObject);
+            generatedMazeObject.SetActive(false);
+        }
 
-        selectedMaze.cellWidth = wallGameObject.transform.localScale.x - wallGameObject.transform.localScale.z;
-        wallOffset = selectedMaze.cellWidth / 2.0f;
-
-        selectedMaze.SetupStartNodePosition(transform.localScale);
-        CreateMaze(mazes[0]);
+        generatedMazesObjects[0].SetActive(true);
     }
 
     private void Start()
     {
-        enemyManager?.SpawnEnemies(selectedMaze);
-        trapManager?.SpawnTraps(selectedMaze);
+        Maze maze = mazes[mazeIndexes[0]];
+
+        enemyManager?.SpawnEnemies(maze);
+        trapManager?.SpawnTraps(maze);
         SpawnGameObjects();
 
-        onMazeGenerated?.Invoke(selectedMaze);
+        onMazeGenerated?.Invoke(maze);
     }
 
     private void SpawnGameObjects()
@@ -294,40 +299,41 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-    private void CreateWall(int row, int col, Maze.WallDirection direction, Maze.WallType type)
+    private (GameObject wallObject, GameObject lucidWallObject) CreateWall(int row, int col,
+        Maze.WallDirection direction, Maze.WallType type, Maze maze)
     {
         GameObject wallObject = wallGameObject;
         switch (type)
         {
             case Maze.WallType.Wall:
-                wallObject = Instantiate(wallGameObject, transform);
+                wallObject = Instantiate(wallGameObject);
                 break;
             case Maze.WallType.ExitDoor:
-                wallObject = Instantiate(exitDoorGameObject, transform);
+                wallObject = Instantiate(exitDoorGameObject);
                 break;
         }
 
-        float wallX = col * selectedMaze.cellWidth;
-        float wallY = selectedMaze.cellWidth / 2.0f;
-        float wallZ = -row * selectedMaze.cellWidth;
+        float wallX = col * maze.cellWidth;
+        float wallY = maze.cellWidth / 2.0f;
+        float wallZ = -row * maze.cellWidth;
         Quaternion wallRotation = new Quaternion();
 
         switch (direction)
         {
             case Maze.WallDirection.North:
-                wallZ += wallOffset;
+                wallZ += maze.wallOffset;
                 wallRotation = northSouthRotation;
                 break;
             case Maze.WallDirection.South:
-                wallZ -= wallOffset;
+                wallZ -= maze.wallOffset;
                 wallRotation = northSouthRotation;
                 break;
             case Maze.WallDirection.West:
-                wallX -= wallOffset;
+                wallX -= maze.wallOffset;
                 wallRotation = eastWestRotation;
                 break;
             case Maze.WallDirection.East:
-                wallX += wallOffset;
+                wallX += maze.wallOffset;
                 wallRotation = eastWestRotation;
                 break;
         }
@@ -339,29 +345,64 @@ public class MazeGenerator : MonoBehaviour
 
         if (type == Maze.WallType.Wall)
         {
-            GameObject lucidWallObject = Instantiate(wallObject, lucidMazeOutline.transform);
+            GameObject lucidWallObject = Instantiate(wallObject);
             lucidWallObject.transform.localPosition =
-                new Vector3(wallX, wallY - selectedMaze.cellWidth * lucidMazePercentInFloor, wallZ);
+                new Vector3(wallX, wallY - maze.cellWidth * lucidMazePercentInFloor, wallZ);
             lucidWallObject.transform.localRotation = wallRotation;
             lucidWallObject.layer = LayerMask.NameToLayer(lucidMazeLayerName);
 
             lucidWallObject.GetComponent<MeshRenderer>().material = lucidWallMaterial;
+
+            return (wallObject, lucidWallObject);
         }
+
+        return (wallObject, null);
     }
 
-    private void CreateMaze(Maze maze)
+    public GameObject CreateMaze(Maze maze)
     {
+        GameObject mazeObject = new GameObject
+        {
+            name = "Maze",
+            transform =
+            {
+                position = transform.localPosition,
+                rotation = transform.rotation,
+                localScale = transform.localScale,
+                parent = transform
+            },
+        };
+
         // Parent GameObject for the lucid maze outline
-        lucidMazeOutline = new GameObject
+        GameObject lucidMazeObject = new GameObject
         {
             name = "LucidMazeOutline",
             transform =
             {
                 position = transform.localPosition,
                 rotation = transform.rotation,
-                localScale = transform.localScale
-            }
+                localScale = transform.localScale,
+                parent = mazeObject.transform
+            },
         };
+
+        GameObject navMeshObject = new GameObject
+        {
+            name = "NavMesh",
+            transform =
+            {
+                position = transform.localPosition,
+                rotation = transform.rotation,
+                localScale = transform.localScale,
+                parent = mazeObject.transform
+            },
+        };
+
+        NavMeshSurface navMeshSurface = navMeshObject.AddComponent<NavMeshSurface>();
+
+        maze.cellWidth = wallGameObject.transform.localScale.x - wallGameObject.transform.localScale.z;
+        maze.wallOffset = maze.cellWidth / 2.0f;
+        maze.SetupStartNodePosition(transform.localScale);
 
         foreach (var (node, connectingNodes) in maze.nodeConnections)
         {
@@ -387,17 +428,25 @@ public class MazeGenerator : MonoBehaviour
 
                 if (node == maze.endNode.nodeIndex && direction == maze.endNode.direction)
                 {
-                    CreateWall(row, col, direction, Maze.WallType.ExitDoor);
+                    var (exitDoorInstance, _) =
+                        CreateWall(row, col, direction, Maze.WallType.ExitDoor, maze);
+
+                    exitDoorInstance.transform.SetParent(mazeObject.transform, false);
                     continue;
                 }
 
                 if (!connectingNodes.Contains(index) && (index < node || isEdge))
                 {
-                    CreateWall(row, col, direction, Maze.WallType.Wall);
+                    var (wallInstance, lucidWallInstance) =
+                        CreateWall(row, col, direction, Maze.WallType.Wall, maze);
+
+                    wallInstance.transform.SetParent(mazeObject.transform, false);
+                    lucidWallInstance.transform.SetParent(lucidMazeObject.transform, false);
                 }
             }
         }
 
-        surface.BuildNavMesh();
+        navMeshSurface.BuildNavMesh();
+        return mazeObject;
     }
 }
