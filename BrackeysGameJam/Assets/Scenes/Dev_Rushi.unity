@@ -493,10 +493,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 397299395}
     - target: {fileID: 3935475577483327222, guid: 443473b9484d2b0439945b73aea7c192, type: 3}
-      propertyPath: lucidWallMaterial
-      value: 
-      objectReference: {fileID: -876546973899608171, guid: f4076fcbc02ef3f498272249b3f07349, type: 3}
-    - target: {fileID: 3935475577483327222, guid: 443473b9484d2b0439945b73aea7c192, type: 3}
       propertyPath: lucidMazeLayer.m_Bits
       value: 0
       objectReference: {fileID: 0}

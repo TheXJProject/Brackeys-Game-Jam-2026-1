@@ -341,8 +341,7 @@ public class MazeGenerator : MonoBehaviour
         {
             GameObject lucidWallObject = Instantiate(wallObject, lucidMazeOutline.transform);
             lucidWallObject.transform.localPosition =
-                // new Vector3(wallX, wallY - selectedMaze.cellWidth * lucidMazePercentInFloor, wallZ);
-                new Vector3(wallX, wallY, wallZ);
+                new Vector3(wallX, wallY - selectedMaze.cellWidth * lucidMazePercentInFloor, wallZ);
             lucidWallObject.transform.localRotation = wallRotation;
             lucidWallObject.layer = LayerMask.NameToLayer(lucidMazeLayerName);
 
