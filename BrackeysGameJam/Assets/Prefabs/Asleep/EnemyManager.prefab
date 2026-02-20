@@ -45,13 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyGameObject: {fileID: 7075187483878198881, guid: 2737159affdda734ab43fbd4524c7565, type: 3}
-  enemiesToSpawn:
-  - gameObject: {fileID: 7075187483878198881, guid: 2737159affdda734ab43fbd4524c7565, type: 3}
-    startNodeIndex: 50
-    allowedTargetNodes: 0a000000200000002d0000001500000032000000
-  - gameObject: {fileID: 7075187483878198881, guid: 2737159affdda734ab43fbd4524c7565, type: 3}
-    startNodeIndex: 57
-    allowedTargetNodes: 3b0000001b000000080000003700000039000000
-  - gameObject: {fileID: 7075187483878198881, guid: 2737159affdda734ab43fbd4524c7565, type: 3}
-    startNodeIndex: 66
-    allowedTargetNodes: 4f00000042000000420000005a000000
+  enemiesToSpawn: []
