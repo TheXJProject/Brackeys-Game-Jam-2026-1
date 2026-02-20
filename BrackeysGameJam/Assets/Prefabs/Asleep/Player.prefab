@@ -1627,9 +1627,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24bbfc427c357764f9e05d99c9909044, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amplitude: 0.04
-  frequency: 1
-  moveThreshold: 0.1
+  verticleAmplitude: 0.04
+  frequency: 16
   playersAss: {fileID: 1089743945357076857}
 --- !u!1 &5089059956230966257
 GameObject:
