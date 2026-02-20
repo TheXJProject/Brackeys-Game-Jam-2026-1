@@ -22,7 +22,7 @@ public class AllSoundsController : MonoBehaviour
     [SerializeField] float minWhisperTime;
     [SerializeField] float timeBetweenBeingSpotted;
     [SerializeField] double musicStartTime = 0.5f;
-    //[SerializeField] float fadeInTime = 1;
+    [SerializeField] float fadeInTime = 1;
     //[SerializeField] float fadeOutTime = 1;
     SceneName currentScene;
     bool walking = false;
@@ -207,10 +207,17 @@ public class AllSoundsController : MonoBehaviour
 
     void FadeIn()
     {
+        MixerFXManager.instance.SetMusicOverallParam(EX_PARA.VOLUME, fadeInTime);
+        MixerFXManager.instance.SetSfxOverallParam(EX_PARA.VOLUME, fadeInTime);
+
         // Different depending what new scene we're in
         switch (currentScene)
         {
             case SceneName.AWAKEBEGINNING:
+                MixerFXManager.instance.SetMusicParam("BChoir", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("BMusicBox", EX_PARA.VOLUME, fadeInTime + (float)musicStartTime * 2);
+
+                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.3f);
                 break;
             case SceneName.AWAKEPARALYZED1:
                 break;

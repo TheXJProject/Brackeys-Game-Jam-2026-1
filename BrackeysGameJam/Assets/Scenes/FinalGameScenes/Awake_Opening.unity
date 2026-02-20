@@ -588,7 +588,7 @@ MonoBehaviour:
   cameraObject: {fileID: 1173324134}
   cameraFinalPos: {x: -3.68, y: 0, z: -10}
   size: 5
-  playerCanStartTime: 2
+  playerCanStartTime: 4
   cameraMoveTime: 2.5
 --- !u!224 &1035995423
 RectTransform:
@@ -1234,3 +1234,4 @@ SceneRoots:
   - {fileID: 94433460}
   - {fileID: 154468501}
   - {fileID: 1035995423}
+  - {fileID: 1617019437}
