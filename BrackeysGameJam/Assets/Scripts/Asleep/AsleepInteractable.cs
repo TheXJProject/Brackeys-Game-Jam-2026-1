@@ -38,6 +38,7 @@ public class AsleepInteractable : MonoBehaviour
         AsleepInteractable.onLevelCollectablePickedUp += Unlock;
         AsleepButtonManager.onButtonSequenceSolved += Unlock;
         AsleepInteractable.onPuzzlePieceAdded += AddToPuzzlesToUnlock;
+        AsleepTrapManager.onAllTrapsActivated += Unlock;
     }
 
     private void OnDisable()
@@ -45,6 +46,7 @@ public class AsleepInteractable : MonoBehaviour
         AsleepInteractable.onLevelCollectablePickedUp -= Unlock;
         AsleepButtonManager.onButtonSequenceSolved -= Unlock;
         AsleepInteractable.onPuzzlePieceAdded -= AddToPuzzlesToUnlock;
+        AsleepTrapManager.onAllTrapsActivated -= Unlock;
     }
 
     private void Start()

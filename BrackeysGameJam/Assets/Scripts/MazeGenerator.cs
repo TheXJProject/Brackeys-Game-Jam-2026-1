@@ -10,14 +10,6 @@ public class GameObjectSpawnInfo
     public int nodeIndex;
 }
 
-[Serializable]
-public class EnemySpawnInfo
-{
-    public GameObject gameObject;
-    public int startNodeIndex;
-    public List<int> allowedTargetNodes;
-}
-
 public class Maze
 {
     public enum WallDirection
@@ -83,8 +75,10 @@ public class MazeGenerator : MonoBehaviour
     public static event Action<Maze> onMazeGenerated;
 
     public Maze selectedMaze;
-    public List<EnemySpawnInfo> enemiesToSpawn;
     public List<GameObjectSpawnInfo> objectsToSpawn;
+
+    public AsleepTrapManager trapManager;
+    public AsleepEnemyManager enemyManager;
 
     // TODO: Load maze from file
     public static Maze maze_1 = new(nodeConnections: new Dictionary<int, HashSet<int>>
@@ -281,29 +275,11 @@ public class MazeGenerator : MonoBehaviour
 
     private void Start()
     {
-        SpawnEnemies();
+        enemyManager.SpawnEnemies(selectedMaze);
+        trapManager.SpawnTraps(selectedMaze);
         SpawnGameObjects();
 
         onMazeGenerated?.Invoke(selectedMaze);
-    }
-
-    private void SpawnEnemies()
-    {
-        int enemyCount = 0;
-
-        foreach (var enemy in enemiesToSpawn)
-        {
-            int row = enemy.startNodeIndex / selectedMaze.size;
-            int col = enemy.startNodeIndex % selectedMaze.size;
-
-            GameObject newEnemy = Instantiate(enemy.gameObject,
-                new Vector3(col * selectedMaze.scale.x, 0, -row * selectedMaze.scale.z), Quaternion.identity);
-
-            AsleepEnemy enemyScript = newEnemy.GetComponent<AsleepEnemy>();
-
-            enemyScript.SetAllowedTargetNodes(enemy.allowedTargetNodes);
-            enemyScript.enemyID = enemyCount++;
-        }
     }
 
     private void SpawnGameObjects()
