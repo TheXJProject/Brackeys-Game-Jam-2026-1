@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class StartGame : MonoBehaviour
+public class StartGame2 : MonoBehaviour
 {
     public AnimationCurve curve;
     [SerializeField] GameObject cameraObject;
@@ -32,9 +32,6 @@ public class StartGame : MonoBehaviour
     private void Awake()
     {
         playerControls = new InputController();
-
-        cameraStartPos = cameraObject.transform.position;
-        startSize = cameraObject.GetComponent<Camera>().orthographicSize;
     }
 
     private void OnEnable()
@@ -54,18 +51,14 @@ public class StartGame : MonoBehaviour
     private void Start()
     {
         startedCameraMove = false;
-        if (TransitionManager.instance.gameStarted)
-        {
-            cameraObject.transform.position = cameraFinalPos;
-            cameraObject.GetComponent<Camera>().orthographicSize = size;
-        }
     }
 
     private void DoAdamsthing(InputAction.CallbackContext context)
     {
-        if (!inStartTransistion && !startedCameraMove && !TransitionManager.instance.gameStarted)
+        if (!inStartTransistion && !startedCameraMove && TransitionManager.instance.gameStarted)
         {
-
+            cameraStartPos = cameraObject.transform.position;
+            startSize = cameraObject.GetComponent<Camera>().orthographicSize;
             startedCameraMove = true;
             beginPressed?.Invoke(cameraMoveTime);
             StartCoroutine(MoveCamera());
@@ -74,15 +67,18 @@ public class StartGame : MonoBehaviour
 
     void Update()
     {
-        if (TransitionManager.instance.time > playerCanStartTime)
+        if (TransitionManager.instance.gameStarted)
         {
-            // Show press Space to play
-            gameObject.GetComponent<TextMeshPro>().enabled = true;
-            inStartTransistion = false;
-        }
-        else
-        {
-            TransitionManager.instance.time += Time.deltaTime;
+            if (TransitionManager.instance.time2 > playerCanStartTime)
+            {
+                // Show press Space to play
+                gameObject.GetComponent<TextMeshPro>().enabled = true;
+                inStartTransistion = false;
+            }
+            else
+            {
+                TransitionManager.instance.time2 += Time.deltaTime;
+            }
         }
     }
 
@@ -106,7 +102,6 @@ public class StartGame : MonoBehaviour
             Debug.LogWarning("Error, how heree??");
         }
 
-        TransitionManager.instance.gameStarted = true;
         cameraObject.transform.position = cameraFinalPos;
         cameraObject.GetComponent<Camera>().orthographicSize = size;
         startGameNow?.Invoke();
