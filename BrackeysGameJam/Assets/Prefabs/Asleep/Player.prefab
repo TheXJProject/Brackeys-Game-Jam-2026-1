@@ -1471,6 +1471,7 @@ GameObject:
   - component: {fileID: 872695525522137414}
   - component: {fileID: 4651925424808504130}
   - component: {fileID: 337101682105391407}
+  - component: {fileID: 7228805582852081107}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1614,6 +1615,22 @@ MonoBehaviour:
   layersShownOnLucid:
   - Enemies
   cam: {fileID: 6473284754000131024}
+--- !u!114 &7228805582852081107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4683110927495596862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24bbfc427c357764f9e05d99c9909044, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amplitude: 0.04
+  frequency: 1
+  moveThreshold: 0.1
+  playersAss: {fileID: 1089743945357076857}
 --- !u!1 &5089059956230966257
 GameObject:
   m_ObjectHideFlags: 0
@@ -1925,7 +1942,7 @@ MonoBehaviour:
   lucidBar: {fileID: 8231323607244179391}
   lucidIncreaseRate: 0.5
   lucidDecreaseRate: 1
-  maxLucidTime: 3
+  maxLucidTime: 100
   percentNeededToStartLucid: 0.4
   lucidTimeRemaining: 0
 --- !u!114 &7426421132830144036
