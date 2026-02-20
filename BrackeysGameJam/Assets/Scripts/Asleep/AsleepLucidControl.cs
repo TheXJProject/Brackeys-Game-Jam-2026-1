@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class AsleepLucidControl : MonoBehaviour
 {
+    public static event Action onLucidStarted;
+    public static event Action onLucidEnded;
     public static event Action<bool> onLucidToggled;
 
     [Header("Initialise references:")]
@@ -71,6 +73,7 @@ public class AsleepLucidControl : MonoBehaviour
     {
         if (canGoLucid)
         {
+            onLucidStarted?.Invoke();
             startLucidTriggered = true;
             TransitionAnimControl.onBlinkMiddle += lucidOn;
             TransitionAnimControl.instance.StartBlinkTransition();
@@ -89,6 +92,7 @@ public class AsleepLucidControl : MonoBehaviour
     {
         if (endLucidGate && startLucidTriggered)
         {
+            onLucidEnded?.Invoke();
             endLucidGate = false;
             TransitionAnimControl.onBlinkMiddle += LucidOff;
             TransitionAnimControl.instance.StartBlinkTransition();

@@ -3761,10 +3761,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b979240af1be53342ab954cb5c8f789d, type: 3}
     looped: 0
   - name: SingleFootstep
-    volume: 0.6
+    volume: 0.7
     pitch: 1
     panning: 0
-    randomPitchRange: {x: 0.75, y: 1.15}
+    randomPitchRange: {x: 0.5, y: 0.59}
     clip: {fileID: 8300000, guid: b404b47de73db524c9d3a7543699295b, type: 3}
     looped: 0
   - name: SingleFootstepLight
@@ -3775,7 +3775,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 71afb1a2fb7302740a5906cc8ced0c9b, type: 3}
     looped: 0
   - name: SingleHeartbeat
-    volume: 0.8
+    volume: 0.5
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
@@ -4034,7 +4034,7 @@ MonoBehaviour:
       volume: SFXOverallVolume
       lowPassEQ: 
       highPassEQ: 
-      pitchShift: 
+      pitchShift: PitchShiftSFX
       startVolume: 0
       startLowPassEQ: 0
       startHighPassEQ: 0
@@ -4063,7 +4063,7 @@ MonoBehaviour:
       volume: MOverallVolume
       lowPassEQ: 
       highPassEQ: 
-      pitchShift: 
+      pitchShift: PitchShiftMusic
       startVolume: 0
       startLowPassEQ: 0
       startHighPassEQ: 0

@@ -10,7 +10,9 @@ public class AsleepEnemy : MonoBehaviour
     public float chaseSpeed;
     public float viewDistance;
     public float killDistance;
+    public SpriteRenderer sprite;
     public int enemyID;
+
 
     public List<int> allowedTargetNodes;
 
@@ -21,8 +23,9 @@ public class AsleepEnemy : MonoBehaviour
     private NavMeshAgent navMeshAgent;
     private Collider playerCollider;
     private Collider enemyCollider;
-    private MeshRenderer meshRenderer;
     private AudioSource audioSource;
+
+    private Vector3 targetBeforeStopped;
 
     public static event Action<int, AudioSource> onPlayerSeen;
 
@@ -39,9 +42,17 @@ public class AsleepEnemy : MonoBehaviour
 
     private void SetStopped(bool frozen)
     {
-        if (!isTrapped || frozen)
+        if (isTrapped) return;
+
+        if (frozen)
         {
-            navMeshAgent.isStopped = frozen;
+            targetBeforeStopped = navMeshAgent.destination;
+            navMeshAgent.enabled = false;
+        }
+        else
+        {
+            navMeshAgent.enabled = true;
+            navMeshAgent.destination = targetBeforeStopped;
         }
     }
 
@@ -72,7 +83,6 @@ public class AsleepEnemy : MonoBehaviour
 
         playerCollider = player.GetComponent<Collider>();
         enemyCollider = GetComponent<Collider>();
-        meshRenderer = GetComponent<MeshRenderer>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         audioSource = GetComponent<AudioSource>();
 
@@ -81,7 +91,9 @@ public class AsleepEnemy : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (navMeshAgent.isStopped) return;
+        SpriteLookAtPlayer();
+
+        if (!navMeshAgent.enabled) return;
 
         Vector3 rayDirection = player.transform.position - transform.position;
         Vector3 rayOrigin = transform.position;
@@ -102,17 +114,17 @@ public class AsleepEnemy : MonoBehaviour
             if (lineOfSightRay.distance <= killDistance)
             {
                 AsleepPlayerControl.killPlayer();
+                return;
             }
 
             onPlayerSeen?.Invoke(enemyID, audioSource);
 
-            meshRenderer.material.color = Color.red;
             navMeshAgent.speed = chaseSpeed;
             navMeshAgent.SetDestination(player.transform.position);
+            targetBeforeStopped = navMeshAgent.destination;
         }
         else
         {
-            meshRenderer.material.color = Color.blue;
             navMeshAgent.speed = roamSpeed;
         }
 
@@ -125,6 +137,16 @@ public class AsleepEnemy : MonoBehaviour
 
             navMeshAgent.SetDestination(new Vector3(col * maze.scale.x, 0, -row * maze.scale.z));
         }
+    }
+
+    private void SpriteLookAtPlayer()
+    {
+        sprite.transform.LookAt(player.transform);
+
+        Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
+        directionToPlayer.y = 0;
+
+        sprite.transform.forward = directionToPlayer;
     }
 
     public void SetAllowedTargetNodes(List<int> targetNodes)

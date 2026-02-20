@@ -357,6 +357,7 @@ MonoBehaviour:
         m_CallState: 2
   promptText: {fileID: 1271887202}
   promptTextShown: Try To Sleep [E]
+  interactObject: 0
 --- !u!1 &798377985
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,7 +673,7 @@ MonoBehaviour:
   cameraObject: {fileID: 1173324134}
   cameraFinalPos: {x: -3.68, y: 0, z: -10}
   size: 5
-  playerCanStartTime: 4
+  playerCanStartTime: 2
   cameraMoveTime: 2.5
 --- !u!224 &1035995423
 RectTransform:
@@ -715,8 +716,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Press Space
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 758ab09b4335e084982844da882bc4ad, type: 2}
+  m_sharedMaterial: {fileID: 7631264898929424833, guid: 758ab09b4335e084982844da882bc4ad, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -805,7 +806,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  - {fileID: 7631264898929424833, guid: 758ab09b4335e084982844da882bc4ad, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

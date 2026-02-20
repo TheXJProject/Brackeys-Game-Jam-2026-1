@@ -18,6 +18,7 @@ public class AllSoundsController : MonoBehaviour
     public AudioClip spottedClip;
     public AudioClip pickUpKey;
     public AudioClip unlockDoor;
+    public AudioClip catchDreamon;
     [SerializeField] string[] whispers;
     [SerializeField][Range(minWalkFreq, maxWalkFreq)] float footStepFrequencyBedroom;
     [SerializeField][Range(minWalkFreq, maxWalkFreq)] float footStepFrequencyDream;
@@ -47,9 +48,12 @@ public class AllSoundsController : MonoBehaviour
         AsleepPlayerControl.onPlayer3DStartedMoving += StartWalking;
         AsleepPlayerControl.onPlayer3DStoppedMoving += StopWalking;
         StartGame.beginPressed += StartScreenEnterGame;
-        //AsleepLucidControl.onLucidToggled +=
-        //AwakeEndAnimThenNextThing.onLossFadeScreenStarted
+        AsleepLucidControl.onLucidToggled += LucidMode;
+        //AwakeEndAnimThenNextThing.onLossFadeScreenStarted += WinScreenAu
         //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
+        // Enterlucid
+        // Exitlucid
+        AsleepTrap.onEnemyTrapped += EnemyTrappedSounds;
     }
 
     private void OnDisable()
@@ -62,9 +66,10 @@ public class AllSoundsController : MonoBehaviour
         AsleepPlayerControl.onPlayer3DStartedMoving -= StartWalking;
         AsleepPlayerControl.onPlayer3DStoppedMoving -= StopWalking;
         StartGame.beginPressed -= StartScreenEnterGame;
-        //AsleepLucidControl.onLucidToggled -=
+        AsleepLucidControl.onLucidToggled -= LucidMode;
         //AwakeEndAnimThenNextThing.onLossFadeScreenStarted
         //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
+        AsleepTrap.onEnemyTrapped -= EnemyTrappedSounds;
     }
 
     private void Awake()
@@ -195,6 +200,10 @@ public class AllSoundsController : MonoBehaviour
         MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.SFX_OVERALL, EX_PARA.VOLUME, 0);
         MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.LOOPING_SFX, EX_PARA.VOLUME, 0);
 
+        // No PitchShift
+        MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.SFX_OVERALL, EX_PARA.PITCH_SHIFT);
+        MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.MUSIC_OVERALL, EX_PARA.PITCH_SHIFT);
+
         // Stops all SFX
         AudioManager.instance.StopAllSFX();
     }
@@ -285,30 +294,40 @@ public class AllSoundsController : MonoBehaviour
                 break;
             case SceneName.MAZE1:
                 MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
+
+                MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
                 break;
 
             case SceneName.MAZE2:
                 MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
                 MixerFXManager.instance.SetMusicParam("MPianoSFX", EX_PARA.VOLUME, fadeInTime);
+
+                MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
                 break;
 
             case SceneName.MAZE3:
                 MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
                 MixerFXManager.instance.SetMusicParam("MPianoSFX", EX_PARA.VOLUME, fadeInTime);
 
-                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.3f);
+                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.2f);
+                MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
                 break;
 
             case SceneName.MAZE4:
                 MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("MPianoSFX", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("MMusicBoxAndGong", EX_PARA.VOLUME, fadeInTime);
 
-                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.4f);
+                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.3f);
+                MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
                 break;
 
             case SceneName.MAZE5:
-                MixerFXManager.instance.SetMusicParam("", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("MPianoSFX", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("MMusicBoxAndGong", EX_PARA.VOLUME, fadeInTime);
 
-                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.5f);
+                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.4f);
+                MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
                 break;
 
             case SceneName.LOST:
@@ -377,7 +396,7 @@ public class AllSoundsController : MonoBehaviour
 
         if (currentScene == SceneName.AWAKEBEGINNING)
         {
-            if (timeWalking > footStepFrequencyBedroom / 2f)
+            if (timeWalking > footStepFrequencyBedroom / 4f)
             {
                 timeWalking = 0;
                 AudioManager.instance.PlaySFX("SingleFootstepLight", false, null, true);
@@ -385,7 +404,7 @@ public class AllSoundsController : MonoBehaviour
         }
         else
         {
-            if (timeWalking > footStepFrequencyDream / 2f)
+            if (timeWalking > footStepFrequencyDream / 4f)
             {
                 timeWalking = 0;
                 AudioManager.instance.PlaySFX("SingleFootstep", false, null, true);
@@ -481,6 +500,45 @@ public class AllSoundsController : MonoBehaviour
                 heartBeatTime += heartbeatTimeUntilFadeOut;
                 playingHeartBeat = true;
             }
+        }
+    }
+
+    void LucidMode(bool inLucid)
+    {
+        if (inLucid)
+        {
+            MixerFXManager.instance.SetMusicOverallParam(EX_PARA.PITCH_SHIFT, 0.2f, 0f);
+            MixerFXManager.instance.SetSfxOverallParam(EX_PARA.PITCH_SHIFT, 0.2f, 0f);
+        }
+        else
+        {
+            MixerFXManager.instance.SetMusicOverallParam(EX_PARA.PITCH_SHIFT, 0.2f);
+            MixerFXManager.instance.SetSfxOverallParam(EX_PARA.PITCH_SHIFT, 0.2f);
+        }
+    }
+
+    void EnterExitLucid()
+    {
+        AudioManager.instance.PlaySFX("SingleHeartbeat");
+    }
+
+    void EnemyTrappedSounds(GameObject dreamon)
+    {
+        // Find the audiosources for rumbling
+        AudioSource source = Array.Find(dreamon.GetComponents<AudioSource>(), source => source.clip != null && source.clip.name == "Rumbling");
+        AudioSource source2 = Array.Find(dreamon.GetComponents<AudioSource>(), source => source.clip != null && source.clip.name == "Rasping");
+
+        if ((source != null) && (source2 != null))
+        {
+            source.Stop();
+            source2.Stop();
+            source2.clip = catchDreamon;
+            source2.loop = false;
+            source2.Play();
+        }
+        else
+        {
+            Debug.LogWarning("Error, couldn't find both sources!");
         }
     }
 }
