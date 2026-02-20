@@ -151,11 +151,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8ed71e14fafac74eb1d43c1bcd8d52b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: -0
+      outSlope: -0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.22148116
+    - serializedVersion: 3
+      time: 0.50524855
+      value: 0.5192397
+      inSlope: 2.9531431
+      outSlope: 2.9531431
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.05797313
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.026916431
+      outSlope: 0.026916431
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.11519705
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   cameraObject: {fileID: 1173324134}
   cameraFinalPos: {x: -3.68, y: 0, z: -10}
   size: 5
   playerCanStartTime: 2
-  cameraMoveTime: 6
+  cameraMoveTime: 2
 --- !u!4 &1035995423
 Transform:
   m_ObjectHideFlags: 0
