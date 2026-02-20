@@ -275,8 +275,8 @@ public class MazeGenerator : MonoBehaviour
 
     private void Start()
     {
-        enemyManager.SpawnEnemies(selectedMaze);
-        trapManager.SpawnTraps(selectedMaze);
+        enemyManager?.SpawnEnemies(selectedMaze);
+        trapManager?.SpawnTraps(selectedMaze);
         SpawnGameObjects();
 
         onMazeGenerated?.Invoke(selectedMaze);
