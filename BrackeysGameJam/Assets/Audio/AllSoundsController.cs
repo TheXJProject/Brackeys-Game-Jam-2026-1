@@ -6,6 +6,8 @@ using UnityEngine;
 public class AllSoundsController : MonoBehaviour
 {
     const float newEnemy = -1;
+    const float maxWalkFreq = 3f;
+    const float minWalkFreq = 0.001f;
 
     public SceneName startScene;
     public AudioClip buttonPress;
@@ -15,8 +17,8 @@ public class AllSoundsController : MonoBehaviour
     public AudioClip pickUpKey;
     public AudioClip unlockDoor;
     [SerializeField] string[] whispers;
-    [SerializeField] float footStepFrequencyBedroom;
-    [SerializeField] float footStepFrequencyDream;
+    [SerializeField][Range(minWalkFreq, maxWalkFreq)] float footStepFrequencyBedroom;
+    [SerializeField][Range(minWalkFreq, maxWalkFreq)] float footStepFrequencyDream;
     [SerializeField] float randomWhisperFrequencyBedroom;
     [SerializeField] float randomWhisperFrequencyDream;
     [SerializeField] float minWhisperTime;
@@ -35,8 +37,14 @@ public class AllSoundsController : MonoBehaviour
         TransitionManager.onLoadingNextScene += NewScene;
         TransitionManager.onBeginFadeOut += FadeOut;
         AsleepEnemy.onPlayerSeen += EnemySeenPlayer;
-        //+= StartWalking;
-        //+= StopWalking;
+        AwakePlayerControl.onPlayer2DStartedMoving += StartWalking;
+        AwakePlayerControl.onPlayer2DStoppedMoving += StopWalking;
+        AsleepPlayerControl.onPlayer3DStartedMoving += StartWalking;
+        AsleepPlayerControl.onPlayer3DStoppedMoving += StopWalking;
+        StartGame.startGameNow += StartScreenEnterGame;
+        //AsleepLucidControl.onLucidToggled +=
+        //AwakeEndAnimThenNextThing.onLossFadeScreenStarted
+        //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
     }
 
     private void OnDisable()
@@ -44,8 +52,14 @@ public class AllSoundsController : MonoBehaviour
         TransitionManager.onLoadingNextScene -= NewScene;
         TransitionManager.onBeginFadeOut -= FadeOut;
         AsleepEnemy.onPlayerSeen -= EnemySeenPlayer;
-        //-= StartWalking;
-        //-= StopWalking;
+        AwakePlayerControl.onPlayer2DStartedMoving -= StartWalking;
+        AwakePlayerControl.onPlayer2DStoppedMoving -= StopWalking;
+        AsleepPlayerControl.onPlayer3DStartedMoving -= StartWalking;
+        AsleepPlayerControl.onPlayer3DStoppedMoving -= StopWalking;
+        StartGame.startGameNow -= StartScreenEnterGame;
+        //AsleepLucidControl.onLucidToggled -=
+        //AwakeEndAnimThenNextThing.onLossFadeScreenStarted
+        //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
     }
 
     private void Start()
@@ -99,30 +113,37 @@ public class AllSoundsController : MonoBehaviour
                 // Don't try to play whispers
                 break;
         }
+
+        // WALKING
+        if (timeWalking < maxWalkFreq)
+        {
+            timeWalking += Time.deltaTime;
+        }
     }
 
     void NewScene(SceneName name)
     {
         currentScene = name;
+        Debug.LogWarning("Now in: " + name);
 
         // If we need to mute sounds before we go into the new scene
         switch (currentScene)
         {
-            case SceneName.AWAKEPARALYZED1:
-            case SceneName.AWAKEPARALYZED2:
-            case SceneName.AWAKEPARALYZED3:
-            case SceneName.AWAKEPARALYZED4:
-            case SceneName.AWAKEPARALYZED5:
-            case SceneName.LOST:
             case SceneName.WON:
-            case SceneName.AWAKEBEGINNING:
-                FullResetToNothing();
-                break;
+            case SceneName.LOST:
             case SceneName.MAZE1:
             case SceneName.MAZE2:
             case SceneName.MAZE3:
             case SceneName.MAZE4:
             case SceneName.MAZE5:
+                FullResetToNothing();
+                break;
+            case SceneName.AWAKEPARALYZED1:
+            case SceneName.AWAKEPARALYZED2:
+            case SceneName.AWAKEPARALYZED3:
+            case SceneName.AWAKEPARALYZED4:
+            case SceneName.AWAKEPARALYZED5:
+            case SceneName.AWAKEBEGINNING:
             default:
                 break;
         }
@@ -201,6 +222,7 @@ public class AllSoundsController : MonoBehaviour
         // Return true if we're already playing the SFX loop
         if (source == null)
         {
+            Debug.Log("play, " + name);
             AudioManager.instance.PlayLoopingSFX(name, null, volume);
         }
     }
@@ -288,13 +310,19 @@ public class AllSoundsController : MonoBehaviour
 
     // ++++++++ Unique functionality +++++++++
 
+    void StartScreenEnterGame()
+    {
+        // Remove music box and general whispers
+        //MixerFXManager.instance.
+    }
+
     void StartWalking()
     {
         walking = true;
 
         if (currentScene == SceneName.AWAKEBEGINNING)
         {
-            if (timeWalking > footStepFrequencyBedroom / 2)
+            if (timeWalking > footStepFrequencyBedroom / 2f)
             {
                 timeWalking = 0;
                 AudioManager.instance.PlaySFX("SingleFootstepLight", false, null, true);
@@ -302,8 +330,9 @@ public class AllSoundsController : MonoBehaviour
         }
         else
         {
-            if (timeWalking > footStepFrequencyDream / 2)
+            if (timeWalking > footStepFrequencyDream / 2f)
             {
+                Debug.Log("Start step");
                 timeWalking = 0;
                 AudioManager.instance.PlaySFX("SingleFootstep", false, null, true);
             }
@@ -320,7 +349,6 @@ public class AllSoundsController : MonoBehaviour
     {
         while (walking)
         {
-            timeWalking += Time.deltaTime;
             if (currentScene == SceneName.AWAKEBEGINNING)
             {
                 if (timeWalking > footStepFrequencyBedroom)
@@ -333,6 +361,7 @@ public class AllSoundsController : MonoBehaviour
             {
                 if (timeWalking > footStepFrequencyDream)
                 {
+                    Debug.Log("mstep");
                     timeWalking = 0;
                     AudioManager.instance.PlaySFX("SingleFootstep", false, null, true);
                 }
