@@ -14,6 +14,8 @@ public class AwakePlayerControl : MonoBehaviour
     InputAction move;
     Vector2 moveDirection;
 
+    private bool canMove = false;
+
     private void Awake()
     {
         playerControls = new InputController();
@@ -23,11 +25,14 @@ public class AwakePlayerControl : MonoBehaviour
     {
         move = playerControls.Player.Move;
         move.Enable();
+
+        StartGame.startGameNow += AllowMovement;
     }
 
     private void OnDisable()
     {
         move.Disable();
+        StartGame.startGameNow -= AllowMovement;
     }
 
     private void Update()
@@ -35,9 +40,11 @@ public class AwakePlayerControl : MonoBehaviour
         moveDirection = move.ReadValue<Vector2>();
     }
 
+    private void AllowMovement() => canMove = true;
+
     private void FixedUpdate()
     {
-        if (GameManager.instance.awakeState == GameManager.AwakeState.BEGINNING)
+        if (canMove)
             playerRB.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
     }
 }
