@@ -47,9 +47,11 @@ public class AllSoundsController : MonoBehaviour
         AsleepPlayerControl.onPlayer3DStartedMoving += StartWalking;
         AsleepPlayerControl.onPlayer3DStoppedMoving += StopWalking;
         StartGame.beginPressed += StartScreenEnterGame;
-        //AsleepLucidControl.onLucidToggled +=
-        //AwakeEndAnimThenNextThing.onLossFadeScreenStarted
+        AsleepLucidControl.onLucidToggled += LucidMode;
+        //AwakeEndAnimThenNextThing.onLossFadeScreenStarted += WinScreenAu
         //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
+        // Enterlucid
+        // Exitlucid
     }
 
     private void OnDisable()
@@ -62,7 +64,7 @@ public class AllSoundsController : MonoBehaviour
         AsleepPlayerControl.onPlayer3DStartedMoving -= StartWalking;
         AsleepPlayerControl.onPlayer3DStoppedMoving -= StopWalking;
         StartGame.beginPressed -= StartScreenEnterGame;
-        //AsleepLucidControl.onLucidToggled -=
+        AsleepLucidControl.onLucidToggled -= LucidMode;
         //AwakeEndAnimThenNextThing.onLossFadeScreenStarted
         //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
     }
@@ -195,6 +197,10 @@ public class AllSoundsController : MonoBehaviour
         MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.SFX_OVERALL, EX_PARA.VOLUME, 0);
         MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.LOOPING_SFX, EX_PARA.VOLUME, 0);
 
+        // No PitchShift
+        MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.SFX_OVERALL, EX_PARA.PITCH_SHIFT);
+        MixerFXManager.instance.ForceSetParam(GROUP_OPTIONS.MUSIC_OVERALL, EX_PARA.PITCH_SHIFT);
+
         // Stops all SFX
         AudioManager.instance.StopAllSFX();
     }
@@ -285,30 +291,40 @@ public class AllSoundsController : MonoBehaviour
                 break;
             case SceneName.MAZE1:
                 MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
+
+                MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
                 break;
 
             case SceneName.MAZE2:
                 MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
                 MixerFXManager.instance.SetMusicParam("MPianoSFX", EX_PARA.VOLUME, fadeInTime);
+                
+                MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
                 break;
 
             case SceneName.MAZE3:
                 MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
                 MixerFXManager.instance.SetMusicParam("MPianoSFX", EX_PARA.VOLUME, fadeInTime);
 
-                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.3f);
+                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.2f);
+                MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
                 break;
 
             case SceneName.MAZE4:
                 MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("MPianoSFX", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("MMusicBoxAndGong", EX_PARA.VOLUME, fadeInTime);
 
-                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.4f);
+                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.3f);
+                MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
                 break;
 
             case SceneName.MAZE5:
-                MixerFXManager.instance.SetMusicParam("", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("MPianoSFX", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("MMusicBoxAndGong", EX_PARA.VOLUME, fadeInTime);
 
-                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.5f);
+                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.4f);
+                MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
                 break;
 
             case SceneName.LOST:
@@ -482,5 +498,24 @@ public class AllSoundsController : MonoBehaviour
                 playingHeartBeat = true;
             }
         }
+    }
+
+    void LucidMode(bool inLucid)
+    {
+        if (inLucid)
+        {
+            MixerFXManager.instance.SetMusicOverallParam(EX_PARA.PITCH_SHIFT, 0.2f, 0f);
+            MixerFXManager.instance.SetSfxOverallParam(EX_PARA.PITCH_SHIFT, 0.2f, 0f);
+        }
+        else
+        {
+            MixerFXManager.instance.SetMusicOverallParam(EX_PARA.PITCH_SHIFT, 0.2f);
+            MixerFXManager.instance.SetSfxOverallParam(EX_PARA.PITCH_SHIFT, 0.2f);
+        }
+    }
+
+    void EnterExitLucid()
+    {
+        AudioManager.instance.PlaySFX("SingleHeartbeat");
     }
 }

@@ -7,7 +7,7 @@ AudioMixerController:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Spacial Sound
-  m_OutputGroup: {fileID: 2783296758238418759, guid: 30c4e80f1c9e614499090cc08f21eb5b, type: 2}
+  m_OutputGroup: {fileID: -2113934606607056820, guid: 30e3a62b36f317442b9db35864b01c71, type: 2}
   m_MasterGroup: {fileID: 24300002}
   m_Snapshots:
   - {fileID: 24500006}

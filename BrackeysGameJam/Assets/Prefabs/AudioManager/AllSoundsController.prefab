@@ -64,8 +64,8 @@ MonoBehaviour:
   - Whisper52
   footStepFrequencyBedroom: 0.4
   footStepFrequencyDream: 0.6
-  randomWhisperFrequencyBedroom: 40
-  randomWhisperFrequencyDream: 25
+  randomWhisperFrequencyBedroom: 25
+  randomWhisperFrequencyDream: 40
   minWhisperTime: 12
   timeBetweenBeingSpotted: 8
   musicStartTime: 3
