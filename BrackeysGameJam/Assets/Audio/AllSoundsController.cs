@@ -9,6 +9,8 @@ public class AllSoundsController : MonoBehaviour
     const float maxWalkFreq = 3f;
     const float minWalkFreq = 0.001f;
 
+    public static AllSoundsController instance;
+
     public SceneName startScene;
     public AudioClip buttonPress;
     public AudioClip doorLocked;
@@ -25,12 +27,15 @@ public class AllSoundsController : MonoBehaviour
     [SerializeField] float timeBetweenBeingSpotted;
     [SerializeField] double musicStartTime = 0.5f;
     [SerializeField] float fadeInTime = 1;
-    //[SerializeField] float fadeOutTime = 1;
+    [SerializeField] float fadeOutTime = 1;
+    [SerializeField] float heartbeatTimeUntilFadeOut = 1;
     SceneName currentScene;
     bool walking = false;
     float timeWalking = 0f;
     float timeWhispers = 0f;
     private Dictionary<int, float> dreamonSpottedTimes = new();
+    float heartBeatTime = 0f;
+    bool playingHeartBeat = false;
 
     private void OnEnable()
     {
@@ -41,7 +46,7 @@ public class AllSoundsController : MonoBehaviour
         AwakePlayerControl.onPlayer2DStoppedMoving += StopWalking;
         AsleepPlayerControl.onPlayer3DStartedMoving += StartWalking;
         AsleepPlayerControl.onPlayer3DStoppedMoving += StopWalking;
-        StartGame.startGameNow += StartScreenEnterGame;
+        StartGame.beginPressed += StartScreenEnterGame;
         //AsleepLucidControl.onLucidToggled +=
         //AwakeEndAnimThenNextThing.onLossFadeScreenStarted
         //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
@@ -56,10 +61,26 @@ public class AllSoundsController : MonoBehaviour
         AwakePlayerControl.onPlayer2DStoppedMoving -= StopWalking;
         AsleepPlayerControl.onPlayer3DStartedMoving -= StartWalking;
         AsleepPlayerControl.onPlayer3DStoppedMoving -= StopWalking;
-        StartGame.startGameNow -= StartScreenEnterGame;
+        StartGame.beginPressed -= StartScreenEnterGame;
         //AsleepLucidControl.onLucidToggled -=
         //AwakeEndAnimThenNextThing.onLossFadeScreenStarted
         //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
+    }
+
+    private void Awake()
+    {
+        // If we haven't already initialised an instance of the Audio manager
+        if (instance == null)
+        {
+            // Make this instance a singleton
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
+        else
+        {
+            // Destroy this
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
@@ -119,6 +140,17 @@ public class AllSoundsController : MonoBehaviour
         {
             timeWalking += Time.deltaTime;
         }
+
+        // HEARTBEAT
+        if (heartBeatTime > 0)
+        {
+            heartBeatTime -= Time.deltaTime;
+        }
+        else if (playingHeartBeat)
+        {
+            MixerFXManager.instance.SetLoopingSFXParam("RacingHeartbeat", EX_PARA.VOLUME, heartbeatTimeUntilFadeOut, 0f);
+            playingHeartBeat = false;
+        }
     }
 
     void NewScene(SceneName name)
@@ -174,8 +206,8 @@ public class AllSoundsController : MonoBehaviour
         {
             case SceneName.AWAKEBEGINNING:
                 PlayButCheck("GeneralWhispers");
-                PlayButCheck("ElectricHum", 0.2f);
-                PlayButCheck("WindOutside", 0.5f);
+                PlayButCheck("ElectricHum", 0.6f);
+                PlayButCheck("WindOutside");
                 break;
 
             case SceneName.AWAKEPARALYZED4:
@@ -222,7 +254,6 @@ public class AllSoundsController : MonoBehaviour
         // Return true if we're already playing the SFX loop
         if (source == null)
         {
-            Debug.Log("play, " + name);
             AudioManager.instance.PlayLoopingSFX(name, null, volume);
         }
     }
@@ -273,20 +304,18 @@ public class AllSoundsController : MonoBehaviour
 
     void FadeOut()
     {
+        Debug.Log("Fadeout" + currentScene);
         // Different depending what scene we're currently in
         switch (currentScene)
         {
             case SceneName.AWAKEBEGINNING:
-                break;
             case SceneName.AWAKEPARALYZED1:
-                break;
             case SceneName.AWAKEPARALYZED2:
-                break;
             case SceneName.AWAKEPARALYZED3:
-                break;
             case SceneName.AWAKEPARALYZED4:
-                break;
             case SceneName.AWAKEPARALYZED5:
+                MixerFXManager.instance.SetMusicOverallParam(EX_PARA.VOLUME, fadeOutTime, 0);
+                MixerFXManager.instance.SetSfxOverallParam(EX_PARA.VOLUME, fadeOutTime, 0);
                 break;
             case SceneName.MAZE1:
                 break;
@@ -310,10 +339,18 @@ public class AllSoundsController : MonoBehaviour
 
     // ++++++++ Unique functionality +++++++++
 
-    void StartScreenEnterGame()
+    void StartScreenEnterGame(float time)
     {
-        // Remove music box and general whispers
-        //MixerFXManager.instance.
+        // Remove music box
+        MixerFXManager.instance.SetMusicParam("BMusicBox", EX_PARA.VOLUME, time, 0f);
+        MixerFXManager.instance.SetMusicParam("BChoir", EX_PARA.VOLUME, time, 0.5f);
+
+        // Remove general whispers
+        MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, time, 0f);
+
+        // Add room ambience
+        MixerFXManager.instance.SetLoopingSFXParam("ElectricHum", EX_PARA.VOLUME, time);
+        MixerFXManager.instance.SetLoopingSFXParam("WindOutside", EX_PARA.VOLUME, time);
     }
 
     void StartWalking()
@@ -332,7 +369,6 @@ public class AllSoundsController : MonoBehaviour
         {
             if (timeWalking > footStepFrequencyDream / 2f)
             {
-                Debug.Log("Start step");
                 timeWalking = 0;
                 AudioManager.instance.PlaySFX("SingleFootstep", false, null, true);
             }
@@ -361,7 +397,6 @@ public class AllSoundsController : MonoBehaviour
             {
                 if (timeWalking > footStepFrequencyDream)
                 {
-                    Debug.Log("mstep");
                     timeWalking = 0;
                     AudioManager.instance.PlaySFX("SingleFootstep", false, null, true);
                 }
@@ -400,12 +435,13 @@ public class AllSoundsController : MonoBehaviour
         {
             timeWhispers = 0;
             int index = UnityEngine.Random.Range(0, whispers.Length - 1);
-            AudioManager.instance.PlaySFX(whispers[index]);
+            AudioManager.instance.PlaySFX(whispers[index], false, 0.3f);
         }
     }
 
     void EnemySeenPlayer(int enemy, AudioSource source)
     {
+        Debug.Log("Enemyspots" + enemy);
         // Add to map if needed
         if (!dreamonSpottedTimes.ContainsKey(enemy))
         {
@@ -414,12 +450,19 @@ public class AllSoundsController : MonoBehaviour
         }
 
         float timeDifference = Time.time - dreamonSpottedTimes[enemy];
-        
+
         // Check time
         if ((timeDifference > timeBetweenBeingSpotted) || (dreamonSpottedTimes[enemy] == newEnemy))
         {
+            Debug.Log("Enemy screams" + enemy + spottedClip);
             dreamonSpottedTimes[enemy] = Time.time;
             source.Play();
+            if (!playingHeartBeat)
+            {
+                MixerFXManager.instance.SetLoopingSFXParam("RacingHeartbeat", EX_PARA.VOLUME, fadeInTime);
+                heartBeatTime += heartbeatTimeUntilFadeOut;
+                playingHeartBeat = true;
+            }
         }
     }
 }

@@ -3607,70 +3607,70 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 35e107da3e5c6104ba4106f9386e9b14, type: 3}
     looped: 0
   - name: Whisper11
-    volume: 0.8
+    volume: 0.5
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: 4fef74952f68f4347b13e5a7d7196819, type: 3}
     looped: 0
   - name: Whisper12
-    volume: 0.8
+    volume: 0.5
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: 2be1fef80f3b1ea4296ad711c96a563c, type: 3}
     looped: 0
   - name: Whisper21
-    volume: 0.8
+    volume: 0.5
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: 1d8dcd88f278bfb418b98f3db54a539a, type: 3}
     looped: 0
   - name: Whisper22
-    volume: 0.8
+    volume: 0.5
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: ca87130842d1b8547b4b48a775ba9e11, type: 3}
     looped: 0
   - name: Whisper31
-    volume: 0.8
+    volume: 0.5
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: 5e397149e81e9364c978be9156ff7355, type: 3}
     looped: 0
   - name: Whisper32
-    volume: 0.8
+    volume: 0.5
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: 9044e752bae8e254d9738c9a7b8d66e0, type: 3}
     looped: 0
   - name: Whisper41
-    volume: 0.8
+    volume: 0.5
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: af1ae83fd1cc67941aed1a7ec03fdfd9, type: 3}
     looped: 0
   - name: Whisper42
-    volume: 0.8
+    volume: 0.5
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: 8f8b44d8ccf99bc488a59a727d717d90, type: 3}
     looped: 0
   - name: Whisper51
-    volume: 0.8
+    volume: 0.5
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: 77acb85baeaafb7498d2bce81b3fe613, type: 3}
     looped: 0
   - name: Whisper52
-    volume: 0.8
+    volume: 0.5
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
@@ -3705,10 +3705,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 9d97ac0a22ab2064b81f5d5c544c7f2c, type: 3}
     looped: 0
   - name: ComputerBeep
-    volume: 0.8
+    volume: 0.6
     pitch: 1
     panning: 0
-    randomPitchRange: {x: 0, y: 0}
+    randomPitchRange: {x: 0.8, y: 1}
     clip: {fileID: 8300000, guid: ad675a28b99806b438f5188b597ec33d, type: 3}
     looped: 0
   - name: GaspAwake
@@ -3726,8 +3726,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 6da4f2139b27fe340a5c5428890ea2e6, type: 3}
     looped: 0
   - name: GoToBed
-    volume: 0.8
-    pitch: 1
+    volume: 0.9
+    pitch: 1.2
     panning: 0
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: c9e9067a48a2be848a6264412b7a82c3, type: 3}
@@ -3743,7 +3743,7 @@ MonoBehaviour:
     volume: 0.8
     pitch: 1
     panning: 0
-    randomPitchRange: {x: 0, y: 0}
+    randomPitchRange: {x: 1.1, y: 1.3}
     clip: {fileID: 8300000, guid: a9c515b5be9c9af47a98b9695350b84e, type: 3}
     looped: 0
   - name: LightsOff
@@ -3761,17 +3761,17 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b979240af1be53342ab954cb5c8f789d, type: 3}
     looped: 0
   - name: SingleFootstep
-    volume: 0.75
+    volume: 0.6
     pitch: 1
     panning: 0
-    randomPitchRange: {x: 0.7, y: 1.3}
+    randomPitchRange: {x: 0.75, y: 1.15}
     clip: {fileID: 8300000, guid: b404b47de73db524c9d3a7543699295b, type: 3}
     looped: 0
   - name: SingleFootstepLight
     volume: 0.55
     pitch: 1
     panning: 0
-    randomPitchRange: {x: 0.7, y: 1.3}
+    randomPitchRange: {x: 0.8, y: 1.2}
     clip: {fileID: 8300000, guid: 71afb1a2fb7302740a5906cc8ced0c9b, type: 3}
     looped: 0
   - name: SingleHeartbeat
