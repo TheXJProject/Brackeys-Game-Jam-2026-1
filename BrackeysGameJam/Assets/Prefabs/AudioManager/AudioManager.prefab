@@ -3804,7 +3804,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b3909252722c5764fbf5ebf80c6815ea, type: 3}
     looped: 1
   - name: GeneralWhispers
-    volume: 0.8
+    volume: 0.4
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}

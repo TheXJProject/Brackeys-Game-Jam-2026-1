@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 439e952820dff634cb0f879f1f50b01a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startScene: 0
   buttonPress: {fileID: 8300000, guid: 252b3a81855bffd48afcb1db2e6e3278, type: 3}
   doorLocked: {fileID: 8300000, guid: e01947f6746f9b34d8dfdce5eda65205, type: 3}
   doorOpens: {fileID: 8300000, guid: 2350caf90846ff345a90beef667246fd, type: 3}
@@ -68,4 +69,5 @@ MonoBehaviour:
   minWhisperTime: 8
   timeBetweenBeingSpotted: 10
   musicStartTime: 3
-  currentScene: 0
+  fadeInTime: 2.5
+  fadeOutTime: 1.5
