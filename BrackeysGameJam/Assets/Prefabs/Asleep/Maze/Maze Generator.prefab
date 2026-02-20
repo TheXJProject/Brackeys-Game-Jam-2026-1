@@ -47,12 +47,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   surface: {fileID: 6832940989219050038}
   wallGameObject: {fileID: 1163777725093958344, guid: e4763a63417295e4a86881d2bb6f2ad4, type: 3}
-  exitDoorGameObject: {fileID: 1163777725093958344, guid: f160de96851cdb74dacf196747532dbe, type: 3}
+  exitDoorGameObject: {fileID: 7031548200127160587, guid: 231d336f3e81c0a4e8b166199b88cd25, type: 3}
   lucidWallMaterial: {fileID: 2100000, guid: 78e4ea723a296c548b7b1525220ad958, type: 2}
   lucidMazePercentInFloor: 0.95
   lucidMazeLayerName: Enemies
-  enemiesToSpawn: []
   objectsToSpawn: []
+  trapManager: {fileID: 0}
+  enemyManager: {fileID: 0}
 --- !u!1 &5989921149808422185
 GameObject:
   m_ObjectHideFlags: 0

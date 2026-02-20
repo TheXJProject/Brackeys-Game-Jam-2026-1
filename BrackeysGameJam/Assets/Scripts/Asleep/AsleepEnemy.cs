@@ -12,13 +12,15 @@ public class AsleepEnemy : MonoBehaviour
     public float killDistance;
     public int enemyID;
 
-    private List<int> allowedTargetNodes;
+    public List<int> allowedTargetNodes;
 
     private Maze maze;
+    private bool isTrapped;
 
     private GameObject player;
     private NavMeshAgent navMeshAgent;
     private Collider playerCollider;
+    private Collider enemyCollider;
     private MeshRenderer meshRenderer;
     private AudioSource audioSource;
 
@@ -26,9 +28,21 @@ public class AsleepEnemy : MonoBehaviour
 
     private void Stop() => SetStopped(true);
 
+    private void Trap(GameObject enemy)
+    {
+        if (enemy.GetComponent<AsleepEnemy>().enemyID != enemyID) return;
+
+        enemyCollider.enabled = false;
+        navMeshAgent.isStopped = true;
+        isTrapped = true;
+    }
+
     private void SetStopped(bool frozen)
     {
-        navMeshAgent.isStopped = frozen;
+        if (!isTrapped || frozen)
+        {
+            navMeshAgent.isStopped = frozen;
+        }
     }
 
     private void SetMaze(Maze newMaze)
@@ -40,6 +54,7 @@ public class AsleepEnemy : MonoBehaviour
     {
         AsleepLucidControl.onLucidToggled += SetStopped;
         AsleepPlayerControl.onPlayerKilled += Stop;
+        AsleepTrap.onEnemyTrapped += Trap;
         MazeGenerator.onMazeGenerated += SetMaze;
     }
 
@@ -47,6 +62,7 @@ public class AsleepEnemy : MonoBehaviour
     {
         AsleepLucidControl.onLucidToggled -= SetStopped;
         AsleepPlayerControl.onPlayerKilled -= Stop;
+        AsleepTrap.onEnemyTrapped -= Trap;
         MazeGenerator.onMazeGenerated -= SetMaze;
     }
 
@@ -55,6 +71,7 @@ public class AsleepEnemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
 
         playerCollider = player.GetComponent<Collider>();
+        enemyCollider = GetComponent<Collider>();
         meshRenderer = GetComponent<MeshRenderer>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         audioSource = GetComponent<AudioSource>();
@@ -67,14 +84,17 @@ public class AsleepEnemy : MonoBehaviour
         if (navMeshAgent.isStopped) return;
 
         Vector3 rayDirection = player.transform.position - transform.position;
-        rayDirection.y = 0;
+        Vector3 rayOrigin = transform.position;
 
         rayDirection.Normalize();
         rayDirection *= viewDistance;
 
-        Debug.DrawRay(transform.position, rayDirection, Color.green);
+        rayOrigin.y = 1f;
+        rayDirection.y = 0f;
 
-        Physics.Raycast(transform.position, rayDirection, out RaycastHit lineOfSightRay, maxDistance: viewDistance);
+        Debug.DrawRay(rayOrigin, rayDirection, Color.green);
+
+        Physics.Raycast(rayOrigin, rayDirection, out RaycastHit lineOfSightRay, maxDistance: viewDistance);
         bool playerSeen = (lineOfSightRay.collider == playerCollider);
 
         if (playerSeen)

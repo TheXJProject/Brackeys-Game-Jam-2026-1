@@ -130,6 +130,7 @@ MonoBehaviour:
   viewDistance: 5
   killDistance: 1
   enemyID: 0
+  allowedTargetNodes: 
 --- !u!195 &7564224492984416347
 NavMeshAgent:
   m_ObjectHideFlags: 0
