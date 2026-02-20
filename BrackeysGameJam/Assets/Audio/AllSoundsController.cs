@@ -51,8 +51,10 @@ public class AllSoundsController : MonoBehaviour
         AsleepLucidControl.onLucidToggled += LucidMode;
         //AwakeEndAnimThenNextThing.onLossFadeScreenStarted += WinScreenAu
         //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
-        // Enterlucid
-        // Exitlucid
+        AwakeEndAnimThenNextThing.onLossScreenShown += FadeToDeathScreen;
+        AwakeEndAnimThenNextThing.onWinScreenShown += FadeToWinScreen;
+        AsleepLucidControl.onLucidStarted += EnterExitLucid;
+        AsleepLucidControl.onLucidEnded += EnterExitLucid;
         AsleepTrap.onEnemyTrapped += EnemyTrappedSounds;
     }
 
@@ -69,6 +71,10 @@ public class AllSoundsController : MonoBehaviour
         AsleepLucidControl.onLucidToggled -= LucidMode;
         //AwakeEndAnimThenNextThing.onLossFadeScreenStarted
         //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
+        AwakeEndAnimThenNextThing.onLossScreenShown -= FadeToDeathScreen;
+        AwakeEndAnimThenNextThing.onWinScreenShown -= FadeToWinScreen;
+        AsleepLucidControl.onLucidStarted += EnterExitLucid;
+        AsleepLucidControl.onLucidEnded += EnterExitLucid;
         AsleepTrap.onEnemyTrapped -= EnemyTrappedSounds;
     }
 
@@ -221,8 +227,8 @@ public class AllSoundsController : MonoBehaviour
 
             case SceneName.AWAKEPARALYZED4:
             case SceneName.AWAKEPARALYZED3:
-                PlayButCheck("Scratching N");
-                goto case SceneName.AWAKEPARALYZED3;
+                PlayButCheck("ScratchingNails");
+                goto case SceneName.AWAKEPARALYZED1;
             case SceneName.AWAKEPARALYZED5:
             case SceneName.AWAKEPARALYZED2:
             case SceneName.AWAKEPARALYZED1:
@@ -231,12 +237,12 @@ public class AllSoundsController : MonoBehaviour
                 PlayButCheck("WindOutside");
                 break;
 
+            case SceneName.MAZE5:
             case SceneName.MAZE4:
             case SceneName.MAZE3:
                 // play general whispers
                 PlayButCheck("GeneralWhispers");
-                goto case SceneName.MAZE5;
-            case SceneName.MAZE5:
+                goto case SceneName.MAZE1;
             case SceneName.MAZE2:
             case SceneName.MAZE1:
                 // play ambience
@@ -249,8 +255,10 @@ public class AllSoundsController : MonoBehaviour
                 break;
 
             case SceneName.WON:
+                PlayButCheck("WindOutside");
+                break;
+
             default:
-                // If we won, don't play any ambience
                 break;
         }
     }
@@ -282,16 +290,23 @@ public class AllSoundsController : MonoBehaviour
                 MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.3f);
                 break;
 
-            case SceneName.AWAKEPARALYZED1:
-                break;
-            case SceneName.AWAKEPARALYZED2:
-                break;
-            case SceneName.AWAKEPARALYZED3:
-                break;
             case SceneName.AWAKEPARALYZED4:
-                break;
+            case SceneName.AWAKEPARALYZED3:
+                MixerFXManager.instance.SetLoopingSFXParam("ScratchingNails", EX_PARA.VOLUME, fadeInTime);
+                goto case SceneName.AWAKEPARALYZED1;
             case SceneName.AWAKEPARALYZED5:
+            case SceneName.AWAKEPARALYZED2:
+            case SceneName.AWAKEPARALYZED1:
+                MixerFXManager.instance.SetLoopingSFXParam("ElectricHum", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetLoopingSFXParam("FloorCreaking", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetLoopingSFXParam("WindOutside", EX_PARA.VOLUME, fadeInTime);
+
+                MixerFXManager.instance.SetMusicParam("BChoir", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("BDeepChords", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("BPianoSFX", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("BMusicBox", EX_PARA.VOLUME, fadeInTime);
                 break;
+
             case SceneName.MAZE1:
                 MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
 
@@ -331,8 +346,13 @@ public class AllSoundsController : MonoBehaviour
                 break;
 
             case SceneName.LOST:
+                // Don't fade in anything initially on lost
                 break;
+
             case SceneName.WON:
+                MixerFXManager.instance.SetMusicParam("WinMusic", EX_PARA.VOLUME, fadeInTime);
+
+                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.3f);
                 break;
             default:
                 Debug.LogWarning("Error, couldn't find scene!");
@@ -388,6 +408,19 @@ public class AllSoundsController : MonoBehaviour
         // Add room ambience
         MixerFXManager.instance.SetLoopingSFXParam("ElectricHum", EX_PARA.VOLUME, time);
         MixerFXManager.instance.SetLoopingSFXParam("WindOutside", EX_PARA.VOLUME, time);
+    }
+
+    void FadeToDeathScreen()
+    {
+        MixerFXManager.instance.SetMusicParam("BDeepChords", EX_PARA.VOLUME, fadeInTime);
+        MixerFXManager.instance.SetMusicParam("BPianoSFX", EX_PARA.VOLUME, fadeInTime);
+
+        MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime);
+    }
+
+    void FadeToWinScreen()
+    {
+        MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0f);
     }
 
     void StartWalking()
@@ -534,7 +567,7 @@ public class AllSoundsController : MonoBehaviour
             source2.Stop();
             source2.clip = catchDreamon;
             source2.loop = false;
-            source2.Play();
+            source2.Play();  
         }
         else
         {
