@@ -188,7 +188,7 @@ MonoBehaviour:
   cameraFinalPos: {x: -3.68, y: 0, z: -10}
   size: 5
   playerCanStartTime: 2
-  cameraMoveTime: 2
+  cameraMoveTime: 2.5
 --- !u!4 &1035995423
 Transform:
   m_ObjectHideFlags: 0
