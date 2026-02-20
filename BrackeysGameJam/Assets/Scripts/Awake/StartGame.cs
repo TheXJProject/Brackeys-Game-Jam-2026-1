@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class StartGame : MonoBehaviour
 {
+    public AnimationCurve curve;
     [SerializeField] GameObject cameraObject;
     [SerializeField] Vector3 cameraFinalPos;
     public float size;
@@ -18,6 +21,8 @@ public class StartGame : MonoBehaviour
     bool startedCameraMove = false;
     float currentCameraSize = 0;
     float donePercentage = 0;
+    Vector3 cameraStartPos;
+    float startSize;
 
     public static event Action startGameNow;
 
@@ -27,6 +32,9 @@ public class StartGame : MonoBehaviour
     private void Awake()
     {
         playerControls = new InputController();
+
+        cameraStartPos = cameraObject.transform.position;
+        startSize = cameraObject.GetComponent<Camera>().orthographicSize;
     }
 
     private void OnEnable()
@@ -61,7 +69,8 @@ public class StartGame : MonoBehaviour
     {
         if (time > playerCanStartTime)
         {
-            // Show press E to play
+            // Show press Space to play
+            gameObject.GetComponent<TextMeshPro>().enabled = true;
             inStartTransistion = false;
         }
         else
@@ -78,7 +87,7 @@ public class StartGame : MonoBehaviour
             while (!((Vector3.Distance(cameraFinalPos, cameraObject.transform.position) < 0.005f) && (size - currentCameraSize) < 0.005f))
             {
                 timeTransition += Time.deltaTime;
-                donePercentage = timeTransition / cameraMoveTime;
+                donePercentage = curve.Evaluate(timeTransition / cameraMoveTime);
 
                 // Move camera a bit
                 ChangeCameraPositionAndSize();
@@ -101,8 +110,8 @@ public class StartGame : MonoBehaviour
         Camera camera = cameraObject.GetComponent<Camera>();
 
         currentCameraSize = camera.orthographicSize;
-        camera.orthographicSize = Mathf.Lerp(currentCameraSize, size, donePercentage / 2f);
+        camera.orthographicSize = Mathf.Lerp(startSize, size, donePercentage);
 
-        cameraObject.transform.position = Vector3.Lerp(cameraObject.transform.position, cameraFinalPos, donePercentage / 2f);
+        cameraObject.transform.position = Vector3.Lerp(cameraStartPos, cameraFinalPos, donePercentage);
     }
 }
