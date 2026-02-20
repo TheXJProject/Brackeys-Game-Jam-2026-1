@@ -152,38 +152,38 @@ public class AllSoundsController : MonoBehaviour
         switch (currentScene)
         {
             case SceneName.AWAKEBEGINNING:
-                if (!AlreadyPlaying("GeneralWhispers")) AudioManager.instance.PlayLoopingSFX("GeneralWhispers");
-                AudioManager.instance.PlayLoopingSFX("ElectricHum", null, 0.2f);
-                AudioManager.instance.PlayLoopingSFX("WindOutside", null, 0.5f);
+                PlayButCheck("GeneralWhispers");
+                PlayButCheck("ElectricHum", 0.2f);
+                PlayButCheck("WindOutside", 0.5f);
                 break;
 
             case SceneName.AWAKEPARALYZED4:
             case SceneName.AWAKEPARALYZED3:
-                AudioManager.instance.PlayLoopingSFX("Scratching N");
+                PlayButCheck("Scratching N");
                 goto case SceneName.AWAKEPARALYZED3;
             case SceneName.AWAKEPARALYZED5:
             case SceneName.AWAKEPARALYZED2:
             case SceneName.AWAKEPARALYZED1:
-                AudioManager.instance.PlayLoopingSFX("ElectricHum");
-                AudioManager.instance.PlayLoopingSFX("FloorCreaking");
-                AudioManager.instance.PlayLoopingSFX("WindOutside");
+                PlayButCheck("ElectricHum");
+                PlayButCheck("FloorCreaking");
+                PlayButCheck("WindOutside");
                 break;
 
             case SceneName.MAZE4:
             case SceneName.MAZE3:
                 // play general whispers
-                if (!AlreadyPlaying("GeneralWhispers")) AudioManager.instance.PlayLoopingSFX("GeneralWhispers");
+                PlayButCheck("GeneralWhispers");
                 goto case SceneName.MAZE5;
             case SceneName.MAZE5:
             case SceneName.MAZE2:
             case SceneName.MAZE1:
                 // play ambience
-                AudioManager.instance.PlayLoopingSFX("Dripping");
-                AudioManager.instance.PlayLoopingSFX("RacingHeartbeat");
+                PlayButCheck("Dripping");
+                PlayButCheck("RacingHeartbeat");
                 break;
 
             case SceneName.LOST:
-                if (!AlreadyPlaying("GeneralWhispers")) AudioManager.instance.PlayLoopingSFX("GeneralWhispers");
+                PlayButCheck("GeneralWhispers");
                 break;
 
             case SceneName.WON:
@@ -193,13 +193,16 @@ public class AllSoundsController : MonoBehaviour
         }
     }
 
-    bool AlreadyPlaying(string name)
+    void PlayButCheck(string name, float? volume = null)
     {
         // Find the looping source that's currently playing that sound
         SoundSource source = Array.Find(AudioManager.instance.sfxLoopingSourceList, y => y.soundName == name);
 
         // Return true if we're already playing the SFX loop
-        return source != null;
+        if (source == null)
+        {
+            AudioManager.instance.PlayLoopingSFX(name, null, volume);
+        }
     }
 
     void FadeIn()
@@ -278,33 +281,33 @@ public class AllSoundsController : MonoBehaviour
 
     // ++++++++ Unique functionality +++++++++
 
-    //void StartWalking()
-    //{
-    //    walking = true;
+    void StartWalking()
+    {
+        walking = true;
 
-    //    if (currentScene == SceneName.AWAKEBEGINNING)
-    //    {
-    //        if (timeWalking > footStepFrequencyBedroom / 2)
-    //        {
-    //            timeWalking = 0;
-    //            AudioManager.instance.PlaySFX("SingleFootstepLight", false, null, true);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        if (timeWalking > footStepFrequencyDream / 2)
-    //        {
-    //            timeWalking = 0;
-    //            AudioManager.instance.PlaySFX("SingleFootstep", false, null, true);
-    //        }
-    //    }
-    //    StartCoroutine(Walking());
-    //}
+        if (currentScene == SceneName.AWAKEBEGINNING)
+        {
+            if (timeWalking > footStepFrequencyBedroom / 2)
+            {
+                timeWalking = 0;
+                AudioManager.instance.PlaySFX("SingleFootstepLight", false, null, true);
+            }
+        }
+        else
+        {
+            if (timeWalking > footStepFrequencyDream / 2)
+            {
+                timeWalking = 0;
+                AudioManager.instance.PlaySFX("SingleFootstep", false, null, true);
+            }
+        }
+        StartCoroutine(Walking());
+    }
 
-    //void StopWalking()
-    //{
-    //    walking = false;
-    //}
+    void StopWalking()
+    {
+        walking = false;
+    }
 
     IEnumerator Walking()
     {
