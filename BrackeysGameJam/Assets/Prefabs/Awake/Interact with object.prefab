@@ -110,6 +110,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: InteractTextCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 5954156453265723804, guid: 7e35e0b601a4193499636217ce62f3ec, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 270759a3c9c5854489bedf866144c916, type: 2}
+    - target: {fileID: 5954156453265723804, guid: 7e35e0b601a4193499636217ce62f3ec, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 9136512173816575489, guid: 270759a3c9c5854489bedf866144c916, type: 2}
+    - target: {fileID: 5954156453265723804, guid: 7e35e0b601a4193499636217ce62f3ec, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8752051738525206256, guid: 7e35e0b601a4193499636217ce62f3ec, type: 3}
       propertyPath: m_Pivot.x
       value: 0
