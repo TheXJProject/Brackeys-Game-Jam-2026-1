@@ -51,6 +51,7 @@ MonoBehaviour:
   spottedClip: {fileID: 8300000, guid: 4b1aff7b20fc13542afb1dee8ab8d65d, type: 3}
   pickUpKey: {fileID: 8300000, guid: e1554e2b5d22107418991b9426a98b24, type: 3}
   unlockDoor: {fileID: 8300000, guid: 4f91b030e31207d4baca289ee734868b, type: 3}
+  catchDreamon: {fileID: 8300000, guid: 64366211be7200845ae38bc5906ab700, type: 3}
   whispers:
   - Whisper11
   - Whisper12

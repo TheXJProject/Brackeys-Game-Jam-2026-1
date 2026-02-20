@@ -18,6 +18,7 @@ public class AllSoundsController : MonoBehaviour
     public AudioClip spottedClip;
     public AudioClip pickUpKey;
     public AudioClip unlockDoor;
+    public AudioClip catchDreamon;
     [SerializeField] string[] whispers;
     [SerializeField][Range(minWalkFreq, maxWalkFreq)] float footStepFrequencyBedroom;
     [SerializeField][Range(minWalkFreq, maxWalkFreq)] float footStepFrequencyDream;
@@ -52,7 +53,7 @@ public class AllSoundsController : MonoBehaviour
         //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
         // Enterlucid
         // Exitlucid
-        //AsleepTrap.onEnemyTrapped get componenets
+        AsleepTrap.onEnemyTrapped += EnemyTrappedSounds;
     }
 
     private void OnDisable()
@@ -68,6 +69,7 @@ public class AllSoundsController : MonoBehaviour
         AsleepLucidControl.onLucidToggled -= LucidMode;
         //AwakeEndAnimThenNextThing.onLossFadeScreenStarted
         //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
+        AsleepTrap.onEnemyTrapped -= EnemyTrappedSounds;
     }
 
     private void Awake()
@@ -299,7 +301,7 @@ public class AllSoundsController : MonoBehaviour
             case SceneName.MAZE2:
                 MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
                 MixerFXManager.instance.SetMusicParam("MPianoSFX", EX_PARA.VOLUME, fadeInTime);
-                
+
                 MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
                 break;
 
@@ -518,5 +520,25 @@ public class AllSoundsController : MonoBehaviour
     void EnterExitLucid()
     {
         AudioManager.instance.PlaySFX("SingleHeartbeat");
+    }
+
+    void EnemyTrappedSounds(GameObject dreamon)
+    {
+        // Find the audiosources for rumbling
+        AudioSource source = Array.Find(dreamon.GetComponents<AudioSource>(), source => source.clip != null && source.clip.name == "Rumbling");
+        AudioSource source2 = Array.Find(dreamon.GetComponents<AudioSource>(), source => source.clip != null && source.clip.name == "Rasping");
+
+        if ((source != null) && (source2 != null))
+        {
+            source.Stop();
+            source2.Stop();
+            source2.clip = catchDreamon;
+            source2.loop = false;
+            source2.Play();
+        }
+        else
+        {
+            Debug.LogWarning("Error, couldn't find both sources!");
+        }
     }
 }
