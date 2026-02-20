@@ -3761,7 +3761,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b979240af1be53342ab954cb5c8f789d, type: 3}
     looped: 0
   - name: SingleFootstep
-    volume: 0.65
+    volume: 0.7
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0.5, y: 0.59}

@@ -52,6 +52,7 @@ public class AllSoundsController : MonoBehaviour
         //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
         // Enterlucid
         // Exitlucid
+        //AsleepTrap.onEnemyTrapped get componenets
     }
 
     private void OnDisable()
@@ -393,7 +394,7 @@ public class AllSoundsController : MonoBehaviour
 
         if (currentScene == SceneName.AWAKEBEGINNING)
         {
-            if (timeWalking > footStepFrequencyBedroom / 2f)
+            if (timeWalking > footStepFrequencyBedroom / 4f)
             {
                 timeWalking = 0;
                 AudioManager.instance.PlaySFX("SingleFootstepLight", false, null, true);
@@ -401,7 +402,7 @@ public class AllSoundsController : MonoBehaviour
         }
         else
         {
-            if (timeWalking > footStepFrequencyDream / 2f)
+            if (timeWalking > footStepFrequencyDream / 4f)
             {
                 timeWalking = 0;
                 AudioManager.instance.PlaySFX("SingleFootstep", false, null, true);
