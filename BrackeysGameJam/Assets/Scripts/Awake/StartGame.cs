@@ -25,6 +25,7 @@ public class StartGame : MonoBehaviour
     float startSize;
 
     public static event Action startGameNow;
+    public static event Action<float> beginPressed;
 
     InputController playerControls;
     InputAction interact;
@@ -61,6 +62,7 @@ public class StartGame : MonoBehaviour
         if (!inStartTransistion && !startedCameraMove)
         {
             startedCameraMove = true;
+            beginPressed?.Invoke(cameraMoveTime);
             StartCoroutine(MoveCamera());
         }
     }
