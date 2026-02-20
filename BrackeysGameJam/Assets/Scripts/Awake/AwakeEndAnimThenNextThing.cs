@@ -1,13 +1,27 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+    
+public enum GameState
+{
+    WON,
+    LOSS,
+    OTHER
+}
 
 public class AwakeEndAnimThenNextThing : MonoBehaviour
 {
+    public static event Action onWinFadeScreenStarted;
+    public static event Action onLossFadeScreenStarted;
+
     [SerializeField] private GameObject nextToUnlock;
     [SerializeField] private int endScreenFade = 5;
     [SerializeField] Image blackFade;
+    [SerializeField] GameState gameState;
+
+    [SerializeField] 
 
     private void Start()
     {
@@ -23,6 +37,11 @@ public class AwakeEndAnimThenNextThing : MonoBehaviour
 
     public IEnumerator ShowEndScreen()
     {
+        if (gameState == GameState.WON)
+            onWinFadeScreenStarted?.Invoke();
+        else if (gameState == GameState.LOSS)
+            onLossFadeScreenStarted?.Invoke();
+
         float timer = 0;
         Color color = blackFade.color;
         while ( timer < endScreenFade)

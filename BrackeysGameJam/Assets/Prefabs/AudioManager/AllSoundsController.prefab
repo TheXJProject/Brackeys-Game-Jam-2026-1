@@ -62,7 +62,7 @@ MonoBehaviour:
   - Whisper42
   - Whisper51
   - Whisper52
-  footStepFrequencyBedroom: 0.3
+  footStepFrequencyBedroom: 0.4
   footStepFrequencyDream: 0.9
   randomWhisperFrequencyBedroom: 25
   randomWhisperFrequencyDream: 15
