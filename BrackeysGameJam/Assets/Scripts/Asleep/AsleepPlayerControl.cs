@@ -1,10 +1,14 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class AsleepPlayerControl : MonoBehaviour
 {
+    public static event Action onPlayer3DStartedMoving;
+    public static event Action onPlayer3DStoppedMoving;
+
     [SerializeField] float moveSpeed = 2;
     [SerializeField] float mouseSensitivity = 0.1f;
     [SerializeField] float detectionRange = 5f;
@@ -32,6 +36,7 @@ public class AsleepPlayerControl : MonoBehaviour
     bool checkIsLucid = false;
     bool lookingAtInteractable = false;
     AsleepInteractable curInteractable;
+    bool sentStartedMoving = false;
 
     private void MoveToMazeStart(Maze maze)
     {
@@ -199,6 +204,19 @@ public class AsleepPlayerControl : MonoBehaviour
         Vector3 moveScaler = new Vector3(inputValue.x, 0, inputValue.y);
         Quaternion moveRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
         moveVector = moveRotation * moveScaler;
+
+        playerRB.velocity = new Vector2(moveVector.x * moveSpeed, moveVector.y * moveSpeed);
+        if (!sentStartedMoving && playerRB.velocity.magnitude > 0.1f)
+        {
+            sentStartedMoving = true;
+            onPlayer3DStartedMoving?.Invoke();
+        }
+        else if (sentStartedMoving && playerRB.velocity.magnitude < 0.1f)
+        {
+            sentStartedMoving = false;
+            onPlayer3DStoppedMoving?.Invoke();
+        }
+
     }
 
     private void ToggleIsLucidCheck(bool isLucid) => checkIsLucid = isLucid;
