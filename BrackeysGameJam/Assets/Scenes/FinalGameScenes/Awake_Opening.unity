@@ -360,7 +360,7 @@ MonoBehaviour:
   cameraObject: {fileID: 1173324134}
   cameraFinalPos: {x: -3.68, y: 0, z: -10}
   size: 5
-  playerCanStartTime: 2
+  playerCanStartTime: 4
   cameraMoveTime: 2.5
 --- !u!224 &1035995423
 RectTransform:
@@ -861,7 +861,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1488649139}
-  m_Father: {fileID: 4043673824794397542}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4043673824794397541
 PrefabInstance:
@@ -1005,3 +1005,4 @@ SceneRoots:
   - {fileID: 94433460}
   - {fileID: 154468501}
   - {fileID: 1035995423}
+  - {fileID: 1617019437}

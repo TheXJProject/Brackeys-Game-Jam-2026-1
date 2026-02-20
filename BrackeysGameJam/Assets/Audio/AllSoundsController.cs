@@ -23,7 +23,7 @@ public class AllSoundsController : MonoBehaviour
     [SerializeField] float timeBetweenBeingSpotted;
     [SerializeField] double musicStartTime = 0.5f;
     [SerializeField] float fadeInTime = 1;
-    [SerializeField] float fadeOutTime = 1;
+    //[SerializeField] float fadeOutTime = 1;
     SceneName currentScene;
     bool walking = false;
     float timeWalking = 0f;
