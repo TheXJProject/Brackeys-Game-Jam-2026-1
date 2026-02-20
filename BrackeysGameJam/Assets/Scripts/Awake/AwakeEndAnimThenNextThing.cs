@@ -14,7 +14,9 @@ public enum GameState
 public class AwakeEndAnimThenNextThing : MonoBehaviour
 {
     public static event Action onWinFadeScreenStarted;
+    public static event Action onWinScreenShown;
     public static event Action onLossFadeScreenStarted;
+    public static event Action onLossScreenShown;
 
     [SerializeField] private GameObject nextToUnlock;
     [SerializeField] private int endScreenFade = 5;
@@ -57,6 +59,11 @@ public class AwakeEndAnimThenNextThing : MonoBehaviour
 
         if (nextToUnlock != null)
             nextToUnlock.SetActive(true);
+
+        if (gameState == GameState.WON)
+            onWinScreenShown?.Invoke();
+        else if (gameState == GameState.LOSS)
+            onLossScreenShown?.Invoke();
         yield return null;
     }
 }

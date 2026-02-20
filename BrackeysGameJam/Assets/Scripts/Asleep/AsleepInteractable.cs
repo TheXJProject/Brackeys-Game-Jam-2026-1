@@ -15,7 +15,12 @@ public class AsleepInteractable : MonoBehaviour
     public static OnPuzzlePieceAdded onPuzzlePieceAdded;
 
     public static event Action onLevelCollectablePickedUp;
+    public static event Action onPuzzleSolved;
     public static event Action<int> onButtonPressed;
+    public static event Action<AudioSource> onButtonPressedAudio;
+    public static event Action<AudioSource> onLockedDoorTriedAudio;
+    public static event Action<AudioSource> onDoorOpenedAudio;
+    public static event Action<AudioSource> onKeyCollectedAudio;
 
     public enum InteractableType
     {
@@ -68,7 +73,7 @@ public class AsleepInteractable : MonoBehaviour
                 Open();
                 break;
             case InteractableType.LOCKEDOPENABLE:
-                
+                LockedDoorTried();
                 break;
             default:
                 break;
@@ -83,10 +88,12 @@ public class AsleepInteractable : MonoBehaviour
     private void Press()
     {
         onButtonPressed?.Invoke(buttonInfo.ButtonID);
+        onButtonPressedAudio?.Invoke(GetComponent<AudioSource>());
     }
 
     private void Collect()
     {
+        onKeyCollectedAudio?.Invoke(GetComponent<AudioSource>());
         onLevelCollectablePickedUp?.Invoke();
         gameObject.SetActive(false);
     }
@@ -96,10 +103,16 @@ public class AsleepInteractable : MonoBehaviour
         ++numberOfPuzzlesToSolve;
     }
 
+    private void LockedDoorTried()
+    {
+        onLockedDoorTriedAudio?.Invoke(GetComponent<AudioSource>());
+    }
+
     private void Unlock()
     {
         if (interactType == InteractableType.LOCKEDOPENABLE)
         {
+            onPuzzleSolved?.Invoke();
             if (numberOfPuzzlesToSolve == ++numberOfPuzzlesSolved)
                 interactType = InteractableType.OPENABLE;
         }
@@ -107,7 +120,8 @@ public class AsleepInteractable : MonoBehaviour
 
     private void Open()
     {
-        if(TransitionManager.instance.IsThisLastLevel())
+        onDoorOpenedAudio?.Invoke(GetComponent<AudioSource>());
+        if (TransitionManager.instance.IsThisLastLevel())
             TransitionManager.instance.LoadVictoryLevel();
         else
             TransitionManager.instance.LoadNextSleepLevel();

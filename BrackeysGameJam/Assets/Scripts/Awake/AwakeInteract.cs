@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -5,12 +6,20 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
+public enum InteractWith2D
+{
+    BED,
+    COMPUTER
+}
+
 public class AwakeInteract : MonoBehaviour
 {
     public UnityEvent onInteractedWith;
+    public static event Action<InteractWith2D> onInteractedWithIn2D;
 
     [SerializeField] private TextMeshProUGUI promptText;
     [SerializeField] private string promptTextShown = "Interact [E]";
+    [SerializeField] private InteractWith2D interactObject = InteractWith2D.BED;
     private bool withinRangeForPrompt = false;
     private bool disableInteraction;
 
@@ -63,6 +72,7 @@ public class AwakeInteract : MonoBehaviour
     {
         if (withinRangeForPrompt)
         {
+            onInteractedWithIn2D?.Invoke(interactObject);
             onInteractedWith?.Invoke();
             disableInteraction = true;
             withinRangeForPrompt = false;

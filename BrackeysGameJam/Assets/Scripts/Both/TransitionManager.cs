@@ -26,6 +26,7 @@ public class TransitionManager : MonoBehaviour
 {
     public static TransitionManager instance;
 
+    public static event Action onSuccessPinchStartWakeUp;
     public static event Action<SceneName> onLoadingNextScene;
     public static event Action onBeginFadeOut;
 
@@ -59,6 +60,7 @@ public class TransitionManager : MonoBehaviour
     {
         TransitionAnimControl.onBlinkMiddle += LoadCurrentAwakeScene;
         TransitionAnimControl.instance.StartBlinkTransition();
+        onSuccessPinchStartWakeUp?.Invoke();
         onBeginFadeOut?.Invoke();
     }
     public void FallAsleep()
