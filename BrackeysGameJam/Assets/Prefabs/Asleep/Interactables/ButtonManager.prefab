@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94fc158dc9a5261409c18b1b56440200, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonGameObject: {fileID: 6017181212082625077, guid: 9e34f274822a9fe4ab69c3cd92c0ab6a, type: 3}
+  buttonsToSpawn: []
   buttonOrder: 010000000200000000000000

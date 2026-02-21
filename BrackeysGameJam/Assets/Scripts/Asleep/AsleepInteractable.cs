@@ -7,6 +7,7 @@ using UnityEngine;
 public class Button
 {
     public int ButtonID;
+    public MeshRenderer ButtonMeshRenderer;
 }
 
 public class AsleepInteractable : MonoBehaviour
@@ -30,7 +31,7 @@ public class AsleepInteractable : MonoBehaviour
         LOCKEDOPENABLE
     }
 
-    [SerializeField] Button buttonInfo;
+    public Button buttonInfo;
     private int numberOfPuzzlesToSolve = 0;
     private int numberOfPuzzlesSolved = 0;
 

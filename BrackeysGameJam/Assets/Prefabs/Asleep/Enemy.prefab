@@ -160,10 +160,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roamSpeed: 2
   chaseSpeed: 1
-  viewDistance: 5
+  straightViewDistance: 5
+  diagonalViewDistance: 3
   killDistance: 1
   sprite: {fileID: 5640209426268644083}
   enemyID: 0
+  diagonalAngle: 20
   allowedTargetNodes: 
 --- !u!195 &7564224492984416347
 NavMeshAgent:

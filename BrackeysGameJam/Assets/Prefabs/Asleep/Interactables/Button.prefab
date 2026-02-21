@@ -70,6 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonInfo:
     ButtonID: 0
+    ButtonMeshRenderer: {fileID: 1160758000523280235}
   interactType: 1
 --- !u!82 &6834530083370053314
 AudioSource:
@@ -229,7 +230,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 877aea40ac584d84b8ba0ab371fa3106, type: 2}
+  - {fileID: 2100000, guid: 82b1e186b8d08014fb8b98eed4ab5832, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

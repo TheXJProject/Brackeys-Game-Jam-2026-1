@@ -12,6 +12,7 @@ public class AsleepTrapManager : MonoBehaviour
 {
     public GameObject trapGameObject;
     public List<TrapSpawnInfo> trapsToSpawn;
+    public int numberOfTrapsRequired;
     public float trapYPosition;
 
     private int trapActivated;
@@ -37,7 +38,7 @@ public class AsleepTrapManager : MonoBehaviour
     {
         trapActivated++;
 
-        if (trapActivated >= trapsToSpawn.Count)
+        if (trapActivated >= numberOfTrapsRequired)
         {
             onAllTrapsActivated?.Invoke();
         }

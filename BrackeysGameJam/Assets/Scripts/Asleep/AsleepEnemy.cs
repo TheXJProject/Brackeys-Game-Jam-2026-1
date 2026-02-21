@@ -8,11 +8,13 @@ public class AsleepEnemy : MonoBehaviour
 {
     public float roamSpeed;
     public float chaseSpeed;
-    public float viewDistance;
+    public float straightViewDistance;
+    public float diagonalViewDistance;
     public float killDistance;
     public SpriteRenderer sprite;
     public int enemyID;
 
+    [SerializeField] private float diagonalAngle;
 
     public List<int> allowedTargetNodes;
 
@@ -99,14 +101,29 @@ public class AsleepEnemy : MonoBehaviour
         Vector3 rayOrigin = transform.position;
 
         rayDirection.Normalize();
-        rayDirection *= viewDistance;
 
         rayOrigin.y = 1f;
         rayDirection.y = 0f;
 
+        rayDirection *= straightViewDistance;
+
+        // Vector3 rayDirectionAbs =
+        //     new Vector3(Math.Abs(rayDirection.x), Math.Abs(rayDirection.y), Math.Abs(rayDirection.z));
+        //
+        // print(Vector3.Angle(rayDirectionAbs, transform.forward));
+        //
+        // if (Vector3.Angle(rayDirectionAbs, transform.forward) > diagonalAngle)
+        // {
+        //     rayDirection *= diagonalViewDistance;
+        // }
+        // else
+        // {
+        //     rayDirection *= straightViewDistance;
+        // }
+
         Debug.DrawRay(rayOrigin, rayDirection, Color.green);
 
-        Physics.Raycast(rayOrigin, rayDirection, out RaycastHit lineOfSightRay, maxDistance: viewDistance);
+        Physics.Raycast(rayOrigin, rayDirection, out RaycastHit lineOfSightRay, maxDistance: straightViewDistance);
         bool playerSeen = (lineOfSightRay.collider == playerCollider);
 
         if (playerSeen)
