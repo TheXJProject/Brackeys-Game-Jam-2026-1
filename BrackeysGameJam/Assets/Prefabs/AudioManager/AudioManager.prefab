@@ -4445,7 +4445,7 @@ MonoBehaviour:
   Msg: 0
   removeWarningMsgs: 0
   removeCautionMsgs: 1
-  nonPriorityVolume: 0.8
+  nonPriorityVolume: 0.7
   musicSounds:
   - name: BChoir
     volume: 0.8

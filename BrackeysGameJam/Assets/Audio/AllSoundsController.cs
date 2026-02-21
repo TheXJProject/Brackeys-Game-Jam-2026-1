@@ -227,10 +227,10 @@ public class AllSoundsController : MonoBehaviour
                 break;
 
             case SceneName.AWAKEPARALYZED4:
-            case SceneName.AWAKEPARALYZED3:
                 PlayButCheck("ScratchingNails");
                 goto case SceneName.AWAKEPARALYZED1;
             case SceneName.AWAKEPARALYZED5:
+            case SceneName.AWAKEPARALYZED3:
             case SceneName.AWAKEPARALYZED2:
             case SceneName.AWAKEPARALYZED1:
                 PlayButCheck("ElectricHum");
@@ -257,6 +257,8 @@ public class AllSoundsController : MonoBehaviour
 
             case SceneName.WON:
                 PlayButCheck("WindOutside");
+                PlayButCheck("ElectricHum", 0.6f);
+                PlayButCheck("GeneralWhispers");
                 break;
 
             default:
@@ -293,10 +295,10 @@ public class AllSoundsController : MonoBehaviour
                 break;
 
             case SceneName.AWAKEPARALYZED4:
-            case SceneName.AWAKEPARALYZED3:
                 MixerFXManager.instance.SetLoopingSFXParam("ScratchingNails", EX_PARA.VOLUME, fadeInTime);
                 goto case SceneName.AWAKEPARALYZED1;
             case SceneName.AWAKEPARALYZED5:
+            case SceneName.AWAKEPARALYZED3:
             case SceneName.AWAKEPARALYZED2:
             case SceneName.AWAKEPARALYZED1:
                 MixerFXManager.instance.SetLoopingSFXParam("ElectricHum", EX_PARA.VOLUME, fadeInTime);
@@ -537,7 +539,6 @@ public class AllSoundsController : MonoBehaviour
 
     void EnemySeenPlayer(int enemy, AudioSource source)
     {
-        Debug.Log("Enemyspots" + enemy);
         // Add to map if needed
         if (!dreamonSpottedTimes.ContainsKey(enemy))
         {
@@ -550,8 +551,8 @@ public class AllSoundsController : MonoBehaviour
         // Check time
         if ((timeDifference > timeBetweenBeingSpotted) || (dreamonSpottedTimes[enemy] == newEnemy))
         {
-            Debug.Log("Enemy screams" + enemy + spottedClip);
             dreamonSpottedTimes[enemy] = Time.time;
+            source.pitch = UnityEngine.Random.Range(0.95f, 1.05f);
             source.Play();
             if (!playingHeartBeat)
             {
@@ -589,8 +590,11 @@ public class AllSoundsController : MonoBehaviour
 
         if ((source != null) && (source2 != null))
         {
+            source.playOnAwake = false;
             source.Stop();
+            source2.playOnAwake = false;
             source2.Stop();
+
             source2.clip = catchDreamon;
             source2.loop = false;
             source2.Play();  

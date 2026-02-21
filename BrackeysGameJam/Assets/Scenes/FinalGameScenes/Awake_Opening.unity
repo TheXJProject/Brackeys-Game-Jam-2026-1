@@ -1189,7 +1189,7 @@ MonoBehaviour:
   cameraObject: {fileID: 1173324134}
   cameraFinalPos: {x: 0, y: -100, z: -10}
   size: 3
-  playerCanStartTime: 2
+  playerCanStartTime: 0.5
   cameraMoveTime: 2.5
 --- !u!1 &1271887200
 GameObject:
