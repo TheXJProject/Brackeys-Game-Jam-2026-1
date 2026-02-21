@@ -45,3 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicAndSoundForceOff: 0
+  cannotDie: 0

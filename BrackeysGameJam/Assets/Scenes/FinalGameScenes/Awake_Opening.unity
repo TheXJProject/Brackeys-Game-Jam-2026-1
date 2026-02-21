@@ -552,14 +552,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1154810367233674687, guid: e3c7bbdde2fbf8b4aa1a97f4e6c4098f, type: 3}
-      propertyPath: sfxLoopedSounds.Array.data[2].volume
-      value: 0.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 1154810367233674687, guid: e3c7bbdde2fbf8b4aa1a97f4e6c4098f, type: 3}
-      propertyPath: sfxLoopedSounds.Array.data[6].volume
-      value: 0.9
-      objectReference: {fileID: 0}
     - target: {fileID: 5127075528363332172, guid: e3c7bbdde2fbf8b4aa1a97f4e6c4098f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

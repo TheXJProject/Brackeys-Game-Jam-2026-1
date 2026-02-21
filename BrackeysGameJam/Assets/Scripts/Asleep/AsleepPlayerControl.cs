@@ -228,6 +228,21 @@ public class AsleepPlayerControl : MonoBehaviour
     public static void killPlayer()
     {
         onPlayerKilled?.Invoke();
-        print("Dead!");
+
+        if (CheatLogic.cheatTool != null)
+        {
+            if (CheatLogic.cheatTool.cannotDie)
+            {
+                print("deaed");
+            }
+            else
+            {
+                TransitionManager.instance.LoadDeathLevel();
+            }
+        }
+        else
+        {
+            print("deaed (CheatLogic not present)");
+        }
     }
 }

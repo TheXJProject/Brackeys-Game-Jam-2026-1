@@ -7,6 +7,7 @@ public class CheatLogic : MonoBehaviour
     public static CheatLogic cheatTool;
 
     public bool musicAndSoundForceOff;
+    public bool cannotDie;
 
     private void Awake()
     {
@@ -30,6 +31,12 @@ public class CheatLogic : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             musicAndSoundForceOff = !musicAndSoundForceOff;
+        }
+
+        // If we press the up arrow turn off/on if the player can die
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            cannotDie = !cannotDie;
         }
     }
 }

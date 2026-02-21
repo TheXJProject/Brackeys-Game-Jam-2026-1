@@ -4709,7 +4709,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 3000f44bee472bc4db0b60912de90566, type: 3}
     looped: 1
   - name: FloorCreaking
-    volume: 0.8
+    volume: 0.9
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
@@ -4737,7 +4737,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 1ff9be4106f29f44095021427f64c020, type: 3}
     looped: 1
   - name: WindOutside
-    volume: 0.8
+    volume: 0.9
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
