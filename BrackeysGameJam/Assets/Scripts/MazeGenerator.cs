@@ -69,26 +69,12 @@ public class MazeGenerator : MonoBehaviour
             int row = objectInfo.nodeIndex / maze.size;
             int col = objectInfo.nodeIndex % maze.size;
 
-            Vector3 offsetVector = new();
-
-            switch (objectInfo.wallFace)
-            {
-                case Maze.WallDirection.North:
-                    offsetVector = Vector3.forward;
-                    break;
-                case Maze.WallDirection.South:
-                    offsetVector = Vector3.back;
-                    break;
-                case Maze.WallDirection.East:
-                    offsetVector = Vector3.right;
-                    break;
-                case Maze.WallDirection.West:
-                    offsetVector = Vector3.left;
-                    break;
-            }
+            Vector3 offsetVector = maze.getOnWallFaceOffset(objectInfo.wallFace);
+            Vector3 rotationVector = maze.getOnWallFaceRotation(objectInfo.wallFace);
 
             Instantiate(objectInfo.gameObject,
-                new Vector3(col * maze.scale.x, 1, -row * maze.scale.z) + offsetVector, Quaternion.identity);
+                new Vector3(col * maze.scale.x, 0, -row * maze.scale.z) + offsetVector,
+                Quaternion.Euler(rotationVector), transform);
         }
     }
 

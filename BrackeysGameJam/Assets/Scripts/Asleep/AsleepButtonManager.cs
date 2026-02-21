@@ -9,6 +9,7 @@ public class ButtonSpawnInfo
     public int startNodeIndex;
     public int id;
     public Material material;
+    public Maze.WallDirection wallFace;
 }
 
 public class AsleepButtonManager : MonoBehaviour
@@ -54,18 +55,23 @@ public class AsleepButtonManager : MonoBehaviour
 
     public void SpawnButtons(Maze maze)
     {
-        foreach (var button in buttonsToSpawn)
+        foreach (var buttonInfo in buttonsToSpawn)
         {
-            int row = button.startNodeIndex / maze.size;
-            int col = button.startNodeIndex % maze.size;
+            int row = buttonInfo.startNodeIndex / maze.size;
+            int col = buttonInfo.startNodeIndex % maze.size;
+
+            Vector3 offsetVector = maze.getOnWallFaceOffset(buttonInfo.wallFace);
+            Vector3 rotationVector = maze.getOnWallFaceRotation(buttonInfo.wallFace);
 
             GameObject newButton = Instantiate(buttonGameObject,
-                new Vector3(col * maze.scale.x, 0, -row * maze.scale.z), Quaternion.identity, transform);
+                new Vector3(col * maze.scale.x, 0, -row * maze.scale.z) +
+                offsetVector - Vector3.Scale(offsetVector, new Vector3(0.02f, 0, 0.02f)),
+                Quaternion.Euler(rotationVector), transform);
 
             AsleepInteractable interactableScript = newButton.GetComponent<AsleepInteractable>();
 
-            interactableScript.buttonInfo.ButtonID = button.id;
-            interactableScript.buttonInfo.ButtonMeshRenderer.material = button.material;
+            interactableScript.buttonInfo.ButtonID = buttonInfo.id;
+            interactableScript.buttonInfo.ButtonMeshRenderer.material = buttonInfo.material;
         }
     }
 }
