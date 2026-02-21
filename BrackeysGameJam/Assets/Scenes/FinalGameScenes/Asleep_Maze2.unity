@@ -159,6 +159,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3935475577483327222, guid: 443473b9484d2b0439945b73aea7c192, type: 3}
+      propertyPath: objectsToSpawn.Array.data[0].wallFace
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3935475577483327222, guid: 443473b9484d2b0439945b73aea7c192, type: 3}
       propertyPath: objectsToSpawn.Array.data[0].nodeIndex
       value: 62
       objectReference: {fileID: 0}
