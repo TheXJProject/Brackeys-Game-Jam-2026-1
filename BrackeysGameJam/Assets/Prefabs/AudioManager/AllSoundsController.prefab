@@ -66,10 +66,10 @@ MonoBehaviour:
   footStepFrequencyBedroom: 0.4
   footStepFrequencyDream: 0.6
   randomWhisperFrequencyBedroom: 30
-  randomWhisperFrequencyDream: 50
-  minWhisperTime: 12
-  timeBetweenBeingSpotted: 8
+  randomWhisperFrequencyDream: 70
+  minWhisperTime: 15
+  timeBetweenBeingSpotted: 9
   musicStartTime: 3
   fadeInTime: 1.5
   fadeOutTime: 0.5
-  heartbeatTimeUntilFadeOut: 3
+  heartbeatTimeUntilFadeOut: 4

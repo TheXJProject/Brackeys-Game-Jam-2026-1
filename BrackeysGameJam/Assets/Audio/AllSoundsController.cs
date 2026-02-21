@@ -29,6 +29,7 @@ public class AllSoundsController : MonoBehaviour
     [SerializeField] double musicStartTime = 0.5f;
     [SerializeField] float fadeInTime = 1;
     [SerializeField] float fadeOutTime = 1;
+    [SerializeField] float quickFadeOutTime = 1;
     [SerializeField] float heartbeatTimeUntilFadeOut = 1;
     SceneName currentScene;
     bool walking = false;
@@ -49,8 +50,8 @@ public class AllSoundsController : MonoBehaviour
         AsleepPlayerControl.onPlayer3DStoppedMoving += StopWalking;
         StartGame.beginPressed += StartScreenEnterGame;
         AsleepLucidControl.onLucidToggled += LucidMode;
-        //AwakeEndAnimThenNextThing.onLossFadeScreenStarted += WinScreenAu
-        //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
+        AwakeEndAnimThenNextThing.onLossFadeScreenStarted += StartDeathSequence;
+        AwakeEndAnimThenNextThing.onWinFadeScreenStarted += WinFadeFirstStep;
         AwakeEndAnimThenNextThing.onLossScreenShown += FadeToDeathScreen;
         AwakeEndAnimThenNextThing.onWinScreenShown += FadeToWinScreen;
         AsleepLucidControl.onLucidStarted += EnterExitLucid;
@@ -69,8 +70,8 @@ public class AllSoundsController : MonoBehaviour
         AsleepPlayerControl.onPlayer3DStoppedMoving -= StopWalking;
         StartGame.beginPressed -= StartScreenEnterGame;
         AsleepLucidControl.onLucidToggled -= LucidMode;
-        //AwakeEndAnimThenNextThing.onLossFadeScreenStarted
-        //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
+        AwakeEndAnimThenNextThing.onLossFadeScreenStarted -= StartDeathSequence;
+        AwakeEndAnimThenNextThing.onWinFadeScreenStarted -= WinFadeFirstStep;
         AwakeEndAnimThenNextThing.onLossScreenShown -= FadeToDeathScreen;
         AwakeEndAnimThenNextThing.onWinScreenShown -= FadeToWinScreen;
         AsleepLucidControl.onLucidStarted += EnterExitLucid;
@@ -167,7 +168,7 @@ public class AllSoundsController : MonoBehaviour
     void NewScene(SceneName name)
     {
         currentScene = name;
-        //Debug.LogWarning("Now in: " + name);
+        Debug.LogWarning("Now in: " + name);
 
         // If we need to mute sounds before we go into the new scene
         switch (currentScene)
@@ -277,6 +278,7 @@ public class AllSoundsController : MonoBehaviour
 
     void FadeIn()
     {
+        Debug.Log("Fadein" + currentScene);
         MixerFXManager.instance.SetMusicOverallParam(EX_PARA.VOLUME, fadeInTime);
         MixerFXManager.instance.SetSfxOverallParam(EX_PARA.VOLUME, fadeInTime);
 
@@ -347,12 +349,16 @@ public class AllSoundsController : MonoBehaviour
 
             case SceneName.LOST:
                 // Don't fade in anything initially on lost
+                // Play the loss SFX music
+                AudioManager.instance.PlaySFX("DeathMusic", true);
                 break;
 
             case SceneName.WON:
                 MixerFXManager.instance.SetMusicParam("WinMusic", EX_PARA.VOLUME, fadeInTime);
 
                 MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.3f);
+                MixerFXManager.instance.SetLoopingSFXParam("ElectricHum", EX_PARA.VOLUME, fadeInTime, 0.3f);
+                MixerFXManager.instance.SetLoopingSFXParam("WindOutside", EX_PARA.VOLUME, fadeInTime, 0.3f);
                 break;
             default:
                 Debug.LogWarning("Error, couldn't find scene!");
@@ -374,19 +380,22 @@ public class AllSoundsController : MonoBehaviour
                 MixerFXManager.instance.SetMusicOverallParam(EX_PARA.VOLUME, fadeOutTime, 0);
                 MixerFXManager.instance.SetSfxOverallParam(EX_PARA.VOLUME, fadeOutTime, 0);
                 break;
-            case SceneName.MAZE1:
-                break;
-            case SceneName.MAZE2:
-                break;
-            case SceneName.MAZE3:
-                break;
-            case SceneName.MAZE4:
-                break;
+
             case SceneName.MAZE5:
+            case SceneName.MAZE4:
+            case SceneName.MAZE3:
+            case SceneName.MAZE2:
+            case SceneName.MAZE1:
+                MixerFXManager.instance.SetMusicOverallParam(EX_PARA.VOLUME, quickFadeOutTime, 0);
+                MixerFXManager.instance.SetSfxOverallParam(EX_PARA.VOLUME, quickFadeOutTime, 0);
                 break;
+
             case SceneName.LOST:
+                MixerFXManager.instance.SetMusicParam("BDeepChords", EX_PARA.VOLUME, fadeOutTime);
+                MixerFXManager.instance.SetMusicParam("BPianoSFX", EX_PARA.VOLUME, fadeOutTime);
                 break;
             case SceneName.WON:
+                MixerFXManager.instance.SetMusicParam("WinMusic", EX_PARA.VOLUME, fadeOutTime);
                 break;
             default:
                 Debug.LogWarning("Error, couldn't find scene!");
@@ -421,6 +430,23 @@ public class AllSoundsController : MonoBehaviour
     void FadeToWinScreen()
     {
         MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0f);
+    }
+
+    void StartDeathSequence()
+    {
+        Debug.Log("LossFadeFirst");
+        // TODO: this
+
+        // Wait set amount of time
+
+        // Play scream SFX
+    }
+
+    void WinFadeFirstStep()
+    {
+        Debug.Log("WinFadeFirst");
+        MixerFXManager.instance.SetLoopingSFXParam("ElectricHum", EX_PARA.VOLUME, fadeInTime, 0f);
+        MixerFXManager.instance.SetLoopingSFXParam("WindOutside", EX_PARA.VOLUME, fadeInTime, 0f);
     }
 
     void StartWalking()
@@ -511,7 +537,7 @@ public class AllSoundsController : MonoBehaviour
 
     void EnemySeenPlayer(int enemy, AudioSource source)
     {
-        //Debug.Log("Enemyspots" + enemy);
+        Debug.Log("Enemyspots" + enemy);
         // Add to map if needed
         if (!dreamonSpottedTimes.ContainsKey(enemy))
         {
@@ -524,7 +550,7 @@ public class AllSoundsController : MonoBehaviour
         // Check time
         if ((timeDifference > timeBetweenBeingSpotted) || (dreamonSpottedTimes[enemy] == newEnemy))
         {
-            //Debug.Log("Enemy screams" + enemy + spottedClip);
+            Debug.Log("Enemy screams" + enemy + spottedClip);
             dreamonSpottedTimes[enemy] = Time.time;
             source.Play();
             if (!playingHeartBeat)
