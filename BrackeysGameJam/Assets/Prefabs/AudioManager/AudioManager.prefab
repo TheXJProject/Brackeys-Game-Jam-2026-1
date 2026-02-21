@@ -4603,7 +4603,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: de64d1141e15d5a4781cfef530dc74d6, type: 3}
     looped: 0
   - name: CharacterInteract
-    volume: 0.8
+    volume: 1
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
@@ -4659,7 +4659,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b00065fafbe178b49a614b88e8022fe1, type: 3}
     looped: 0
   - name: PlayerInteract
-    volume: 0.8
+    volume: 0.6
     pitch: 1
     panning: 0
     randomPitchRange: {x: 0, y: 0}
@@ -4685,6 +4685,13 @@ MonoBehaviour:
     panning: 0
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: 0c68db3e618e34640b00449005afbce1, type: 3}
+    looped: 0
+  - name: PickUpKey
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: e1554e2b5d22107418991b9426a98b24, type: 3}
     looped: 0
   sfxLoopedSounds:
   - name: Dripping

@@ -20,7 +20,7 @@ public class AsleepInteractable : MonoBehaviour
     public static event Action<AudioSource> onButtonPressedAudio;
     public static event Action<AudioSource> onLockedDoorTriedAudio;
     public static event Action<AudioSource> onDoorOpenedAudio;
-    public static event Action<AudioSource> onKeyCollectedAudio;
+    public static event Action onKeyCollectedAudio;
 
     public enum InteractableType
     {
@@ -93,7 +93,7 @@ public class AsleepInteractable : MonoBehaviour
 
     private void Collect()
     {
-        onKeyCollectedAudio?.Invoke(GetComponent<AudioSource>());
+        onKeyCollectedAudio?.Invoke();
         onLevelCollectablePickedUp?.Invoke();
         gameObject.SetActive(false);
     }
