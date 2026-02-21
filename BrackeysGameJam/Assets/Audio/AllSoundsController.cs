@@ -65,7 +65,7 @@ public class AllSoundsController : MonoBehaviour
         //TODO: computer and go to sleep
         AsleepInteractable.onButtonPressedAudio += ButtonSound;
         AsleepInteractable.onLockedDoorTriedAudio += DoorLocked;
-        //TODO: Door unlock and open sequence UnLockAndOpen()
+        AsleepInteractable.onDoorOpenedAudio += UnLockAndOpen;
         AsleepInteractable.onKeyCollectedAudio += CollectKey;
     }
 
@@ -97,7 +97,7 @@ public class AllSoundsController : MonoBehaviour
         //TODO: computer and go to sleep
         AsleepInteractable.onButtonPressedAudio -= ButtonSound;
         AsleepInteractable.onLockedDoorTriedAudio -= DoorLocked;
-        //TODO: Door unlock and open sequence
+        AsleepInteractable.onDoorOpenedAudio -= UnLockAndOpen;
         AsleepInteractable.onKeyCollectedAudio -= CollectKey;
     }
 
