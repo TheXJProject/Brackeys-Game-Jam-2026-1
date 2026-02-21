@@ -57,6 +57,10 @@ public class AsleepInteractable : MonoBehaviour
     private void Start()
     {
         if (interactType == InteractableType.COLLECTABLE) AsleepInteractable.onPuzzlePieceAdded?.Invoke();
+
+        // Yeah thats right, look at my unreasonably long if-statement and weep
+        if (interactType == InteractableType.LOCKEDOPENABLE && TransitionManager.instance.wokeUpThisGame && TransitionManager.instance.IsThisFirstLevel()) 
+            interactType = InteractableType.OPENABLE;
     }
 
     public void Interact()

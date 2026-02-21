@@ -38,6 +38,8 @@ public class TransitionManager : MonoBehaviour
     private int currentLevelSceneIndex = 0;
 
     public bool gameStarted = false;
+    public bool wakeUpTextShownThisGame = false;
+    public bool wokeUpThisGame = false;
     public float time = 0;
     public float time2 = 0;
 
@@ -53,10 +55,12 @@ public class TransitionManager : MonoBehaviour
 
     public bool IsThisLastLevel()
     {
-        if (currentLevelSceneIndex == orderedAsleepScenesToLoad.Count - 1)
-            return true;
-        else 
-            return false;
+        return (currentLevelSceneIndex == orderedAsleepScenesToLoad.Count - 1);
+    }
+
+    public bool IsThisFirstLevel()
+    {
+        return (currentLevelSceneIndex == 0);
     }
 
     public void WakeUpFromPinch()
@@ -93,6 +97,9 @@ public class TransitionManager : MonoBehaviour
     }
     public void LoadSceneRestartGame()
     {
+        currentLevelSceneIndex = 0;
+        wokeUpThisGame = false;
+        wakeUpTextShownThisGame = false;
         TransitionAnimControl.onBlinkMiddle += LoadOpeningScene;
         TransitionAnimControl.instance.StartBlinkTransition();
         onBeginFadeOut?.Invoke();

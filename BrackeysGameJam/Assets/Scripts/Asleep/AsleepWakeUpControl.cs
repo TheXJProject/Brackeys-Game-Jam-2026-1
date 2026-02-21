@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,9 +10,20 @@ public class AsleepWakeUpControl : MonoBehaviour
 
     [SerializeField] private float maxRechargeTime = 20.0f;
     [SerializeField] private Slider awakeBar;
+    [SerializeField] private Image awakeBarImage;
+    [SerializeField] private Color startColour = Color.white;
+    [SerializeField] private Color flashColour = Color.red;
+    [SerializeField] private float flashTime = 0.8f;
+    [SerializeField] private int numberOfFlashes = 3;
 
     private float wakeUpRecharge = 0;
     private bool canWakeUp = false;
+    private Coroutine flashRed;
+
+    private void Awake()
+    {
+        startColour = awakeBarImage.color;
+    }
 
     private void OnEnable()
     {
@@ -53,8 +63,28 @@ public class AsleepWakeUpControl : MonoBehaviour
         }
         else
         {
-            // TODO FAILED WAKE UP - flash the slider red or something
+            if (flashRed != null)
+                StopCoroutine(flashRed);
+            flashRed = StartCoroutine(FlashRed());
         }
+    }
+    IEnumerator FlashRed()
+    {
+
+        float timer = 0;
+        Color color = startColour;
+        float timeOfOneFlash = flashTime / numberOfFlashes;
+        while (timer < flashTime)
+        {
+            timer += Time.deltaTime;
+            float delta = (Mathf.Sin(Mathf.PI * (timer / timeOfOneFlash)) + 1) / 2;
+            color = startColour * (1 - delta) + flashColour * delta;
+            awakeBarImage.color = color;
+            yield return null;
+        }
+
+        awakeBarImage.color = startColour;
+        yield return null;
     }
 
     public void CancelWakeUp()
@@ -64,6 +94,7 @@ public class AsleepWakeUpControl : MonoBehaviour
 
     private void LoadAwakeScene()
     {
+        TransitionManager.instance.wokeUpThisGame = true;
         TransitionManager.instance.WakeUpFromPinch();
     }
 }
