@@ -486,7 +486,6 @@ public class AllSoundsController : MonoBehaviour
     {
         Debug.Log("WinFadeFirst");
         MixerFXManager.instance.SetLoopingSFXParam("ElectricHum", EX_PARA.VOLUME, fadeInTime, 0f);
-        MixerFXManager.instance.SetLoopingSFXParam("WindOutside", EX_PARA.VOLUME, fadeInTime, 0f);
     }
 
     void StartWalking()
