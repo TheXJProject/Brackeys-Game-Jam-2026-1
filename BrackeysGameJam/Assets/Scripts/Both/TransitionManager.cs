@@ -37,6 +37,9 @@ public class TransitionManager : MonoBehaviour
     [SerializeField] List<int> orderedAsleepScenesToLoad;
     private int currentLevelSceneIndex = 0;
 
+    public bool gameStarted = false;
+    public float time = 0;
+    public float time2 = 0;
 
     private void Awake()
     {
