@@ -9,6 +9,7 @@ public class GameObjectSpawnInfo
 {
     public GameObject gameObject;
     public int nodeIndex;
+    public Maze.WallDirection wallFace;
 }
 
 public class MazeGenerator : MonoBehaviour
@@ -68,8 +69,26 @@ public class MazeGenerator : MonoBehaviour
             int row = objectInfo.nodeIndex / maze.size;
             int col = objectInfo.nodeIndex % maze.size;
 
+            Vector3 offsetVector = new();
+
+            switch (objectInfo.wallFace)
+            {
+                case Maze.WallDirection.North:
+                    offsetVector = Vector3.forward;
+                    break;
+                case Maze.WallDirection.South:
+                    offsetVector = Vector3.back;
+                    break;
+                case Maze.WallDirection.East:
+                    offsetVector = Vector3.right;
+                    break;
+                case Maze.WallDirection.West:
+                    offsetVector = Vector3.left;
+                    break;
+            }
+
             Instantiate(objectInfo.gameObject,
-                new Vector3(col * maze.scale.x, 0, -row * maze.scale.z), Quaternion.identity);
+                new Vector3(col * maze.scale.x, 1, -row * maze.scale.z) + offsetVector, Quaternion.identity);
         }
     }
 
