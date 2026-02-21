@@ -21,9 +21,18 @@ public class AwakeEndAnimThenNextThing : MonoBehaviour
     [SerializeField] private GameObject nextToUnlock;
     [SerializeField] private int endScreenFade = 5;
     [SerializeField] Image blackFade;
+    [SerializeField] SpriteRenderer playAgain;
     [SerializeField] GameState gameState;
 
-    [SerializeField] 
+    [SerializeField] Color colorPlayAgain;
+
+    private void Awake()
+    {
+        colorPlayAgain = playAgain.color;
+        Color colour = colorPlayAgain;
+        colour.a = 0f;
+        playAgain.color = colour;
+    }
 
     private void Start()
     {
@@ -40,30 +49,52 @@ public class AwakeEndAnimThenNextThing : MonoBehaviour
     public IEnumerator ShowEndScreen()
     {
         if (gameState == GameState.WON)
+        {
             onWinFadeScreenStarted?.Invoke();
+
+            float timer = 0;
+            Color color = colorPlayAgain;
+            while (timer < endScreenFade)
+            {
+                timer += Time.deltaTime;
+                color.a = timer / endScreenFade;
+                playAgain.color = color;
+                yield return null;
+            }
+
+            color.a = 1;
+            playAgain.color = color;
+
+            if (nextToUnlock != null)
+                nextToUnlock.SetActive(true);
+
+            onWinScreenShown?.Invoke();
+        }
         else if (gameState == GameState.LOSS)
+        {
             onLossFadeScreenStarted?.Invoke();
 
-        float timer = 0;
-        Color color = blackFade.color;
-        while ( timer < endScreenFade)
-        {
-            timer += Time.deltaTime;
-            color.a = timer / endScreenFade;
-            blackFade.color = color;
-            yield return null;
-        }
+            float timer = 0;
+            Color color = playAgain.color;
+            while (timer < endScreenFade)
+            {
+                timer += Time.deltaTime;
+                color.a = timer / endScreenFade;
+                playAgain.color = color;
+                yield return null;
+            }
 
-        color.a = 1;
-        blackFade.color = color;
+            color.a = 1;
+            playAgain.color = color;
 
-        if (nextToUnlock != null)
-            nextToUnlock.SetActive(true);
+            if (nextToUnlock != null)
+                nextToUnlock.SetActive(true);
 
-        if (gameState == GameState.WON)
-            onWinScreenShown?.Invoke();
-        else if (gameState == GameState.LOSS)
             onLossScreenShown?.Invoke();
-        yield return null;
+        }
+        else
+        {
+            Debug.LogWarning("Error, incorrect end scene type set!");
+        }
     }
 }

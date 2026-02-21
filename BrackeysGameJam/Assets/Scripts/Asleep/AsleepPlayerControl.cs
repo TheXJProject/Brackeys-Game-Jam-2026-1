@@ -198,7 +198,6 @@ public class AsleepPlayerControl : MonoBehaviour
         {
             if (sentStartedMoving && playerRB.velocity.magnitude < 0.0001f)
             {
-                print("Stopped moving");
                 sentStartedMoving = false;
                 onPlayer3DStoppedMoving?.Invoke();
             }
@@ -211,16 +210,14 @@ public class AsleepPlayerControl : MonoBehaviour
         Quaternion moveRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
         moveVector = moveRotation * moveScaler;
 
-        playerRB.velocity = new Vector2(moveVector.x * moveSpeed, moveVector.y * moveSpeed);
+        playerRB.velocity = new Vector3(moveVector.x * moveSpeed, 0, moveVector.z * moveSpeed);
         if (!sentStartedMoving && playerRB.velocity.magnitude > 0.0001f)
         {
-            print("Started moving");
             sentStartedMoving = true;
             onPlayer3DStartedMoving?.Invoke();
         }
         else if (sentStartedMoving && playerRB.velocity.magnitude < 0.0001f)
         {
-            print("Stopped moving");
             sentStartedMoving = false;
             onPlayer3DStoppedMoving?.Invoke();
         }
@@ -231,6 +228,21 @@ public class AsleepPlayerControl : MonoBehaviour
     public static void killPlayer()
     {
         onPlayerKilled?.Invoke();
-        print("Dead!");
+
+        if (CheatLogic.cheatTool != null)
+        {
+            if (CheatLogic.cheatTool.cannotDie)
+            {
+                print("deaed");
+            }
+            else
+            {
+                TransitionManager.instance.LoadDeathLevel();
+            }
+        }
+        else
+        {
+            print("deaed (CheatLogic not present)");
+        }
     }
 }

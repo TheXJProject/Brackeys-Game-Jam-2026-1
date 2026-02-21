@@ -14,10 +14,8 @@ public class AllSoundsController : MonoBehaviour
     public SceneName startScene;
     public AudioClip buttonPress;
     public AudioClip doorLocked;
-    public AudioClip doorOpens;
+    public AudioClip unlockAndOpen;
     public AudioClip spottedClip;
-    public AudioClip pickUpKey;
-    public AudioClip unlockDoor;
     public AudioClip catchDreamon;
     [SerializeField] string[] whispers;
     [SerializeField][Range(minWalkFreq, maxWalkFreq)] float footStepFrequencyBedroom;
@@ -29,6 +27,7 @@ public class AllSoundsController : MonoBehaviour
     [SerializeField] double musicStartTime = 0.5f;
     [SerializeField] float fadeInTime = 1;
     [SerializeField] float fadeOutTime = 1;
+    [SerializeField] float quickFadeOutTime = 1;
     [SerializeField] float heartbeatTimeUntilFadeOut = 1;
     SceneName currentScene;
     bool walking = false;
@@ -47,13 +46,27 @@ public class AllSoundsController : MonoBehaviour
         AwakePlayerControl.onPlayer2DStoppedMoving += StopWalking;
         AsleepPlayerControl.onPlayer3DStartedMoving += StartWalking;
         AsleepPlayerControl.onPlayer3DStoppedMoving += StopWalking;
-        StartGame.beginPressed += StartScreenEnterGame;
+        StartGame2.beginPressed += StartScreenEnterGame;
+        StartGame.beginPressed += StartScreenEnterTitleCard;
         AsleepLucidControl.onLucidToggled += LucidMode;
-        //AwakeEndAnimThenNextThing.onLossFadeScreenStarted += WinScreenAu
-        //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
-        // Enterlucid
-        // Exitlucid
+        AwakeEndAnimThenNextThing.onLossFadeScreenStarted += StartDeathSequence;
+        AwakeEndAnimThenNextThing.onWinFadeScreenStarted += WinFadeFirstStep;
+        AwakeEndAnimThenNextThing.onLossScreenShown += FadeToDeathScreen;
+        AwakeEndAnimThenNextThing.onWinScreenShown += FadeToWinScreen;
+        AsleepLucidControl.onLucidStarted += EnterExitLucid;
+        AsleepLucidControl.onLucidEnded += EnterExitLucid;
         AsleepTrap.onEnemyTrapped += EnemyTrappedSounds;
+
+        // SFX triggers
+        AsleepInteractable.onPuzzleSolved += BreathOfChange;
+        TransitionManager.onSuccessPinchStartWakeUp += BuildUp;
+        AwakeInteract.onInteractedWithIn2D += AwakeInteractionSounds;
+        AwakeGoBackToSleep.onWakeUp += WakeUpGasp;
+        //TODO: computer and go to sleep
+        AsleepInteractable.onButtonPressedAudio += ButtonSound;
+        AsleepInteractable.onLockedDoorTriedAudio += DoorLocked;
+        AsleepInteractable.onDoorOpenedAudio += UnLockAndOpen;
+        AsleepInteractable.onKeyCollectedAudio += CollectKey;
     }
 
     private void OnDisable()
@@ -65,11 +78,27 @@ public class AllSoundsController : MonoBehaviour
         AwakePlayerControl.onPlayer2DStoppedMoving -= StopWalking;
         AsleepPlayerControl.onPlayer3DStartedMoving -= StartWalking;
         AsleepPlayerControl.onPlayer3DStoppedMoving -= StopWalking;
-        StartGame.beginPressed -= StartScreenEnterGame;
+        StartGame2.beginPressed -= StartScreenEnterGame;
+        StartGame.beginPressed -= StartScreenEnterTitleCard;
         AsleepLucidControl.onLucidToggled -= LucidMode;
-        //AwakeEndAnimThenNextThing.onLossFadeScreenStarted
-        //AwakeEndAnimThenNextThing.onWinFadeScreenStarted
+        AwakeEndAnimThenNextThing.onLossFadeScreenStarted -= StartDeathSequence;
+        AwakeEndAnimThenNextThing.onWinFadeScreenStarted -= WinFadeFirstStep;
+        AwakeEndAnimThenNextThing.onLossScreenShown -= FadeToDeathScreen;
+        AwakeEndAnimThenNextThing.onWinScreenShown -= FadeToWinScreen;
+        AsleepLucidControl.onLucidStarted -= EnterExitLucid;
+        AsleepLucidControl.onLucidEnded -= EnterExitLucid;
         AsleepTrap.onEnemyTrapped -= EnemyTrappedSounds;
+
+        // SFX triggers
+        AsleepInteractable.onPuzzleSolved -= BreathOfChange;
+        TransitionManager.onSuccessPinchStartWakeUp -= BuildUp;
+        AwakeInteract.onInteractedWithIn2D -= AwakeInteractionSounds;
+        AwakeGoBackToSleep.onWakeUp -= WakeUpGasp;
+        //TODO: computer and go to sleep
+        AsleepInteractable.onButtonPressedAudio -= ButtonSound;
+        AsleepInteractable.onLockedDoorTriedAudio -= DoorLocked;
+        AsleepInteractable.onDoorOpenedAudio -= UnLockAndOpen;
+        AsleepInteractable.onKeyCollectedAudio -= CollectKey;
     }
 
     private void Awake()
@@ -113,24 +142,35 @@ public class AllSoundsController : MonoBehaviour
 
     private void Update()
     {
-        // WHISPERS
         // If we're in any of the current scenes
         switch (currentScene)
         {
-            case SceneName.AWAKEPARALYZED1:
-            case SceneName.AWAKEPARALYZED2:
-            case SceneName.AWAKEPARALYZED3:
-            case SceneName.AWAKEPARALYZED4:
-            case SceneName.AWAKEPARALYZED5:
             case SceneName.MAZE1:
             case SceneName.MAZE2:
             case SceneName.MAZE3:
             case SceneName.MAZE4:
             case SceneName.MAZE5:
-                // Randomly Play Whispers
+                // HEARTBEAT
+                if (heartBeatTime > 0)
+                {
+                    heartBeatTime -= Time.deltaTime;
+                }
+                else if (playingHeartBeat)
+                {
+                    MixerFXManager.instance.SetLoopingSFXParam("RacingHeartbeat", EX_PARA.VOLUME, heartbeatTimeUntilFadeOut, 0f);
+                    playingHeartBeat = false;
+                }
+                goto case SceneName.AWAKEPARALYZED5;
+            case SceneName.AWAKEPARALYZED1:
+            case SceneName.AWAKEPARALYZED2:
+            case SceneName.AWAKEPARALYZED3:
+            case SceneName.AWAKEPARALYZED4:
+            case SceneName.AWAKEPARALYZED5:
+                // WHISPERS
                 timeWhispers += Time.deltaTime;
                 if (timeWhispers > minWhisperTime)
                 {
+                    // Randomly Play Whispers
                     PlayRandomWhisper();
                 }
                 break;
@@ -145,23 +185,11 @@ public class AllSoundsController : MonoBehaviour
         {
             timeWalking += Time.deltaTime;
         }
-
-        // HEARTBEAT
-        if (heartBeatTime > 0)
-        {
-            heartBeatTime -= Time.deltaTime;
-        }
-        else if (playingHeartBeat)
-        {
-            MixerFXManager.instance.SetLoopingSFXParam("RacingHeartbeat", EX_PARA.VOLUME, heartbeatTimeUntilFadeOut, 0f);
-            playingHeartBeat = false;
-        }
     }
 
     void NewScene(SceneName name)
     {
         currentScene = name;
-        //Debug.LogWarning("Now in: " + name);
 
         // If we need to mute sounds before we go into the new scene
         switch (currentScene)
@@ -173,13 +201,13 @@ public class AllSoundsController : MonoBehaviour
             case SceneName.MAZE3:
             case SceneName.MAZE4:
             case SceneName.MAZE5:
-                FullResetToNothing();
-                break;
             case SceneName.AWAKEPARALYZED1:
             case SceneName.AWAKEPARALYZED2:
             case SceneName.AWAKEPARALYZED3:
             case SceneName.AWAKEPARALYZED4:
             case SceneName.AWAKEPARALYZED5:
+                FullResetToNothing();
+                break;
             case SceneName.AWAKEBEGINNING:
             default:
                 break;
@@ -220,10 +248,10 @@ public class AllSoundsController : MonoBehaviour
                 break;
 
             case SceneName.AWAKEPARALYZED4:
-            case SceneName.AWAKEPARALYZED3:
-                PlayButCheck("Scratching N");
-                goto case SceneName.AWAKEPARALYZED3;
+                PlayButCheck("ScratchingNails");
+                goto case SceneName.AWAKEPARALYZED1;
             case SceneName.AWAKEPARALYZED5:
+            case SceneName.AWAKEPARALYZED3:
             case SceneName.AWAKEPARALYZED2:
             case SceneName.AWAKEPARALYZED1:
                 PlayButCheck("ElectricHum");
@@ -231,12 +259,12 @@ public class AllSoundsController : MonoBehaviour
                 PlayButCheck("WindOutside");
                 break;
 
+            case SceneName.MAZE5:
             case SceneName.MAZE4:
             case SceneName.MAZE3:
                 // play general whispers
                 PlayButCheck("GeneralWhispers");
-                goto case SceneName.MAZE5;
-            case SceneName.MAZE5:
+                goto case SceneName.MAZE1;
             case SceneName.MAZE2:
             case SceneName.MAZE1:
                 // play ambience
@@ -249,8 +277,12 @@ public class AllSoundsController : MonoBehaviour
                 break;
 
             case SceneName.WON:
+                PlayButCheck("WindOutside");
+                PlayButCheck("ElectricHum", 0.6f);
+                PlayButCheck("GeneralWhispers");
+                break;
+
             default:
-                // If we won, don't play any ambience
                 break;
         }
     }
@@ -282,16 +314,24 @@ public class AllSoundsController : MonoBehaviour
                 MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.3f);
                 break;
 
-            case SceneName.AWAKEPARALYZED1:
-                break;
-            case SceneName.AWAKEPARALYZED2:
-                break;
-            case SceneName.AWAKEPARALYZED3:
-                break;
             case SceneName.AWAKEPARALYZED4:
-                break;
+                MixerFXManager.instance.SetLoopingSFXParam("ScratchingNails", EX_PARA.VOLUME, fadeInTime);
+                Debug.Log("Fadein" + currentScene);
+                goto case SceneName.AWAKEPARALYZED1;
             case SceneName.AWAKEPARALYZED5:
+            case SceneName.AWAKEPARALYZED3:
+            case SceneName.AWAKEPARALYZED2:
+            case SceneName.AWAKEPARALYZED1:
+                MixerFXManager.instance.SetLoopingSFXParam("ElectricHum", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetLoopingSFXParam("FloorCreaking", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetLoopingSFXParam("WindOutside", EX_PARA.VOLUME, fadeInTime);
+
+                MixerFXManager.instance.SetMusicParam("BChoir", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("BDeepChords", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("BPianoSFX", EX_PARA.VOLUME, fadeInTime);
+                MixerFXManager.instance.SetMusicParam("BMusicBox", EX_PARA.VOLUME, fadeInTime);
                 break;
+
             case SceneName.MAZE1:
                 MixerFXManager.instance.SetMusicParam("MChords", EX_PARA.VOLUME, fadeInTime);
 
@@ -311,6 +351,7 @@ public class AllSoundsController : MonoBehaviour
 
                 MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.2f);
                 MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
+                Debug.Log("Fadein" + currentScene);
                 break;
 
             case SceneName.MAZE4:
@@ -320,6 +361,7 @@ public class AllSoundsController : MonoBehaviour
 
                 MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.3f);
                 MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
+                Debug.Log("Fadein" + currentScene);
                 break;
 
             case SceneName.MAZE5:
@@ -328,11 +370,23 @@ public class AllSoundsController : MonoBehaviour
 
                 MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.4f);
                 MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
+                Debug.Log("Fadein" + currentScene);
                 break;
 
             case SceneName.LOST:
+                // Don't fade in anything initially on lost
+                // Play the loss SFX music
+                AudioManager.instance.PlaySFX("DeathMusic", true);
+                Debug.Log("Fadein" + currentScene);
                 break;
+
             case SceneName.WON:
+                MixerFXManager.instance.SetMusicParam("WinMusic", EX_PARA.VOLUME, fadeInTime);
+
+                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.3f);
+                MixerFXManager.instance.SetLoopingSFXParam("ElectricHum", EX_PARA.VOLUME, fadeInTime, 0.3f);
+                MixerFXManager.instance.SetLoopingSFXParam("WindOutside", EX_PARA.VOLUME, fadeInTime, 0.3f);
+                Debug.Log("Fadein" + currentScene);
                 break;
             default:
                 Debug.LogWarning("Error, couldn't find scene!");
@@ -351,22 +405,28 @@ public class AllSoundsController : MonoBehaviour
             case SceneName.AWAKEPARALYZED3:
             case SceneName.AWAKEPARALYZED4:
             case SceneName.AWAKEPARALYZED5:
+                Debug.Log("Fadeout (note: correct transistion time), " + fadeOutTime);
                 MixerFXManager.instance.SetMusicOverallParam(EX_PARA.VOLUME, fadeOutTime, 0);
                 MixerFXManager.instance.SetSfxOverallParam(EX_PARA.VOLUME, fadeOutTime, 0);
                 break;
-            case SceneName.MAZE1:
-                break;
-            case SceneName.MAZE2:
-                break;
-            case SceneName.MAZE3:
-                break;
-            case SceneName.MAZE4:
-                break;
+
             case SceneName.MAZE5:
+            case SceneName.MAZE4:
+            case SceneName.MAZE3:
+            case SceneName.MAZE2:
+            case SceneName.MAZE1:
+                MixerFXManager.instance.SetMusicOverallParam(EX_PARA.VOLUME, quickFadeOutTime, 0);
+                MixerFXManager.instance.SetSfxOverallParam(EX_PARA.VOLUME, quickFadeOutTime, 0);
                 break;
+
             case SceneName.LOST:
+                MixerFXManager.instance.SetMusicParam("BDeepChords", EX_PARA.VOLUME, fadeOutTime);
+                MixerFXManager.instance.SetMusicParam("BPianoSFX", EX_PARA.VOLUME, fadeOutTime);
+                Debug.Log("Fadeout" + currentScene);
                 break;
             case SceneName.WON:
+                MixerFXManager.instance.SetMusicParam("WinMusic", EX_PARA.VOLUME, fadeOutTime);
+                Debug.Log("Fadeout" + currentScene);
                 break;
             default:
                 Debug.LogWarning("Error, couldn't find scene!");
@@ -378,6 +438,8 @@ public class AllSoundsController : MonoBehaviour
 
     void StartScreenEnterGame(float time)
     {
+        AudioManager.instance.PlaySFX("PlayerInteract");
+
         // Remove music box
         MixerFXManager.instance.SetMusicParam("BMusicBox", EX_PARA.VOLUME, time, 0f);
         MixerFXManager.instance.SetMusicParam("BChoir", EX_PARA.VOLUME, time, 0.5f);
@@ -388,6 +450,42 @@ public class AllSoundsController : MonoBehaviour
         // Add room ambience
         MixerFXManager.instance.SetLoopingSFXParam("ElectricHum", EX_PARA.VOLUME, time);
         MixerFXManager.instance.SetLoopingSFXParam("WindOutside", EX_PARA.VOLUME, time);
+    }
+
+    void StartScreenEnterTitleCard(float ignoreThisFloat)
+    {
+        AudioManager.instance.PlaySFX("PlayerInteract");
+    }
+
+    void FadeToDeathScreen()
+    {
+        MixerFXManager.instance.SetMusicParam("BDeepChords", EX_PARA.VOLUME, fadeInTime);
+        MixerFXManager.instance.SetMusicParam("BPianoSFX", EX_PARA.VOLUME, fadeInTime);
+
+        MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime);
+        Debug.Log("FadeToDeathScreen");
+    }
+
+    void FadeToWinScreen()
+    {
+        MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0f);
+        Debug.Log("FadeToWinScreen");
+    }
+
+    void StartDeathSequence()
+    {
+        Debug.Log("LossFadeFirst");
+        // TODO: this
+
+        // Wait set amount of time
+
+        // Play scream SFX
+    }
+
+    void WinFadeFirstStep()
+    {
+        Debug.Log("WinFadeFirst");
+        MixerFXManager.instance.SetLoopingSFXParam("ElectricHum", EX_PARA.VOLUME, fadeInTime, 0f);
     }
 
     void StartWalking()
@@ -478,7 +576,6 @@ public class AllSoundsController : MonoBehaviour
 
     void EnemySeenPlayer(int enemy, AudioSource source)
     {
-        //Debug.Log("Enemyspots" + enemy);
         // Add to map if needed
         if (!dreamonSpottedTimes.ContainsKey(enemy))
         {
@@ -491,8 +588,8 @@ public class AllSoundsController : MonoBehaviour
         // Check time
         if ((timeDifference > timeBetweenBeingSpotted) || (dreamonSpottedTimes[enemy] == newEnemy))
         {
-            //Debug.Log("Enemy screams" + enemy + spottedClip);
             dreamonSpottedTimes[enemy] = Time.time;
+            source.pitch = UnityEngine.Random.Range(0.95f, 1.05f);
             source.Play();
             if (!playingHeartBeat)
             {
@@ -530,15 +627,90 @@ public class AllSoundsController : MonoBehaviour
 
         if ((source != null) && (source2 != null))
         {
+            source.playOnAwake = false;
             source.Stop();
+            source2.playOnAwake = false;
             source2.Stop();
+
             source2.clip = catchDreamon;
             source2.loop = false;
-            source2.Play();
+            source2.Play();  
         }
         else
         {
             Debug.LogWarning("Error, couldn't find both sources!");
         }
+    }
+
+    // ++++++++++ Unique SFX ++++++++++
+    void BreathOfChange()
+    {
+        Debug.Log("BreathofChange");
+        AudioManager.instance.PlaySFX("BreathChange");
+    }
+
+    void BuildUp()
+    {
+        Debug.Log("buildup");
+        AudioManager.instance.PlaySFX("BuildupOfNoEnd");
+    }
+
+    void AwakeInteractionSounds(InteractWith2D soundToPlay)
+    {
+        Debug.Log("character interact");
+        AudioManager.instance.PlaySFX("CharacterInteract");
+
+        switch (soundToPlay)
+        {
+            case InteractWith2D.BED:
+                Debug.Log("gone bed");
+                AudioManager.instance.PlaySFX("GoToBed");
+                break;
+            case InteractWith2D.COMPUTER:
+                Debug.Log("computer");
+                AudioManager.instance.PlaySFX("ComputerBeep");
+                break;
+            default:
+                Debug.LogWarning("Error, character interaction sound not found!");
+                break;
+        }
+    }
+
+    void WakeUpGasp()
+    {
+        AudioManager.instance.PlaySFX("GaspAwake");
+    }
+
+    void ButtonSound(AudioSource source)
+    {
+        Debug.Log("Button sound");
+        source.playOnAwake = false;
+        source.loop = false;
+        source.clip = buttonPress;
+        source.Play();
+    }
+
+    void DoorLocked(AudioSource source)
+    {
+        Debug.Log("Door locked sound");
+        source.playOnAwake = false;
+        source.loop = false;
+        source.clip = doorLocked;
+        source.Play();
+    }
+
+    void UnLockAndOpen(AudioSource source)
+    {
+        Debug.Log("Unlock and open sound");
+        source.playOnAwake = false;
+        source.loop = false;
+        source.clip = unlockAndOpen;
+        source.Play();
+    }
+
+    void CollectKey()
+    {
+        Debug.Log("gasp awake");
+        AudioManager.instance.PlaySFX("PickUpKey", true);
     }
 }

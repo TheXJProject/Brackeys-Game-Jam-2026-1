@@ -38,5 +38,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FinalGameScenes/Asleep_Maze5.unity
     guid: 9ac19aa530d20924daf11e2260b96a6a
+  - enabled: 1
+    path: Assets/Scenes/FinalGameScenes/Awake_zLost.unity
+    guid: 35c7a507b6cf43748ad63fd46ca362ca
+  - enabled: 1
+    path: Assets/Scenes/FinalGameScenes/Awake_zWon.unity
+    guid: e2d3be1a58834194fb85d29222575707
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: ab6465ecf049f374c96caacd97e0d8e5, type: 3}

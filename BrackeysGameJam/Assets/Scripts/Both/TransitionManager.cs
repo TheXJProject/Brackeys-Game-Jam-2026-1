@@ -37,6 +37,11 @@ public class TransitionManager : MonoBehaviour
     [SerializeField] List<int> orderedAsleepScenesToLoad;
     private int currentLevelSceneIndex = 0;
 
+    public bool gameStarted = false;
+    public bool wakeUpTextShownThisGame = false;
+    public bool wokeUpThisGame = false;
+    public float time = 0;
+    public float time2 = 0;
 
     private void Awake()
     {
@@ -50,10 +55,12 @@ public class TransitionManager : MonoBehaviour
 
     public bool IsThisLastLevel()
     {
-        if (currentLevelSceneIndex == orderedAsleepScenesToLoad.Count - 1)
-            return true;
-        else 
-            return false;
+        return (currentLevelSceneIndex == orderedAsleepScenesToLoad.Count - 1);
+    }
+
+    public bool IsThisFirstLevel()
+    {
+        return (currentLevelSceneIndex == 0);
     }
 
     public void WakeUpFromPinch()
@@ -78,18 +85,21 @@ public class TransitionManager : MonoBehaviour
     }
     public void LoadVictoryLevel()
     {
-        //TransitionAnimControl.onBlinkMiddle += LoadNextAsleepScene;
-        //TransitionAnimControl.instance.StartBlinkTransition();
+        TransitionAnimControl.onBlinkMiddle += LoadWinningScene;
+        TransitionAnimControl.instance.StartBlinkTransition();
         onBeginFadeOut?.Invoke();
     }
     public void LoadDeathLevel()
     {
-        //TransitionAnimControl.onBlinkMiddle += LoadNextAsleepScene;
-        //TransitionAnimControl.instance.StartBlinkTransition();
+        TransitionAnimControl.onBlinkMiddle += LoadLosingScene;
+        TransitionAnimControl.instance.StartBlinkTransition();
         onBeginFadeOut?.Invoke();
     }
     public void LoadSceneRestartGame()
     {
+        currentLevelSceneIndex = 0;
+        wokeUpThisGame = false;
+        wakeUpTextShownThisGame = false;
         TransitionAnimControl.onBlinkMiddle += LoadOpeningScene;
         TransitionAnimControl.instance.StartBlinkTransition();
         onBeginFadeOut?.Invoke();
@@ -123,7 +133,23 @@ public class TransitionManager : MonoBehaviour
     {
         TransitionAnimControl.onBlinkMiddle -= LoadOpeningScene;
         SceneManager.LoadScene((int)SceneName.AWAKEBEGINNING);
-        SendStartedAwakeScene(currentLevelSceneIndex);
+        SendStartedScene(SceneName.AWAKEBEGINNING);
+        ToggleMouseOn();
+    }
+
+    private void LoadLosingScene()
+    {
+        TransitionAnimControl.onBlinkMiddle -= LoadLosingScene;
+        SceneManager.LoadScene((int)SceneName.LOST);
+        SendStartedScene(SceneName.LOST);
+        ToggleMouseOn();
+    }
+
+    private void LoadWinningScene()
+    {
+        TransitionAnimControl.onBlinkMiddle -= LoadWinningScene;
+        SceneManager.LoadScene((int)SceneName.WON);
+        SendStartedScene(SceneName.WON);
         ToggleMouseOn();
     }
 
@@ -136,6 +162,11 @@ public class TransitionManager : MonoBehaviour
     private void SendStartedAwakeScene(int indexForAwakeScene)
     {
         SceneName sceneName = (SceneName)orderedAwakeScenesToLoad[indexForAwakeScene];
+        onLoadingNextScene?.Invoke(sceneName);
+    }
+
+    private void SendStartedScene(SceneName sceneName)
+    {
         onLoadingNextScene?.Invoke(sceneName);
     }
 

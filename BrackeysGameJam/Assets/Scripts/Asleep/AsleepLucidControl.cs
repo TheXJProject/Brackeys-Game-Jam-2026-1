@@ -19,12 +19,19 @@ public class AsleepLucidControl : MonoBehaviour
     [SerializeField] private float maxLucidTime = 5.0f;
     [SerializeField] private float percentNeededToStartLucid = 0.2f;
 
+    [SerializeField] private Image awakeBarImage;
+    [SerializeField] private Color startColour = Color.white;
+    [SerializeField] private Color flashColour = Color.red;
+    [SerializeField] private float flashTime = 0.8f;
+    [SerializeField] private int numberOfFlashes = 3;
+
     public float lucidTimeRemaining;
 
     private bool canGoLucid = true;
     private bool isLucid = false;
     private bool endLucidGate = true;
     private bool startLucidTriggered = false;
+    private Coroutine flashRed;
 
 
     private void Awake()
@@ -78,6 +85,31 @@ public class AsleepLucidControl : MonoBehaviour
             TransitionAnimControl.onBlinkMiddle += lucidOn;
             TransitionAnimControl.instance.StartBlinkTransition();
         }
+        else
+        {
+            if (flashRed != null)
+                StopCoroutine(flashRed);
+            flashRed = StartCoroutine(FlashRed());
+        }
+    }
+
+    IEnumerator FlashRed()
+    {
+
+        float timer = 0;
+        Color color = startColour;
+        float timeOfOneFlash = flashTime / numberOfFlashes;
+        while (timer < flashTime)
+        {
+            timer += Time.deltaTime;
+            float delta = (Mathf.Sin(Mathf.PI * (timer / timeOfOneFlash)) + 1) / 2;
+            color = startColour * (1 - delta) + flashColour * delta;
+            awakeBarImage.color = color;
+            yield return null;
+        }
+
+        awakeBarImage.color = startColour;
+        yield return null;
     }
 
     public void lucidOn()

@@ -15,7 +15,6 @@ public class StartGame : MonoBehaviour
     public float size;
     public float playerCanStartTime;
     public float cameraMoveTime;
-    static float time = 0;
     float timeTransition = 0;
     bool inStartTransistion = true;
     bool startedCameraMove = false;
@@ -24,7 +23,6 @@ public class StartGame : MonoBehaviour
     Vector3 cameraStartPos;
     float startSize;
 
-    public static event Action startGameNow;
     public static event Action<float> beginPressed;
 
     InputController playerControls;
@@ -55,12 +53,18 @@ public class StartGame : MonoBehaviour
     private void Start()
     {
         startedCameraMove = false;
+        if (TransitionManager.instance.gameStarted)
+        {
+            cameraObject.transform.position = cameraFinalPos;
+            cameraObject.GetComponent<Camera>().orthographicSize = size;
+        }
     }
 
     private void DoAdamsthing(InputAction.CallbackContext context)
     {
-        if (!inStartTransistion && !startedCameraMove)
+        if (!inStartTransistion && !startedCameraMove && !TransitionManager.instance.gameStarted)
         {
+
             startedCameraMove = true;
             beginPressed?.Invoke(cameraMoveTime);
             StartCoroutine(MoveCamera());
@@ -69,7 +73,7 @@ public class StartGame : MonoBehaviour
 
     void Update()
     {
-        if (time > playerCanStartTime)
+        if (TransitionManager.instance.time > playerCanStartTime)
         {
             // Show press Space to play
             gameObject.GetComponent<TextMeshPro>().enabled = true;
@@ -77,7 +81,7 @@ public class StartGame : MonoBehaviour
         }
         else
         {
-            time += Time.deltaTime;
+            TransitionManager.instance.time += Time.deltaTime;
         }
     }
 
@@ -101,9 +105,9 @@ public class StartGame : MonoBehaviour
             Debug.LogWarning("Error, how heree??");
         }
 
+        TransitionManager.instance.gameStarted = true;
         cameraObject.transform.position = cameraFinalPos;
         cameraObject.GetComponent<Camera>().orthographicSize = size;
-        startGameNow?.Invoke();
         this.enabled = false;
     }
 

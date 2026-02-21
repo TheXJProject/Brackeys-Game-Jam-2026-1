@@ -21,7 +21,7 @@ public class AsleepInteractable : MonoBehaviour
     public static event Action<AudioSource> onButtonPressedAudio;
     public static event Action<AudioSource> onLockedDoorTriedAudio;
     public static event Action<AudioSource> onDoorOpenedAudio;
-    public static event Action<AudioSource> onKeyCollectedAudio;
+    public static event Action onKeyCollectedAudio;
 
     public enum InteractableType
     {
@@ -58,6 +58,10 @@ public class AsleepInteractable : MonoBehaviour
     private void Start()
     {
         if (interactType == InteractableType.COLLECTABLE) AsleepInteractable.onPuzzlePieceAdded?.Invoke();
+
+        // Yeah thats right, look at my unreasonably long if-statement and weep
+        if (interactType == InteractableType.LOCKEDOPENABLE && TransitionManager.instance.wokeUpThisGame && TransitionManager.instance.IsThisFirstLevel()) 
+            interactType = InteractableType.OPENABLE;
     }
 
     public void Interact()
@@ -94,7 +98,7 @@ public class AsleepInteractable : MonoBehaviour
 
     private void Collect()
     {
-        onKeyCollectedAudio?.Invoke(GetComponent<AudioSource>());
+        onKeyCollectedAudio?.Invoke();
         onLevelCollectablePickedUp?.Invoke();
         gameObject.SetActive(false);
     }

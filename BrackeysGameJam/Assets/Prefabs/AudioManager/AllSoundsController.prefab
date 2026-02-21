@@ -47,10 +47,8 @@ MonoBehaviour:
   startScene: 0
   buttonPress: {fileID: 8300000, guid: 252b3a81855bffd48afcb1db2e6e3278, type: 3}
   doorLocked: {fileID: 8300000, guid: e01947f6746f9b34d8dfdce5eda65205, type: 3}
-  doorOpens: {fileID: 8300000, guid: 2350caf90846ff345a90beef667246fd, type: 3}
+  unlockAndOpen: {fileID: 8300000, guid: 0b129116d7fc19f4890e21a0fdedb02d, type: 3}
   spottedClip: {fileID: 8300000, guid: 4b1aff7b20fc13542afb1dee8ab8d65d, type: 3}
-  pickUpKey: {fileID: 8300000, guid: e1554e2b5d22107418991b9426a98b24, type: 3}
-  unlockDoor: {fileID: 8300000, guid: 4f91b030e31207d4baca289ee734868b, type: 3}
   catchDreamon: {fileID: 8300000, guid: 64366211be7200845ae38bc5906ab700, type: 3}
   whispers:
   - Whisper11
@@ -65,11 +63,12 @@ MonoBehaviour:
   - Whisper52
   footStepFrequencyBedroom: 0.4
   footStepFrequencyDream: 0.6
-  randomWhisperFrequencyBedroom: 25
-  randomWhisperFrequencyDream: 40
-  minWhisperTime: 12
-  timeBetweenBeingSpotted: 8
+  randomWhisperFrequencyBedroom: 30
+  randomWhisperFrequencyDream: 70
+  minWhisperTime: 15
+  timeBetweenBeingSpotted: 9
   musicStartTime: 3
   fadeInTime: 1.5
   fadeOutTime: 0.5
-  heartbeatTimeUntilFadeOut: 3
+  quickFadeOutTime: 0.1
+  heartbeatTimeUntilFadeOut: 4

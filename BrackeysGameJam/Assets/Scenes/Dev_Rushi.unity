@@ -374,9 +374,13 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7891561074413624765, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
-      propertyPath: maxLucidTime
-      value: 100
+    - target: {fileID: 7228805582852081107, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
+      propertyPath: frequency
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 7228805582852081107, guid: e0ac4d3df518ca8419533f10256e5fb8, type: 3}
+      propertyPath: verticleAmplitude
+      value: 0.04
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -717,6 +721,14 @@ PrefabInstance:
     - target: {fileID: 3176557265293653, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
       propertyPath: m_Name
       value: SingletonContainer
+      objectReference: {fileID: 0}
+    - target: {fileID: 4812324097705417750, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
+      propertyPath: m_Maskable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4812324097705417750, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4831689492002668961, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
       propertyPath: m_LocalPosition.x
