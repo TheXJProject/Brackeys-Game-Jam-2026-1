@@ -1628,7 +1628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   verticleAmplitude: 0.04
-  frequency: 16
+  frequency: 12
   playersAss: {fileID: 1089743945357076857}
 --- !u!1 &5089059956230966257
 GameObject:
