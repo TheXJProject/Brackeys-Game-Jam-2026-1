@@ -31,13 +31,13 @@ public class AwakePlayerControl : MonoBehaviour
         move = playerControls.Player.Move;
         move.Enable();
 
-        StartGame.startGameNow += AllowMovement;
+        StartGame2.startGameNow += AllowMovement;
     }
 
     private void OnDisable()
     {
         move.Disable();
-        StartGame.startGameNow -= AllowMovement;
+        StartGame2.startGameNow -= AllowMovement;
     }
 
     private void Update()

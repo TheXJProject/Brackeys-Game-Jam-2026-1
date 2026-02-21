@@ -23,7 +23,6 @@ public class StartGame : MonoBehaviour
     Vector3 cameraStartPos;
     float startSize;
 
-    public static event Action startGameNow;
     public static event Action<float> beginPressed;
 
     InputController playerControls;
@@ -109,7 +108,6 @@ public class StartGame : MonoBehaviour
         TransitionManager.instance.gameStarted = true;
         cameraObject.transform.position = cameraFinalPos;
         cameraObject.GetComponent<Camera>().orthographicSize = size;
-        startGameNow?.Invoke();
         this.enabled = false;
     }
 

@@ -48,7 +48,7 @@ public class AllSoundsController : MonoBehaviour
         AwakePlayerControl.onPlayer2DStoppedMoving += StopWalking;
         AsleepPlayerControl.onPlayer3DStartedMoving += StartWalking;
         AsleepPlayerControl.onPlayer3DStoppedMoving += StopWalking;
-        StartGame.beginPressed += StartScreenEnterGame;
+        StartGame2.beginPressed += StartScreenEnterGame;
         AsleepLucidControl.onLucidToggled += LucidMode;
         AwakeEndAnimThenNextThing.onLossFadeScreenStarted += StartDeathSequence;
         AwakeEndAnimThenNextThing.onWinFadeScreenStarted += WinFadeFirstStep;
@@ -68,7 +68,7 @@ public class AllSoundsController : MonoBehaviour
         AwakePlayerControl.onPlayer2DStoppedMoving -= StopWalking;
         AsleepPlayerControl.onPlayer3DStartedMoving -= StartWalking;
         AsleepPlayerControl.onPlayer3DStoppedMoving -= StopWalking;
-        StartGame.beginPressed -= StartScreenEnterGame;
+        StartGame2.beginPressed -= StartScreenEnterGame;
         AsleepLucidControl.onLucidToggled -= LucidMode;
         AwakeEndAnimThenNextThing.onLossFadeScreenStarted -= StartDeathSequence;
         AwakeEndAnimThenNextThing.onWinFadeScreenStarted -= WinFadeFirstStep;
