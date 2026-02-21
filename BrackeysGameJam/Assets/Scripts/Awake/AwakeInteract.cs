@@ -18,7 +18,7 @@ public class AwakeInteract : MonoBehaviour
     public static event Action<InteractWith2D> onInteractedWithIn2D;
 
     [SerializeField] private TextMeshProUGUI promptText;
-    [SerializeField] private string promptTextShown = "Interact [E]";
+    [SerializeField] public string promptTextShown = "Interact [E]";
     [SerializeField] private InteractWith2D interactObject = InteractWith2D.BED;
     private bool withinRangeForPrompt = false;
     private bool disableInteraction;
@@ -74,8 +74,11 @@ public class AwakeInteract : MonoBehaviour
         {
             onInteractedWithIn2D?.Invoke(interactObject);
             onInteractedWith?.Invoke();
-            disableInteraction = true;
-            withinRangeForPrompt = false;
+            if (interactObject == InteractWith2D.BED) 
+            { 
+                disableInteraction = true;
+                withinRangeForPrompt = false;
+            }
         }
     }
 }

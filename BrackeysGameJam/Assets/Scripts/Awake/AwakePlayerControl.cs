@@ -45,7 +45,8 @@ public class AwakePlayerControl : MonoBehaviour
         moveDirection = move.ReadValue<Vector2>();
     }
 
-    private void AllowMovement() => canMove = true;
+    public void AllowMovement() => canMove = true;
+    public void StopMovement() => canMove = false;
 
     private void FixedUpdate()
     {
