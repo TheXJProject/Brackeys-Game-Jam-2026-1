@@ -32,6 +32,7 @@ public class AwakeHandScript : MonoBehaviour
     IEnumerator StartHandVisuals()
     {
         yield return new WaitForSeconds(secondsBeforeHandComesIn);
+        onHandWaitingToGrab?.Invoke();
         do
         {
             timer += Time.deltaTime;
@@ -46,7 +47,6 @@ public class AwakeHandScript : MonoBehaviour
         handTransform.position = StopPos;
 
         yield return new WaitForSeconds(handPauseTime);
-        onHandWaitingToGrab?.Invoke();
         handAnimator.SetTrigger("next2");
         timer = 0;
         do
@@ -60,6 +60,12 @@ public class AwakeHandScript : MonoBehaviour
             }
             yield return null;
         } while (timer < handQuickLaunchTime);
+
+        if (!handShotForward)
+        {
+            handShotForward = true;
+            animNextThing.ShowEndScreenCoroutine();
+        }
 
         handTransform.position = FinalPos;
         yield return null;

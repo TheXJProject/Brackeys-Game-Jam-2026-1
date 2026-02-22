@@ -64,11 +64,11 @@ public class AllSoundsController : MonoBehaviour
         TransitionManager.onSuccessPinchStartWakeUp += BuildUp;
         AwakeInteract.onInteractedWithIn2D += AwakeInteractionSounds;
         AwakeGoBackToSleep.onWakeUp += WakeUpGasp;
-        //TODO: computer and go to sleep
         AsleepInteractable.onButtonPressedAudio += ButtonSound;
         AsleepInteractable.onLockedDoorTriedAudio += DoorLocked;
         AsleepInteractable.onDoorOpenedAudio += UnLockAndOpen;
         AsleepInteractable.onKeyCollectedAudio += CollectKey;
+        AwakeHandScript.onHandWaitingToGrab += FinalDeathSound;
     }
 
     private void OnDisable()
@@ -98,11 +98,11 @@ public class AllSoundsController : MonoBehaviour
         TransitionManager.onSuccessPinchStartWakeUp -= BuildUp;
         AwakeInteract.onInteractedWithIn2D -= AwakeInteractionSounds;
         AwakeGoBackToSleep.onWakeUp -= WakeUpGasp;
-        //TODO: computer and go to sleep
         AsleepInteractable.onButtonPressedAudio -= ButtonSound;
         AsleepInteractable.onLockedDoorTriedAudio -= DoorLocked;
         AsleepInteractable.onDoorOpenedAudio -= UnLockAndOpen;
         AsleepInteractable.onKeyCollectedAudio -= CollectKey;
+        AwakeHandScript.onHandWaitingToGrab -= FinalDeathSound;
     }
 
     private void Awake()
@@ -479,7 +479,6 @@ public class AllSoundsController : MonoBehaviour
         MixerFXManager.instance.SetMusicParam("BPianoSFX", EX_PARA.VOLUME, fadeInTime);
 
         MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime);
-        Debug.Log("FadeToDeathScreen");
     }
 
     void FadeToWinScreen()
@@ -488,11 +487,15 @@ public class AllSoundsController : MonoBehaviour
         Debug.Log("FadeToWinScreen");
     }
 
-    void StartDeathSequence()
+    void FinalDeathSound()
     {
-        Debug.Log("LossFadeFirst");
 
         AudioManager.instance.PlaySFX("Horror", true);
+    }
+
+    void StartDeathSequence()
+    {
+        // Burp
     }
 
     void WinFadeFirstStep()
