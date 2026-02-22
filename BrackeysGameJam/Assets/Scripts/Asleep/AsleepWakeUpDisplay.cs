@@ -14,13 +14,11 @@ public class AsleepWakeUpDisplay : MonoBehaviour
     private float currentCharge = 0;
     private bool chargingUp = false;
 
-    private void Awake()
-    {
-        wakeUpDisplay.SetActive(false);
-    }
 
     private void OnEnable()
     {
+        currentCharge = 0;
+        displayChargeTimer.value = currentCharge / timeToWakeUp;
         AsleepWakeUpControl.onStartWakeUpSequence += BeginWakingUp;
         AsleepWakeUpControl.onCancelWakeUpSequence += StopWakingUp;
     }
@@ -41,7 +39,7 @@ public class AsleepWakeUpDisplay : MonoBehaviour
             if (currentCharge >= timeToWakeUp)
             {
                 onFinishWakeUpVisual?.Invoke();
-                StopWakingUp();
+                chargingUp = false;
             }
 
             if (displayChargeTimer == null)
@@ -53,14 +51,15 @@ public class AsleepWakeUpDisplay : MonoBehaviour
 
     private void BeginWakingUp()
     {
-        wakeUpDisplay.SetActive(true);
+        //wakeUpDisplay.SetActive(true);
         chargingUp = true;
     }
 
     private void StopWakingUp()
     {
-        wakeUpDisplay.SetActive(false);
+        //wakeUpDisplay.SetActive(false);
         chargingUp = false;
         currentCharge = 0;
+        displayChargeTimer.value = currentCharge / timeToWakeUp;
     }
 }
