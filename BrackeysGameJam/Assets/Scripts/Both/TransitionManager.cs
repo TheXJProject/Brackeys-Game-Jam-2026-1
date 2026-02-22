@@ -108,7 +108,7 @@ public class TransitionManager : MonoBehaviour
         TransitionAnimControl.onBlinkMiddle -= LoadCurrentAwakeScene;
         SceneManager.LoadScene(orderedAwakeScenesToLoad[currentLevelSceneIndex]);
         SendStartedAwakeScene(currentLevelSceneIndex);
-        ToggleMouseOn();
+        ToggleMouseOff();
     }
 
     private void LoadCurrentAsleepScene()
@@ -132,7 +132,7 @@ public class TransitionManager : MonoBehaviour
         TransitionAnimControl.onBlinkMiddle -= LoadOpeningScene;
         SceneManager.LoadScene((int)SceneName.AWAKEBEGINNING);
         SendStartedScene(SceneName.AWAKEBEGINNING);
-        ToggleMouseOn();
+        ToggleMouseOff();
     }
 
     private void LoadLosingScene()
@@ -140,7 +140,7 @@ public class TransitionManager : MonoBehaviour
         TransitionAnimControl.onBlinkMiddle -= LoadLosingScene;
         SceneManager.LoadScene((int)SceneName.LOST);
         SendStartedScene(SceneName.LOST);
-        ToggleMouseOn();
+        ToggleMouseOff();
     }
 
     private void LoadWinningScene()
@@ -148,7 +148,7 @@ public class TransitionManager : MonoBehaviour
         TransitionAnimControl.onBlinkMiddle -= LoadWinningScene;
         SceneManager.LoadScene((int)SceneName.WON);
         SendStartedScene(SceneName.WON);
-        ToggleMouseOn();
+        ToggleMouseOff();
     }
 
     private void SendStartedAsleepScene(int indexForAsleepScene)
@@ -173,10 +173,10 @@ public class TransitionManager : MonoBehaviour
         UnityEngine.Cursor.visible = false;
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
     }
-    private void ToggleMouseOn()
-    {
-        UnityEngine.Cursor.visible = true;
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
+    //private void ToggleMouseOn()
+    //{
+    //    UnityEngine.Cursor.visible = true;
+    //    UnityEngine.Cursor.lockState = CursorLockMode.None;
 
-    }
+    //}
 }

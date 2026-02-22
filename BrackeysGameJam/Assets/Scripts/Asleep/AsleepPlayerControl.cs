@@ -96,19 +96,19 @@ public class AsleepPlayerControl : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (UnityEngine.Cursor.visible)
-            {
-                UnityEngine.Cursor.visible = false;
-                UnityEngine.Cursor.lockState = CursorLockMode.Locked;
-            }
-            else
-            {
-                UnityEngine.Cursor.visible = true;
-                UnityEngine.Cursor.lockState = CursorLockMode.None;
-            }
-        }
+        //if (Input.GetMouseButtonDown(1))
+        //{
+        //    if (UnityEngine.Cursor.visible)
+        //    {
+        //        UnityEngine.Cursor.visible = false;
+        //        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        //    }
+        //    else
+        //    {
+        //        UnityEngine.Cursor.visible = true;
+        //        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        //    }
+        //}
 
 
         DetermineLookDirection();
