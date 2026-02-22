@@ -193,7 +193,7 @@ MonoBehaviour:
   chaseSpeed: 0.8
   straightViewDistance: 5
   diagonalViewDistance: 3
-  killDistance: 1
+  killDistance: 0.5
   spriteRenderer: {fileID: 5640209426268644083}
   animator: {fileID: 1664157755655087413}
   enemyID: 0
