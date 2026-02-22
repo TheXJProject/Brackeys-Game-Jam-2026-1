@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CheatLogic : MonoBehaviour
 {
+    const bool forceOff = true;
     public static CheatLogic cheatTool;
 
     public bool musicAndSoundForceOff;
@@ -27,16 +28,19 @@ public class CheatLogic : MonoBehaviour
 
     private void Update()
     {
-        // If we press the up arrow turn off/on music and sfx
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (!forceOff)
         {
-            musicAndSoundForceOff = !musicAndSoundForceOff;
-        }
+            // If we press the up arrow turn off/on music and sfx
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                musicAndSoundForceOff = !musicAndSoundForceOff;
+            }
 
-        // If we press the up arrow turn off/on if the player can die
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            cannotDie = !cannotDie;
+            // If we press the up arrow turn off/on if the player can die
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                cannotDie = !cannotDie;
+            }
         }
     }
 }

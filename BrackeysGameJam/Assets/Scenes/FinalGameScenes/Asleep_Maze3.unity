@@ -569,7 +569,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4819071944876497776, guid: 417b0499efc351541b1d69f12294bc90, type: 3}
       propertyPath: enemiesToSpawn.Array.data[1].allowedTargetNodes.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -4819071944876497776, guid: 417b0499efc351541b1d69f12294bc90, type: 3}
       propertyPath: enemiesToSpawn.Array.data[0].allowedTargetNodes.Array.data[0]
@@ -581,11 +581,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4819071944876497776, guid: 417b0499efc351541b1d69f12294bc90, type: 3}
       propertyPath: enemiesToSpawn.Array.data[1].allowedTargetNodes.Array.data[0]
-      value: 43
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: -4819071944876497776, guid: 417b0499efc351541b1d69f12294bc90, type: 3}
       propertyPath: enemiesToSpawn.Array.data[1].allowedTargetNodes.Array.data[1]
-      value: 12
+      value: 43
+      objectReference: {fileID: 0}
+    - target: {fileID: -4819071944876497776, guid: 417b0499efc351541b1d69f12294bc90, type: 3}
+      propertyPath: enemiesToSpawn.Array.data[1].allowedTargetNodes.Array.data[2]
+      value: 46
       objectReference: {fileID: 0}
     - target: {fileID: 2329003052980410540, guid: 417b0499efc351541b1d69f12294bc90, type: 3}
       propertyPath: m_Name
@@ -705,19 +709,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8456753269290952091, guid: 3682dd2ed31201640b454f363836be79, type: 3}
       propertyPath: buttonOrder.Array.data[0]
-      value: 0
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8456753269290952091, guid: 3682dd2ed31201640b454f363836be79, type: 3}
+      propertyPath: buttonOrder.Array.data[1]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8456753269290952091, guid: 3682dd2ed31201640b454f363836be79, type: 3}
       propertyPath: buttonOrder.Array.data[2]
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8456753269290952091, guid: 3682dd2ed31201640b454f363836be79, type: 3}
       propertyPath: buttonOrder.Array.data[3]
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8456753269290952091, guid: 3682dd2ed31201640b454f363836be79, type: 3}
       propertyPath: buttonOrder.Array.data[4]
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8456753269290952091, guid: 3682dd2ed31201640b454f363836be79, type: 3}
       propertyPath: buttonsToSpawn.Array.size

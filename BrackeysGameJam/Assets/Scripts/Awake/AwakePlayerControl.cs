@@ -18,6 +18,7 @@ public class AwakePlayerControl : MonoBehaviour
     InputController playerControls;
     InputAction move;
     Vector2 moveDirection;
+    bool previousDirectionX;
 
     public Animator animator;
     public SpriteRenderer spriteRenderer;
@@ -57,8 +58,21 @@ public class AwakePlayerControl : MonoBehaviour
         if (canMove)
         {
             playerRB.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
-            if (moveDirection.x < 0.0f || moveDirection.y < 0.0f) spriteRenderer.flipX = true;
-            else spriteRenderer.flipX = false;
+            if (moveDirection.x < 0.0f)
+            {
+                spriteRenderer.flipX = true;
+                previousDirectionX = false;
+            }
+            else if (moveDirection.x > 0.0f)
+            {
+                spriteRenderer.flipX = false;
+                previousDirectionX = true;
+            }
+            else if (moveDirection.magnitude > 0.0f)
+            {
+                spriteRenderer.flipX = !previousDirectionX;
+            }
+            
                 animator.SetFloat("Speed", Mathf.Abs(moveDirection.magnitude));
             if (!sentStartedMoving && playerRB.velocity.magnitude > 0.1f)
             {

@@ -181,20 +181,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visualChoices:
-  - name: Dancer
-    sprite: {fileID: 725822645, guid: ccc36c01ccb8a5b4abd51556b3d1d958, type: 3}
+  - sprite: {fileID: 725822645, guid: ccc36c01ccb8a5b4abd51556b3d1d958, type: 3}
     animation: {fileID: 9100000, guid: ff7892780b840974d984ba610a2803a9, type: 2}
-  - name: Tall
-    sprite: {fileID: -2074441945, guid: f405591c96c325b4391800f1e368922a, type: 3}
+  - sprite: {fileID: -2074441945, guid: f405591c96c325b4391800f1e368922a, type: 3}
     animation: {fileID: 9100000, guid: dbb12db774741c64cbcc4f15b88682da, type: 2}
-  - name: Thick
-    sprite: {fileID: -912968114, guid: cad29077a6b6a244cb644d271570f66c, type: 3}
+  - sprite: {fileID: -912968114, guid: cad29077a6b6a244cb644d271570f66c, type: 3}
     animation: {fileID: 9100000, guid: 9eedb9abdefee3540bedc6be571956fb, type: 2}
-  - name: Weird
-    sprite: {fileID: -1947188211, guid: 6cd358dfb33554543a3c9cf27a04ae18, type: 3}
+  - sprite: {fileID: -1947188211, guid: 6cd358dfb33554543a3c9cf27a04ae18, type: 3}
     animation: {fileID: 9100000, guid: 5571059ac8189104db6f9e3ad8556944, type: 2}
-  roamSpeed: 2
-  chaseSpeed: 1
+  roamSpeed: 0.5
+  chaseSpeed: 0.8
   straightViewDistance: 5
   diagonalViewDistance: 3
   killDistance: 1

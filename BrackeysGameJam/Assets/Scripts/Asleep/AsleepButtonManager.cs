@@ -64,8 +64,10 @@ public class AsleepButtonManager : MonoBehaviour
             Vector3 rotationVector = maze.getOnWallFaceRotation(buttonInfo.wallFace);
 
             GameObject newButton = Instantiate(buttonGameObject,
+                // new Vector3(col * maze.scale.x, 0, -row * maze.scale.z) +
                 new Vector3(col * maze.scale.x, 0, -row * maze.scale.z) +
-                offsetVector - Vector3.Scale(offsetVector, new Vector3(0.02f, 0, 0.02f)),
+                // offsetVector - Vector3.Scale(offsetVector, new Vector3(0.02f, 0, 0.02f)),
+                offsetVector - Vector3.Scale(offsetVector, new Vector3(0.2f, 0, 0.2f)),
                 Quaternion.Euler(rotationVector), transform);
 
             AsleepInteractable interactableScript = newButton.GetComponent<AsleepInteractable>();
