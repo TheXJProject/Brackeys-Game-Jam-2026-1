@@ -19,10 +19,11 @@ public class AwakeEndAnimThenNextThing : MonoBehaviour
     public static event Action onLossScreenShown;
 
     [SerializeField] private GameObject nextToUnlock;
-    [SerializeField] private int endScreenFade = 5;
+    [SerializeField] private float endScreenFade = 0.09f;
     [SerializeField] Image blackFade;
     [SerializeField] SpriteRenderer playAgain;
     [SerializeField] GameState gameState;
+    [SerializeField] AwakeHandScript handScript;
 
     [SerializeField] Color colorPlayAgain;
 
@@ -37,12 +38,18 @@ public class AwakeEndAnimThenNextThing : MonoBehaviour
     private void Start()
     {
         // TODO: DO screen animation
-        StartCoroutine(WaitForASec());
+        if (handScript != null)
+        {
+            handScript.BeginHandScriptVisuals();
+        }
+        else if (/*check victory scipt isn't null*/true)
+        {
+            ;
+        }
     }
 
-    private IEnumerator WaitForASec()
+    public void ShowEndScreenCoroutine()
     {
-        yield return new WaitForSeconds(1);
         StartCoroutine(ShowEndScreen());
     }
 
