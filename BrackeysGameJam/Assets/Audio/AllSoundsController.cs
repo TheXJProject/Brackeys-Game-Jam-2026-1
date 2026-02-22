@@ -234,6 +234,8 @@ public class AllSoundsController : MonoBehaviour
 
         // Stops all SFX
         AudioManager.instance.StopAllSFX();
+
+        dreamonSpottedTimes = new();
     }
 
     void PlayAmbience()
