@@ -136,6 +136,22 @@ public class MazeGenerator : MonoBehaviour
         return (wallObject, null);
     }
 
+    private void CreateCorner(int nodeIndex, bool left, Maze maze)
+    {
+        GameObject cornerWallObject = Instantiate(wallGameObject);
+        cornerWallObject.name = $"Corner {nodeIndex} {(left ? "Left" : "Right")}";
+
+        int row = nodeIndex / maze.size;
+        int col = nodeIndex % maze.size;
+
+        float cornerX = col * maze.cellWidth * maze.scale.x - (left ? 1 : -1) * maze.wallOffset * maze.scale.x;
+        float cornerY = maze.cellWidth;
+        float cornerZ = -row * maze.cellWidth * maze.scale.z + maze.wallOffset * maze.scale.z;
+
+        cornerWallObject.transform.position = new Vector3(cornerX, cornerY, cornerZ);
+        cornerWallObject.transform.localScale = new Vector3(0.1f * maze.scale.x, maze.scale.y, 0.1f * maze.scale.x);
+    }
+
     public GameObject CreateMaze(Maze maze)
     {
         GameObject mazeObject = new GameObject
@@ -178,7 +194,8 @@ public class MazeGenerator : MonoBehaviour
         NavMeshSurface navMeshSurface = navMeshObject.AddComponent<NavMeshSurface>();
         navMeshSurface.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
 
-        maze.cellWidth = wallGameObject.transform.localScale.x - wallGameObject.transform.localScale.z;
+        maze.cellWidth = wallGameObject.transform.localScale.x;
+        // maze.cellWidth = wallGameObject.transform.localScale.x; // - wallGameObject.transform.localScale.z;
         maze.wallOffset = maze.cellWidth / 2.0f;
         maze.SetupStartNodePosition(transform.localScale);
 
@@ -191,6 +208,17 @@ public class MazeGenerator : MonoBehaviour
             int southIndex = node + maze.size;
             int westIndex = node - 1;
             int eastIndex = node + 1;
+
+            // if (!connectingNodes.Contains(northIndex) && !connectingNodes.Contains(westIndex))
+            // {
+            //     CreateCorner(node, true, maze);
+            // }
+            //
+            // if (!connectingNodes.Contains(northIndex) && !connectingNodes.Contains(eastIndex))
+            // {
+            //     CreateCorner(node, false, maze);
+            // }
+
 
             (int index, Maze.WallDirection direction, Func<int, bool> edgeCheck)[] indexDirectionMapping =
             {
