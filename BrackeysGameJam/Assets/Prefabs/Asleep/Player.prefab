@@ -156,7 +156,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1284438803006156854}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -210,10 +210,10 @@ RectTransform:
   - {fileID: 2552819260622119144}
   m_Father: {fileID: 5070756538968828142}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -1.2905, y: 0}
-  m_SizeDelta: {x: -9.8033, y: 0}
+  m_AnchorMin: {x: 0.015212122, y: 0.39026448}
+  m_AnchorMax: {x: 0.9087879, y: 0.64273554}
+  m_AnchoredPosition: {x: 6.4003, y: -0.3251}
+  m_SizeDelta: {x: 4.3795, y: 5.7151}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1653336649660305301
 GameObject:
@@ -584,16 +584,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2781558679147221602}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1.125, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4460778067407861818}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -3.6991043, y: -0.09000015}
-  m_SizeDelta: {x: 0.0178, y: 4.3136}
+  m_AnchoredPosition: {x: -4.0138, y: -0.7738}
+  m_SizeDelta: {x: -0.1065, y: 4.9351}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7197618276361664300
 CanvasRenderer:
@@ -623,8 +623,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c674a812ec1bf6347a1eada10e7c1179, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 4e12e2ee434d34c499189ec9aa2314de, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1008,10 +1008,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 5070756538968828142}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.25}
-  m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: -0}
-  m_SizeDelta: {x: -10, y: 4.4084}
+  m_AnchorMin: {x: 0.019000001, y: 0.39847112}
+  m_AnchorMax: {x: 0.9087879, y: 0.634529}
+  m_AnchoredPosition: {x: 4.5, y: -1.9999619}
+  m_SizeDelta: {x: 19, y: 36.4084}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7793141146697484280
 CanvasRenderer:
@@ -1041,7 +1041,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bd27c166b38aa1745a2252919ce13322, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dd55eb1317608794eb15f39f6606c25c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1180,20 +1180,20 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3804985676234057914}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 0.6094836, y: 0.6094836, z: 0.6094836}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2983998115925867927}
   - {fileID: 4460778067407861818}
+  - {fileID: 2983998115925867927}
   - {fileID: 7971458340426622228}
   m_Father: {fileID: 4722327191154809529}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.2, y: -29.9}
-  m_SizeDelta: {x: 88.7426, y: 23.1401}
+  m_AnchoredPosition: {x: 382.6, y: 3}
+  m_SizeDelta: {x: 264, y: 102.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &216606881424672429
 MonoBehaviour:
@@ -1446,7 +1446,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4352682148585832328}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 

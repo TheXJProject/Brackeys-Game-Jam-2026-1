@@ -17,7 +17,7 @@ public class AsleepWakeUpControl : MonoBehaviour
     [SerializeField] private int numberOfFlashes = 3;
 
     private float wakeUpRecharge = 0;
-    private bool canWakeUp = false;
+    private bool canWakeUp = true;
     private Coroutine flashRed;
 
     private void Awake()
@@ -40,12 +40,10 @@ public class AsleepWakeUpControl : MonoBehaviour
         if (wakeUpRecharge < maxRechargeTime)
         {
             wakeUpRecharge += Time.deltaTime;
-            canWakeUp = false;
         }
         else
         {
             wakeUpRecharge = maxRechargeTime;
-            canWakeUp = true;
         }
 
         // Update wake up Slider
