@@ -4445,7 +4445,7 @@ MonoBehaviour:
   Msg: 0
   removeWarningMsgs: 0
   removeCautionMsgs: 1
-  nonPriorityVolume: 0.7
+  nonPriorityVolume: 0.6
   musicSounds:
   - name: BChoir
     volume: 0.8
@@ -4659,8 +4659,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: b00065fafbe178b49a614b88e8022fe1, type: 3}
     looped: 0
   - name: PlayerInteract
-    volume: 0.6
-    pitch: 1
+    volume: 1
+    pitch: 0.14
     panning: 0
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: b979240af1be53342ab954cb5c8f789d, type: 3}
@@ -4692,6 +4692,13 @@ MonoBehaviour:
     panning: 0
     randomPitchRange: {x: 0, y: 0}
     clip: {fileID: 8300000, guid: e1554e2b5d22107418991b9426a98b24, type: 3}
+    looped: 0
+  - name: Horror
+    volume: 0.8
+    pitch: 1
+    panning: 0
+    randomPitchRange: {x: 0, y: 0}
+    clip: {fileID: 8300000, guid: 69a1b810497e72847add555dd047a518, type: 3}
     looped: 0
   sfxLoopedSounds:
   - name: Dripping

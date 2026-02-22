@@ -53,9 +53,10 @@ public class AllSoundsController : MonoBehaviour
         AwakeEndAnimThenNextThing.onWinFadeScreenStarted += WinFadeFirstStep;
         AwakeEndAnimThenNextThing.onLossScreenShown += FadeToDeathScreen;
         AwakeEndAnimThenNextThing.onWinScreenShown += FadeToWinScreen;
-        AsleepLucidControl.onLucidStarted += EnterExitLucid;
-        AsleepLucidControl.onLucidEnded += EnterExitLucid;
+        AsleepLucidControl.onLucidStarted += EnterLucid;
+        AsleepLucidControl.onLucidEnded += ExitLucid;
         AsleepTrap.onEnemyTrapped += EnemyTrappedSounds;
+        GoToBeginningOfGameOnPress.returnToStart += BackToStartScreen;
 
         // SFX triggers
         AsleepInteractable.onPuzzleSolved += BreathOfChange;
@@ -85,9 +86,10 @@ public class AllSoundsController : MonoBehaviour
         AwakeEndAnimThenNextThing.onWinFadeScreenStarted -= WinFadeFirstStep;
         AwakeEndAnimThenNextThing.onLossScreenShown -= FadeToDeathScreen;
         AwakeEndAnimThenNextThing.onWinScreenShown -= FadeToWinScreen;
-        AsleepLucidControl.onLucidStarted -= EnterExitLucid;
-        AsleepLucidControl.onLucidEnded -= EnterExitLucid;
+        AsleepLucidControl.onLucidStarted -= EnterLucid;
+        AsleepLucidControl.onLucidEnded -= ExitLucid;
         AsleepTrap.onEnemyTrapped -= EnemyTrappedSounds;
+        GoToBeginningOfGameOnPress.returnToStart -= BackToStartScreen;
 
         // SFX triggers
         AsleepInteractable.onPuzzleSolved -= BreathOfChange;
@@ -396,6 +398,9 @@ public class AllSoundsController : MonoBehaviour
 
     void FadeOut()
     {
+        // Shouldn't be walking when changing scene
+        StopWalking();
+
         // Different depending what scene we're currently in
         switch (currentScene)
         {
@@ -457,6 +462,11 @@ public class AllSoundsController : MonoBehaviour
         AudioManager.instance.PlaySFX("PlayerInteract");
     }
 
+    void BackToStartScreen()
+    {
+        AudioManager.instance.PlaySFX("PlayerInteract");
+    }
+
     void FadeToDeathScreen()
     {
         MixerFXManager.instance.SetMusicParam("BDeepChords", EX_PARA.VOLUME, fadeInTime);
@@ -475,11 +485,8 @@ public class AllSoundsController : MonoBehaviour
     void StartDeathSequence()
     {
         Debug.Log("LossFadeFirst");
-        // TODO: this
 
-        // Wait set amount of time
-
-        // Play scream SFX
+        AudioManager.instance.PlaySFX("Horror", true);
     }
 
     void WinFadeFirstStep()
@@ -614,9 +621,14 @@ public class AllSoundsController : MonoBehaviour
         }
     }
 
-    void EnterExitLucid()
+    void EnterLucid()
     {
         AudioManager.instance.PlaySFX("SingleHeartbeat");
+    }
+
+    void ExitLucid()
+    {
+        AudioManager.instance.PlaySFX("SingleHeartbeat", false, 0.6f, false, 0.3f);
     }
 
     void EnemyTrappedSounds(GameObject dreamon)
