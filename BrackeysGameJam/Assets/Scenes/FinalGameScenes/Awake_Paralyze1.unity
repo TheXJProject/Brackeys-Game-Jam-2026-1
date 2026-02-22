@@ -214,6 +214,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2371878981353464964, guid: 7f9d1ebf5eb837440a846031d3a0b82e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 436430899, guid: a0721bb62ff98c1499aeb90c4add8c2d, type: 3}
     - target: {fileID: 3696974286180882036, guid: 7f9d1ebf5eb837440a846031d3a0b82e, type: 3}
       propertyPath: m_Name
       value: Bedroom
