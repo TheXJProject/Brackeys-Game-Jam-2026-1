@@ -4,14 +4,27 @@ using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
+[Serializable]
+public class EnemyInformation
+{
+    [SerializeField] private string name = "RENAME_ME";
+    public Sprite sprite;
+    public RuntimeAnimatorController animation;
+}
+
 public class AsleepEnemy : MonoBehaviour
 {
+    private static int enemyVisualChoice = 0;
+    [SerializeField] private List<EnemyInformation> visualChoices;
+    private EnemyInformation thisEnemyVisual;
+
     public float roamSpeed;
     public float chaseSpeed;
     public float straightViewDistance;
     public float diagonalViewDistance;
     public float killDistance;
-    public SpriteRenderer sprite;
+    public SpriteRenderer spriteRenderer;
+    public Animator animator;
     public int enemyID;
 
     [SerializeField] private float diagonalAngle;
@@ -89,6 +102,13 @@ public class AsleepEnemy : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         navMeshAgent.speed = roamSpeed;
+
+        enemyVisualChoice++;
+        enemyVisualChoice = enemyVisualChoice % visualChoices.Count;
+        thisEnemyVisual = visualChoices[enemyVisualChoice];
+
+        spriteRenderer.sprite = thisEnemyVisual.sprite;
+        animator.runtimeAnimatorController = thisEnemyVisual.animation;
     }
 
     private void FixedUpdate()
@@ -128,6 +148,9 @@ public class AsleepEnemy : MonoBehaviour
 
         if (playerSeen)
         {
+            // DOM I'VE PUT MY CODE TO TRIGGER SPRITE CHANGE HERE:
+            animator.SetBool("spottedPlayer", true);
+
             if (lineOfSightRay.distance <= killDistance)
             {
                 AsleepPlayerControl.killPlayer();
@@ -142,6 +165,8 @@ public class AsleepEnemy : MonoBehaviour
         }
         else
         {
+            // DOM I'VE PUT MY CODE TO TRIGGER SPRITE CHANGE HERE:
+            animator.SetBool("spottedPlayer", false);
             navMeshAgent.speed = roamSpeed;
         }
 
@@ -158,12 +183,12 @@ public class AsleepEnemy : MonoBehaviour
 
     private void SpriteLookAtPlayer()
     {
-        sprite.transform.LookAt(player.transform);
+        spriteRenderer.transform.LookAt(player.transform);
 
         Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
         directionToPlayer.y = 0;
 
-        sprite.transform.forward = directionToPlayer;
+        spriteRenderer.transform.forward = directionToPlayer;
     }
 
     public void SetAllowedTargetNodes(List<int> targetNodes)
