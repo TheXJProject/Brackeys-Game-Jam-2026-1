@@ -428,6 +428,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7053546469763047907, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
+      propertyPath: orderedAwakeScenesToLoad.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053546469763047907, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
+      propertyPath: orderedAsleepScenesToLoad.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053546469763047907, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
+      propertyPath: orderedAsleepScenesToLoad.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053546469763047907, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
+      propertyPath: orderedAsleepScenesToLoad.Array.data[1]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053546469763047907, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
+      propertyPath: orderedAsleepScenesToLoad.Array.data[2]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053546469763047907, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
+      propertyPath: orderedAsleepScenesToLoad.Array.data[3]
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
