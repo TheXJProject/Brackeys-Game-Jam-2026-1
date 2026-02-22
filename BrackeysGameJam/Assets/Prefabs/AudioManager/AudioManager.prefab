@@ -4613,7 +4613,7 @@ MonoBehaviour:
     volume: 0.55
     pitch: 1.3
     panning: 0
-    randomPitchRange: {x: 0.8, y: 1}
+    randomPitchRange: {x: 1.2, y: 1.4}
     clip: {fileID: 8300000, guid: ad675a28b99806b438f5188b597ec33d, type: 3}
     looped: 0
   - name: GaspAwake
@@ -4645,7 +4645,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 86fbf69218fdc3147ae2cc7d50a723b6, type: 3}
     looped: 0
   - name: KeyPress
-    volume: 0.8
+    volume: 0.65
     pitch: 1
     panning: 0
     randomPitchRange: {x: 1.1, y: 1.3}

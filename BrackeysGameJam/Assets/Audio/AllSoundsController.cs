@@ -57,6 +57,7 @@ public class AllSoundsController : MonoBehaviour
         AsleepLucidControl.onLucidEnded += ExitLucid;
         AsleepTrap.onEnemyTrapped += EnemyTrappedSounds;
         GoToBeginningOfGameOnPress.returnToStart += BackToStartScreen;
+        AwakePCInteractedScript.onComputerInteraction += ComputerInteractions;
 
         // SFX triggers
         AsleepInteractable.onPuzzleSolved += BreathOfChange;
@@ -90,6 +91,7 @@ public class AllSoundsController : MonoBehaviour
         AsleepLucidControl.onLucidEnded -= ExitLucid;
         AsleepTrap.onEnemyTrapped -= EnemyTrappedSounds;
         GoToBeginningOfGameOnPress.returnToStart -= BackToStartScreen;
+        AwakePCInteractedScript.onComputerInteraction -= ComputerInteractions;
 
         // SFX triggers
         AsleepInteractable.onPuzzleSolved -= BreathOfChange;
@@ -673,7 +675,6 @@ public class AllSoundsController : MonoBehaviour
 
     void AwakeInteractionSounds(InteractWith2D soundToPlay)
     {
-        Debug.Log("character interact");
         AudioManager.instance.PlaySFX("CharacterInteract");
 
         switch (soundToPlay)
@@ -682,12 +683,30 @@ public class AllSoundsController : MonoBehaviour
                 Debug.Log("gone bed");
                 AudioManager.instance.PlaySFX("GoToBed");
                 break;
-            case InteractWith2D.COMPUTER:
-                Debug.Log("computer");
-                AudioManager.instance.PlaySFX("ComputerBeep");
-                break;
+
             default:
                 Debug.LogWarning("Error, character interaction sound not found!");
+                break;
+        }
+    }
+
+    void ComputerInteractions(PC_STATE state)
+    {
+        switch (state)
+        {
+            case PC_STATE.OFF:
+                AudioManager.instance.PlaySFX("CharacterInteract");
+                AudioManager.instance.PlaySFX("KeyPress", false, null, true);
+                break;
+            case PC_STATE.SLIDE1:
+                AudioManager.instance.PlaySFX("CharacterInteract");
+                AudioManager.instance.PlaySFX("ComputerBeep", false, null, true);
+                break;
+            case PC_STATE.SLIDE2:
+                AudioManager.instance.PlaySFX("KeyPress", false, null, true);
+                break;
+            default:
+                Debug.Log("Invalid selection");
                 break;
         }
     }
