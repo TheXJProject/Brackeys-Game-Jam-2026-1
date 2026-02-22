@@ -115,7 +115,7 @@ public class AsleepEnemy : MonoBehaviour
     {
         SpriteLookAtPlayer();
 
-        if (!navMeshAgent.enabled) return;
+        if (!navMeshAgent.enabled || isTrapped) return;
 
         Vector3 rayDirection = player.transform.position - transform.position;
         Vector3 rayOrigin = transform.position;

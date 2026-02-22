@@ -131,6 +131,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -9111763234738948877, guid: bde9cda87ad2f284ba9faf0b6bcb12ea, type: 3}
+      propertyPath: numberOfTrapsRequired
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -9111763234738948877, guid: bde9cda87ad2f284ba9faf0b6bcb12ea, type: 3}
       propertyPath: trapsToSpawn.Array.size
       value: 4
       objectReference: {fileID: 0}
