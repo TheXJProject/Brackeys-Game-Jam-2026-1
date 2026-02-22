@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6cd358dfb33554543a3c9cf27a04ae18
+guid: a0721bb62ff98c1499aeb90c4add8c2d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 400
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -69,9 +69,9 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 16384
+    maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
+    textureFormat: 4
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
@@ -110,13 +110,97 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Dreamon_sprite_sheet_5_0
+      name: bed paralysis animation_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 69
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e65e83872cd68f42855f8dc982f78d5
+      internalID: 436430899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed paralysis animation_1
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 64
+        width: 69
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40550333c8db0ce45b2427496caa96a1
+      internalID: -1212177841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed paralysis animation_2
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 64
+        width: 69
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa7cd6f81f0841b408fdbe77e1e6f441
+      internalID: 1129801724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed paralysis animation_3
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 64
+        width: 69
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fea0c5a170d96441a2496fb02e17e82
+      internalID: 1807717724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bed paralysis animation_4
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1850
-        height: 3100
+        width: 69
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +208,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b51fd2c18adcdf47bbb8d305d7d0bd1
-      internalID: -1947188211
+      spriteID: 807d10b062638324b9ede2c522c43322
+      internalID: -1986182101
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dreamon_sprite_sheet_5_1
+      name: bed paralysis animation_5
       rect:
         serializedVersion: 2
-        x: 1850
+        x: 69
         y: 0
-        width: 1850
-        height: 3100
+        width: 69
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +229,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 73423c6675c9af7449cfcef158bc00e5
-      internalID: 1426385693
+      spriteID: 57051c10dd3bc9d47bbf7e4957a25f90
+      internalID: -1862548870
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Dreamon_sprite_sheet_5_2
+      name: bed paralysis animation_6
       rect:
         serializedVersion: 2
-        x: 3700
+        x: 138
         y: 0
-        width: 1850
-        height: 3100
+        width: 69
+        height: 64
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,71 +250,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 090b0571ef418b84f9bf6d2b8c4f2333
-      internalID: -197613315
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dreamon_sprite_sheet_5_3
-      rect:
-        serializedVersion: 2
-        x: 5550
-        y: 0
-        width: 1850
-        height: 3100
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: af0dcd691c1c4d34992b89171aea8c16
-      internalID: 1648688087
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dreamon_sprite_sheet_5_4
-      rect:
-        serializedVersion: 2
-        x: 7400
-        y: 0
-        width: 1850
-        height: 3100
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b1e8a0f543513904a8f2826166c5f494
-      internalID: -449008569
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Dreamon_sprite_sheet_5_5
-      rect:
-        serializedVersion: 2
-        x: 9250
-        y: 0
-        width: 1850
-        height: 3100
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cb7d6c20ede59ae43bb3a4c36acfae0a
-      internalID: 811429347
+      spriteID: 7392acfac9a5dd642a225d3e96e85174
+      internalID: 1194706140
       vertices: []
       indices: 
       edges: []
@@ -246,12 +267,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Dreamon_sprite_sheet_5_0: -1947188211
-      Dreamon_sprite_sheet_5_1: 1426385693
-      Dreamon_sprite_sheet_5_2: -197613315
-      Dreamon_sprite_sheet_5_3: 1648688087
-      Dreamon_sprite_sheet_5_4: -449008569
-      Dreamon_sprite_sheet_5_5: 811429347
+      bed paralysis animation_0: 436430899
+      bed paralysis animation_1: -1212177841
+      bed paralysis animation_2: 1129801724
+      bed paralysis animation_3: 1807717724
+      bed paralysis animation_4: -1986182101
+      bed paralysis animation_5: -1862548870
+      bed paralysis animation_6: 1194706140
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

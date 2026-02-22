@@ -1836,6 +1836,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: 2DPlayerCharacter
       objectReference: {fileID: 0}
+    - target: {fileID: 3630538531734165918, guid: c938d6de6c6cc7c4881c7aa7433aa861, type: 3}
+      propertyPath: m_Size.x
+      value: 0.6189891
+      objectReference: {fileID: 0}
+    - target: {fileID: 3630538531734165918, guid: c938d6de6c6cc7c4881c7aa7433aa861, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.0033150911
+      objectReference: {fileID: 0}
     - target: {fileID: 4411383744442096691, guid: c938d6de6c6cc7c4881c7aa7433aa861, type: 3}
       propertyPath: animator
       value: 
@@ -1891,7 +1899,7 @@ PrefabInstance:
     - target: {fileID: 9063517087062821066, guid: c938d6de6c6cc7c4881c7aa7433aa861, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 408429066, guid: 892b8a0ed97a2a847be20be178ab41a6, type: 3}
+      objectReference: {fileID: 1031433476, guid: e26017aa8c25bc443a601910f130fc00, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
