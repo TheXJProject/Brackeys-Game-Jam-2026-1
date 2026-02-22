@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 [Serializable]
 public class EnemyInformation
 {
-    [SerializeField] private string name = "RENAME_ME";
+    //[SerializeField] private string name = "RENAME_ME";
     public Sprite sprite;
     public RuntimeAnimatorController animation;
 }

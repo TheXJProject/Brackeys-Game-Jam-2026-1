@@ -72,10 +72,10 @@ public class AwakeInteract : MonoBehaviour
     {
         if (withinRangeForPrompt)
         {
-            onInteractedWithIn2D?.Invoke(interactObject);
             onInteractedWith?.Invoke();
             if (interactObject == InteractWith2D.BED) 
             { 
+                onInteractedWithIn2D?.Invoke(interactObject);
                 disableInteraction = true;
                 withinRangeForPrompt = false;
             }
