@@ -310,6 +310,10 @@ public class AllSoundsController : MonoBehaviour
         switch (currentScene)
         {
             case SceneName.AWAKEBEGINNING:
+                // Fade out deepchords and piano SFX
+                MixerFXManager.instance.SetMusicParam("BDeepChords", EX_PARA.VOLUME, fadeInTime, 0f);
+                MixerFXManager.instance.SetMusicParam("BPianoSFX", EX_PARA.VOLUME, fadeInTime, 0f);
+
                 MixerFXManager.instance.SetMusicParam("BChoir", EX_PARA.VOLUME, fadeInTime);
                 MixerFXManager.instance.SetMusicParam("BMusicBox", EX_PARA.VOLUME, fadeInTime + (float)musicStartTime * 2);
 
@@ -722,7 +726,6 @@ public class AllSoundsController : MonoBehaviour
 
     void CollectKey()
     {
-        Debug.Log("gasp awake");
         AudioManager.instance.PlaySFX("PickUpKey", true);
     }
 }
