@@ -283,6 +283,38 @@ MonoBehaviour:
   - Jakub - SFX, Shaderer Junior
   - Cora - SFX, Chicken Nugget Noise Expert PHD
   textMeshPro: {fileID: 45880314}
+--- !u!1 &330264378 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7671262707346777478, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
+  m_PrefabInstance: {fileID: 7471441112273631124}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &330264379 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3065532590660178532, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
+  m_PrefabInstance: {fileID: 7471441112273631124}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330264378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6bd12137e620984f8d3191886e8b730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &330264381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330264378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3956dcdc2d1d2f4ab9d70b886dcfc84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextthingController: {fileID: 330264379}
+  animator: {fileID: 1472785410}
+  timeUntilWakeyWakey: 1
+  timeUntilCanPLayAgain: 2
 --- !u!1001 &416990415
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -291,6 +323,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3270391779561853666, guid: 7f9d1ebf5eb837440a846031d3a0b82e, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: f0b59edc9cee8ac4294b1dc32726e589, type: 2}
     - target: {fileID: 3696974286180882036, guid: 7f9d1ebf5eb837440a846031d3a0b82e, type: 3}
       propertyPath: m_Name
       value: Bedroom
@@ -645,6 +681,11 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!95 &1472785410 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3270391779561853666, guid: 7f9d1ebf5eb837440a846031d3a0b82e, type: 3}
+  m_PrefabInstance: {fileID: 416990415}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1936682559
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,6 +819,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3065532590660178532, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
+      propertyPath: awakeAnim
+      value: 
+      objectReference: {fileID: 330264381}
+    - target: {fileID: 3065532590660178532, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
       propertyPath: playAgain
       value: 
       objectReference: {fileID: 1936682560}
@@ -887,7 +932,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3002642390503006422, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
       insertIndex: -1
       addedObject: {fileID: 45880313}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7671262707346777478, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 330264381}
   m_SourcePrefab: {fileID: 100100000, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
 --- !u!224 &7471441112273631125 stripped
 RectTransform:
