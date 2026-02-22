@@ -252,8 +252,8 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.011110306
-      value: 0.6197052
+      time: 0.019443512
+      value: 0.61561584
       inSlope: 0.0060340525
       outSlope: 0.0060340525
       tangentMode: 0
@@ -261,8 +261,8 @@ AudioSource:
       inWeight: 0
       outWeight: 1
     - serializedVersion: 3
-      time: 0.38055572
-      value: 0.30371094
+      time: 0.30833587
+      value: 0.34051514
       inSlope: -1.3950529
       outSlope: -1.3950529
       tangentMode: 0
@@ -585,8 +585,8 @@ AudioSource:
       inWeight: 0
       outWeight: 0.26007038
     - serializedVersion: 3
-      time: 0.40366971
-      value: 0.9747009
+      time: 0.27866971
+      value: 0.9787903
       inSlope: -0.16535312
       outSlope: -0.16535312
       tangentMode: 0
@@ -594,17 +594,17 @@ AudioSource:
       inWeight: 0.286314
       outWeight: 1
     - serializedVersion: 3
-      time: 0.44187787
-      value: 0.79744446
-      inSlope: -3.39319
-      outSlope: -3.39319
+      time: 0.41688398
+      value: 0.8874103
+      inSlope: -1.4691488
+      outSlope: -1.4691488
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 1
       outWeight: 0.9961135
     - serializedVersion: 3
-      time: 0.5001834
-      value: 0.48329765
+      time: 0.4918521
+      value: 0.4792083
       inSlope: -4.3034105
       outSlope: -4.3034105
       tangentMode: 0
@@ -612,8 +612,8 @@ AudioSource:
       inWeight: 0.43278983
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.5913426
-      value: 0.06738381
+      time: 0.5496709
+      value: 0.0592051
       inSlope: -0.40468976
       outSlope: -0.40468976
       tangentMode: 0
@@ -623,11 +623,11 @@ AudioSource:
     - serializedVersion: 3
       time: 0.9798584
       value: 0
-      inSlope: -0.4836036
-      outSlope: -0.4836036
+      inSlope: -0.27388746
+      outSlope: -0.27388746
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.36222348
+      inWeight: 0.3362125
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
