@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class GoToBeginningOfGameOnPress : MonoBehaviour
 {
+    public static Action returnToStart;
+
     InputController playerControls;
     InputAction interact;
 
@@ -29,6 +32,7 @@ public class GoToBeginningOfGameOnPress : MonoBehaviour
 
     public void GoToBeginningOfGame(InputAction.CallbackContext context)
     {
+        returnToStart?.Invoke();
         TransitionManager.instance.LoadSceneRestartGame();
     }
 }

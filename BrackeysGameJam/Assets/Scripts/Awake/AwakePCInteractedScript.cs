@@ -1,22 +1,25 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PC_STATE
+{
+    OFF,
+    SLIDE1,
+    SLIDE2
+}
+
 public class AwakePCInteractedScript : MonoBehaviour
 {
-    enum PC_STATE
-    {
-        OFF,
-        SLIDE1,
-        SLIDE2
-    }
-
     [SerializeField] private PC_STATE state = PC_STATE.OFF;
     [SerializeField] private GameObject Slide1;
     [SerializeField] private GameObject Slide2;
     [SerializeField] private AwakePlayerControl PlayerControl;
     [SerializeField] private AwakeInteract InteractControl;
+
+    public static Action<PC_STATE> onComputerInteraction;
 
 
     private void TurnMeOn()
@@ -59,6 +62,8 @@ public class AwakePCInteractedScript : MonoBehaviour
             state = PC_STATE.OFF;
             InteractControl.promptTextShown = "Check Computer [E]";
         }
+
+        onComputerInteraction?.Invoke(state);
     }
    
 }

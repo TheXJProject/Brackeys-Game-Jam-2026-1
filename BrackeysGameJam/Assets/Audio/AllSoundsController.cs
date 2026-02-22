@@ -53,9 +53,11 @@ public class AllSoundsController : MonoBehaviour
         AwakeEndAnimThenNextThing.onWinFadeScreenStarted += WinFadeFirstStep;
         AwakeEndAnimThenNextThing.onLossScreenShown += FadeToDeathScreen;
         AwakeEndAnimThenNextThing.onWinScreenShown += FadeToWinScreen;
-        AsleepLucidControl.onLucidStarted += EnterExitLucid;
-        AsleepLucidControl.onLucidEnded += EnterExitLucid;
+        AsleepLucidControl.onLucidStarted += EnterLucid;
+        AsleepLucidControl.onLucidEnded += ExitLucid;
         AsleepTrap.onEnemyTrapped += EnemyTrappedSounds;
+        GoToBeginningOfGameOnPress.returnToStart += BackToStartScreen;
+        AwakePCInteractedScript.onComputerInteraction += ComputerInteractions;
 
         // SFX triggers
         AsleepInteractable.onPuzzleSolved += BreathOfChange;
@@ -85,9 +87,11 @@ public class AllSoundsController : MonoBehaviour
         AwakeEndAnimThenNextThing.onWinFadeScreenStarted -= WinFadeFirstStep;
         AwakeEndAnimThenNextThing.onLossScreenShown -= FadeToDeathScreen;
         AwakeEndAnimThenNextThing.onWinScreenShown -= FadeToWinScreen;
-        AsleepLucidControl.onLucidStarted -= EnterExitLucid;
-        AsleepLucidControl.onLucidEnded -= EnterExitLucid;
+        AsleepLucidControl.onLucidStarted -= EnterLucid;
+        AsleepLucidControl.onLucidEnded -= ExitLucid;
         AsleepTrap.onEnemyTrapped -= EnemyTrappedSounds;
+        GoToBeginningOfGameOnPress.returnToStart -= BackToStartScreen;
+        AwakePCInteractedScript.onComputerInteraction -= ComputerInteractions;
 
         // SFX triggers
         AsleepInteractable.onPuzzleSolved -= BreathOfChange;
@@ -308,6 +312,10 @@ public class AllSoundsController : MonoBehaviour
         switch (currentScene)
         {
             case SceneName.AWAKEBEGINNING:
+                // Fade out deepchords and piano SFX
+                MixerFXManager.instance.SetMusicParam("BDeepChords", EX_PARA.VOLUME, fadeInTime, 0f);
+                MixerFXManager.instance.SetMusicParam("BPianoSFX", EX_PARA.VOLUME, fadeInTime, 0f);
+
                 MixerFXManager.instance.SetMusicParam("BChoir", EX_PARA.VOLUME, fadeInTime);
                 MixerFXManager.instance.SetMusicParam("BMusicBox", EX_PARA.VOLUME, fadeInTime + (float)musicStartTime * 2);
 
@@ -396,6 +404,9 @@ public class AllSoundsController : MonoBehaviour
 
     void FadeOut()
     {
+        // Shouldn't be walking when changing scene
+        StopWalking();
+
         // Different depending what scene we're currently in
         switch (currentScene)
         {
@@ -457,6 +468,11 @@ public class AllSoundsController : MonoBehaviour
         AudioManager.instance.PlaySFX("PlayerInteract");
     }
 
+    void BackToStartScreen()
+    {
+        AudioManager.instance.PlaySFX("PlayerInteract");
+    }
+
     void FadeToDeathScreen()
     {
         MixerFXManager.instance.SetMusicParam("BDeepChords", EX_PARA.VOLUME, fadeInTime);
@@ -475,11 +491,8 @@ public class AllSoundsController : MonoBehaviour
     void StartDeathSequence()
     {
         Debug.Log("LossFadeFirst");
-        // TODO: this
 
-        // Wait set amount of time
-
-        // Play scream SFX
+        AudioManager.instance.PlaySFX("Horror", true);
     }
 
     void WinFadeFirstStep()
@@ -614,9 +627,14 @@ public class AllSoundsController : MonoBehaviour
         }
     }
 
-    void EnterExitLucid()
+    void EnterLucid()
     {
         AudioManager.instance.PlaySFX("SingleHeartbeat");
+    }
+
+    void ExitLucid()
+    {
+        AudioManager.instance.PlaySFX("SingleHeartbeat", false, 0.6f, false, 0.3f);
     }
 
     void EnemyTrappedSounds(GameObject dreamon)
@@ -657,7 +675,6 @@ public class AllSoundsController : MonoBehaviour
 
     void AwakeInteractionSounds(InteractWith2D soundToPlay)
     {
-        Debug.Log("character interact");
         AudioManager.instance.PlaySFX("CharacterInteract");
 
         switch (soundToPlay)
@@ -666,12 +683,30 @@ public class AllSoundsController : MonoBehaviour
                 Debug.Log("gone bed");
                 AudioManager.instance.PlaySFX("GoToBed");
                 break;
-            case InteractWith2D.COMPUTER:
-                Debug.Log("computer");
-                AudioManager.instance.PlaySFX("ComputerBeep");
-                break;
+
             default:
                 Debug.LogWarning("Error, character interaction sound not found!");
+                break;
+        }
+    }
+
+    void ComputerInteractions(PC_STATE state)
+    {
+        switch (state)
+        {
+            case PC_STATE.OFF:
+                AudioManager.instance.PlaySFX("CharacterInteract");
+                AudioManager.instance.PlaySFX("KeyPress", false, null, true);
+                break;
+            case PC_STATE.SLIDE1:
+                AudioManager.instance.PlaySFX("CharacterInteract");
+                AudioManager.instance.PlaySFX("ComputerBeep", false, null, true);
+                break;
+            case PC_STATE.SLIDE2:
+                AudioManager.instance.PlaySFX("KeyPress", false, null, true);
+                break;
+            default:
+                Debug.Log("Invalid selection");
                 break;
         }
     }
@@ -710,7 +745,6 @@ public class AllSoundsController : MonoBehaviour
 
     void CollectKey()
     {
-        Debug.Log("gasp awake");
         AudioManager.instance.PlaySFX("PickUpKey", true);
     }
 }

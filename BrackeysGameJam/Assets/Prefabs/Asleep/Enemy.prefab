@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4421136983077843752}
   - component: {fileID: 5640209426268644083}
+  - component: {fileID: 1664157755655087413}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
@@ -26,9 +27,9 @@ Transform:
   m_GameObject: {fileID: 6588491413649723759}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0.104, z: 0}
+  m_LocalScale: {x: 0.33, y: 0.33, z: 0.33}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8433094571776059877}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 070b02904c743e34f909818dc0be50ad, type: 3}
+  m_Sprite: {fileID: -2074441945, guid: f405591c96c325b4391800f1e368922a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -84,6 +85,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1664157755655087413
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6588491413649723759}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dbb12db774741c64cbcc4f15b88682da, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7075187483878198881
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,12 +180,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89fd8193bac9bff4987a12f034961a30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  visualChoices:
+  - name: Dancer
+    sprite: {fileID: 725822645, guid: ccc36c01ccb8a5b4abd51556b3d1d958, type: 3}
+    animation: {fileID: 9100000, guid: ff7892780b840974d984ba610a2803a9, type: 2}
+  - name: Tall
+    sprite: {fileID: -2074441945, guid: f405591c96c325b4391800f1e368922a, type: 3}
+    animation: {fileID: 9100000, guid: dbb12db774741c64cbcc4f15b88682da, type: 2}
+  - name: Thick
+    sprite: {fileID: -912968114, guid: cad29077a6b6a244cb644d271570f66c, type: 3}
+    animation: {fileID: 9100000, guid: 9eedb9abdefee3540bedc6be571956fb, type: 2}
+  - name: Weird
+    sprite: {fileID: -1947188211, guid: 6cd358dfb33554543a3c9cf27a04ae18, type: 3}
+    animation: {fileID: 9100000, guid: 5571059ac8189104db6f9e3ad8556944, type: 2}
   roamSpeed: 2
   chaseSpeed: 1
   straightViewDistance: 5
   diagonalViewDistance: 3
   killDistance: 1
-  sprite: {fileID: 5640209426268644083}
+  spriteRenderer: {fileID: 5640209426268644083}
+  animator: {fileID: 1664157755655087413}
   enemyID: 0
   diagonalAngle: 20
   allowedTargetNodes: 
