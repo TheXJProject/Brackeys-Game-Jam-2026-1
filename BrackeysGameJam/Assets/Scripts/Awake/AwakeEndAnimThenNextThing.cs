@@ -24,6 +24,7 @@ public class AwakeEndAnimThenNextThing : MonoBehaviour
     [SerializeField] SpriteRenderer playAgain;
     [SerializeField] GameState gameState;
     [SerializeField] AwakeHandScript handScript;
+    [SerializeField] AwakeExcepeWhenYouActuallyWakeUpForRealzies awakeAnim;
 
     [SerializeField] Color colorPlayAgain;
 
@@ -42,9 +43,9 @@ public class AwakeEndAnimThenNextThing : MonoBehaviour
         {
             handScript.BeginHandScriptVisuals();
         }
-        else if (/*check victory scipt isn't null*/true)
+        else if (awakeAnim != null)
         {
-            ;
+            awakeAnim.StartWakingUp();
         }
     }
 
