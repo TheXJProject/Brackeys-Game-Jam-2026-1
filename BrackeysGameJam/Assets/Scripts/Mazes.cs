@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class Maze
 {
@@ -45,6 +45,30 @@ public class Maze
 
         startNodePosition =
             new Vector3(startNodeCol * cellWidth * mazeScale.x, 0, -startNodeRow * cellWidth * mazeScale.z);
+    }
+
+    public Vector3 getOnWallFaceOffset(WallDirection wallFace)
+    {
+        return wallFace switch
+        {
+            WallDirection.North => (Vector3.forward * scale.z / 2) + (Vector3.up * scale.y / 2),
+            WallDirection.South => (Vector3.back * scale.z / 2) + (Vector3.up * scale.y / 2),
+            WallDirection.East => (Vector3.right * scale.x / 2) + (Vector3.up * scale.y / 2),
+            WallDirection.West => (Vector3.left * scale.x / 2) + (Vector3.up * scale.y / 2),
+            _ => Vector3.zero
+        };
+    }
+
+    public Vector3 getOnWallFaceRotation(WallDirection wallFace)
+    {
+        return wallFace switch
+        {
+            WallDirection.North => Vector3.up * -180,
+            WallDirection.South => Vector3.zero,
+            WallDirection.East => Vector3.up * -90,
+            WallDirection.West => Vector3.up * -270,
+            _ => Vector3.zero
+        };
     }
 }
 
@@ -214,7 +238,7 @@ public static class Mazes
         endNode: (18, Maze.WallDirection.West)
     );
 
-    public static Maze LevelThreeMaze = new(
+    public static readonly Maze LevelThreeMaze = new(
         nodeConnections: new Dictionary<int, HashSet<int>>
         {
             { 0, new HashSet<int> { 8 } },
@@ -287,7 +311,7 @@ public static class Mazes
         endNode: (56, Maze.WallDirection.West)
     );
 
-    public static Maze LevelFourMaze = new(
+    public static readonly Maze LevelFourMaze = new(
         nodeConnections: new Dictionary<int, HashSet<int>>
         {
             { 0, new HashSet<int> { 1, 10 } },
