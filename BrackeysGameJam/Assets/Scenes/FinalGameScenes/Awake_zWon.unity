@@ -153,7 +153,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7471441112273631125}
+  m_Father: {fileID: 1282226556}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278496239
+    rgba: 4283665313
   m_fontColor: {r: 0.6320754, g: 0.54321444, b: 0.32498217, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -282,6 +282,7 @@ MonoBehaviour:
   - Tej - Unreal Engine Enjoyer, Shaderer
   - Jakub - SFX, Shaderer Junior
   - Cora - SFX, Chicken Nugget Noise Expert PHD
+  - Thank you for playing!
   textMeshPro: {fileID: 45880314}
 --- !u!1 &330264378 stripped
 GameObject:
@@ -427,6 +428,30 @@ PrefabInstance:
     - target: {fileID: 4831689492002668961, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053546469763047907, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
+      propertyPath: orderedAwakeScenesToLoad.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053546469763047907, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
+      propertyPath: orderedAsleepScenesToLoad.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053546469763047907, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
+      propertyPath: orderedAsleepScenesToLoad.Array.data[0]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053546469763047907, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
+      propertyPath: orderedAsleepScenesToLoad.Array.data[1]
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053546469763047907, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
+      propertyPath: orderedAsleepScenesToLoad.Array.data[2]
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7053546469763047907, guid: 1a518d254f4019c42b860fec33f3a10e, type: 3}
+      propertyPath: orderedAsleepScenesToLoad.Array.data[3]
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -681,6 +706,11 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!224 &1282226556 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8579357995461427664, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
+  m_PrefabInstance: {fileID: 7471441112273631124}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &1472785410 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 3270391779561853666, guid: 7f9d1ebf5eb837440a846031d3a0b82e, type: 3}
@@ -929,19 +959,14 @@ PrefabInstance:
     - {fileID: 2557515832267910439, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
     - {fileID: 8834233672157422672, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 3002642390503006422, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
-      insertIndex: -1
+    - targetCorrespondingSourceObject: {fileID: 8579357995461427664, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
+      insertIndex: 0
       addedObject: {fileID: 45880313}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7671262707346777478, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
       insertIndex: -1
       addedObject: {fileID: 330264381}
   m_SourcePrefab: {fileID: 100100000, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
---- !u!224 &7471441112273631125 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3002642390503006422, guid: a56b84ef1c5d83c43bf9bd56469b7281, type: 3}
-  m_PrefabInstance: {fileID: 7471441112273631124}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

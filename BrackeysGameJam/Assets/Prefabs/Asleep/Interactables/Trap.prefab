@@ -164,6 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trapCollider: {fileID: 990657435258202238}
+  spriteRenderer: {fileID: 287628434502652935}
 --- !u!65 &990657435258202238
 BoxCollider:
   m_ObjectHideFlags: 0

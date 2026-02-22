@@ -153,7 +153,6 @@ public class AllSoundsController : MonoBehaviour
             case SceneName.MAZE2:
             case SceneName.MAZE3:
             case SceneName.MAZE4:
-            case SceneName.MAZE5:
                 // HEARTBEAT
                 if (heartBeatTime > 0)
                 {
@@ -164,12 +163,11 @@ public class AllSoundsController : MonoBehaviour
                     MixerFXManager.instance.SetLoopingSFXParam("RacingHeartbeat", EX_PARA.VOLUME, heartbeatTimeUntilFadeOut, 0f);
                     playingHeartBeat = false;
                 }
-                goto case SceneName.AWAKEPARALYZED5;
+                goto case SceneName.AWAKEPARALYZED4;
             case SceneName.AWAKEPARALYZED1:
             case SceneName.AWAKEPARALYZED2:
             case SceneName.AWAKEPARALYZED3:
             case SceneName.AWAKEPARALYZED4:
-            case SceneName.AWAKEPARALYZED5:
                 // WHISPERS
                 timeWhispers += Time.deltaTime;
                 if (timeWhispers > minWhisperTime)
@@ -204,12 +202,10 @@ public class AllSoundsController : MonoBehaviour
             case SceneName.MAZE2:
             case SceneName.MAZE3:
             case SceneName.MAZE4:
-            case SceneName.MAZE5:
             case SceneName.AWAKEPARALYZED1:
             case SceneName.AWAKEPARALYZED2:
             case SceneName.AWAKEPARALYZED3:
             case SceneName.AWAKEPARALYZED4:
-            case SceneName.AWAKEPARALYZED5:
                 FullResetToNothing();
                 break;
             case SceneName.AWAKEBEGINNING:
@@ -254,7 +250,6 @@ public class AllSoundsController : MonoBehaviour
             case SceneName.AWAKEPARALYZED4:
                 PlayButCheck("ScratchingNails");
                 goto case SceneName.AWAKEPARALYZED1;
-            case SceneName.AWAKEPARALYZED5:
             case SceneName.AWAKEPARALYZED3:
             case SceneName.AWAKEPARALYZED2:
             case SceneName.AWAKEPARALYZED1:
@@ -263,7 +258,6 @@ public class AllSoundsController : MonoBehaviour
                 PlayButCheck("WindOutside");
                 break;
 
-            case SceneName.MAZE5:
             case SceneName.MAZE4:
             case SceneName.MAZE3:
                 // play general whispers
@@ -325,7 +319,6 @@ public class AllSoundsController : MonoBehaviour
             case SceneName.AWAKEPARALYZED4:
                 MixerFXManager.instance.SetLoopingSFXParam("ScratchingNails", EX_PARA.VOLUME, fadeInTime);
                 goto case SceneName.AWAKEPARALYZED1;
-            case SceneName.AWAKEPARALYZED5:
             case SceneName.AWAKEPARALYZED3:
             case SceneName.AWAKEPARALYZED2:
             case SceneName.AWAKEPARALYZED1:
@@ -369,14 +362,6 @@ public class AllSoundsController : MonoBehaviour
                 MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
                 break;
 
-            case SceneName.MAZE5:
-                MixerFXManager.instance.SetMusicParam("MPianoSFX", EX_PARA.VOLUME, fadeInTime);
-                MixerFXManager.instance.SetMusicParam("MMusicBoxAndGong", EX_PARA.VOLUME, fadeInTime);
-
-                MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.4f);
-                MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
-                break;
-
             case SceneName.LOST:
                 // Don't fade in anything initially on lost
                 // Play the loss SFX music
@@ -410,13 +395,11 @@ public class AllSoundsController : MonoBehaviour
             case SceneName.AWAKEPARALYZED2:
             case SceneName.AWAKEPARALYZED3:
             case SceneName.AWAKEPARALYZED4:
-            case SceneName.AWAKEPARALYZED5:
                 Debug.Log("Fadeout (note: correct transistion time), " + fadeOutTime);
                 MixerFXManager.instance.SetMusicOverallParam(EX_PARA.VOLUME, fadeOutTime, 0);
                 MixerFXManager.instance.SetSfxOverallParam(EX_PARA.VOLUME, fadeOutTime, 0);
                 break;
 
-            case SceneName.MAZE5:
             case SceneName.MAZE4:
             case SceneName.MAZE3:
             case SceneName.MAZE2:
@@ -561,14 +544,12 @@ public class AllSoundsController : MonoBehaviour
             case SceneName.AWAKEPARALYZED2:
             case SceneName.AWAKEPARALYZED3:
             case SceneName.AWAKEPARALYZED4:
-            case SceneName.AWAKEPARALYZED5:
                 playWhisper = (UnityEngine.Random.Range(0, randomWhisperFrequencyBedroom) < timeWhispers);
                 break;
             case SceneName.MAZE1:
             case SceneName.MAZE2:
             case SceneName.MAZE3:
             case SceneName.MAZE4:
-            case SceneName.MAZE5:
                 playWhisper = (UnityEngine.Random.Range(0, randomWhisperFrequencyDream) < timeWhispers);
                 break;
             default:
