@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class AwakePlayerControl : MonoBehaviour
@@ -17,6 +18,9 @@ public class AwakePlayerControl : MonoBehaviour
     InputController playerControls;
     InputAction move;
     Vector2 moveDirection;
+
+    public Animator animator;
+    public SpriteRenderer spriteRenderer;
 
     private bool canMove = false;
     private bool sentStartedMoving = false;
@@ -53,6 +57,9 @@ public class AwakePlayerControl : MonoBehaviour
         if (canMove)
         {
             playerRB.velocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
+            if (moveDirection.x < 0.0f || moveDirection.y < 0.0f) spriteRenderer.flipX = true;
+            else spriteRenderer.flipX = false;
+                animator.SetFloat("Speed", Mathf.Abs(moveDirection.magnitude));
             if (!sentStartedMoving && playerRB.velocity.magnitude > 0.1f)
             {
                 sentStartedMoving = true;
