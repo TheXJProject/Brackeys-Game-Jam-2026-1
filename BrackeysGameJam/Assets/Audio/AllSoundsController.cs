@@ -324,7 +324,6 @@ public class AllSoundsController : MonoBehaviour
 
             case SceneName.AWAKEPARALYZED4:
                 MixerFXManager.instance.SetLoopingSFXParam("ScratchingNails", EX_PARA.VOLUME, fadeInTime);
-                Debug.Log("Fadein" + currentScene);
                 goto case SceneName.AWAKEPARALYZED1;
             case SceneName.AWAKEPARALYZED5:
             case SceneName.AWAKEPARALYZED3:
@@ -359,7 +358,6 @@ public class AllSoundsController : MonoBehaviour
 
                 MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.2f);
                 MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
-                Debug.Log("Fadein" + currentScene);
                 break;
 
             case SceneName.MAZE4:
@@ -369,7 +367,6 @@ public class AllSoundsController : MonoBehaviour
 
                 MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.3f);
                 MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
-                Debug.Log("Fadein" + currentScene);
                 break;
 
             case SceneName.MAZE5:
@@ -378,14 +375,12 @@ public class AllSoundsController : MonoBehaviour
 
                 MixerFXManager.instance.SetLoopingSFXParam("GeneralWhispers", EX_PARA.VOLUME, fadeInTime, 0.4f);
                 MixerFXManager.instance.SetLoopingSFXParam("Dripping", EX_PARA.VOLUME, fadeInTime);
-                Debug.Log("Fadein" + currentScene);
                 break;
 
             case SceneName.LOST:
                 // Don't fade in anything initially on lost
                 // Play the loss SFX music
                 AudioManager.instance.PlaySFX("DeathMusic", true);
-                Debug.Log("Fadein" + currentScene);
                 break;
 
             case SceneName.WON:

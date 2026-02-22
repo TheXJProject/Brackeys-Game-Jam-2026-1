@@ -280,11 +280,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca32f06eae8b4ad4f8db81bf5f6fa387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsBeforeHandComesIn: 0.4
+  secondsBeforeHandComesIn: 3
   timeForHandToComeIn: 4.5
   timeForHandToUnravel: 3.5
-  handPauseTime: 2
-  handQuickLaunchTime: 0.2
+  handPauseTime: 1.7
+  handQuickLaunchTime: 0.1
   fadeOutTime: 0.15
   animNextThing: {fileID: 183663152}
   handAnimator: {fileID: 498312810}
@@ -893,6 +893,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3174515927458645565, guid: f5d9156f1d7e30a48a563b4a65f2cda3, type: 3}
+      propertyPath: startScene
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5906608154083709512, guid: f5d9156f1d7e30a48a563b4a65f2cda3, type: 3}
       propertyPath: m_Name
       value: AllSoundsController
