@@ -293,7 +293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4819071944876497776, guid: 417b0499efc351541b1d69f12294bc90, type: 3}
       propertyPath: enemiesToSpawn.Array.data[0].startNodeIndex
-      value: 34
+      value: 54
       objectReference: {fileID: 0}
     - target: {fileID: -4819071944876497776, guid: 417b0499efc351541b1d69f12294bc90, type: 3}
       propertyPath: enemiesToSpawn.Array.data[1].startNodeIndex
@@ -317,15 +317,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -4819071944876497776, guid: 417b0499efc351541b1d69f12294bc90, type: 3}
       propertyPath: enemiesToSpawn.Array.data[0].allowedTargetNodes.Array.data[0]
-      value: 34
+      value: 38
       objectReference: {fileID: 0}
     - target: {fileID: -4819071944876497776, guid: 417b0499efc351541b1d69f12294bc90, type: 3}
       propertyPath: enemiesToSpawn.Array.data[0].allowedTargetNodes.Array.data[1]
-      value: 29
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: -4819071944876497776, guid: 417b0499efc351541b1d69f12294bc90, type: 3}
       propertyPath: enemiesToSpawn.Array.data[0].allowedTargetNodes.Array.data[2]
-      value: 45
+      value: 54
       objectReference: {fileID: 0}
     - target: {fileID: -4819071944876497776, guid: 417b0499efc351541b1d69f12294bc90, type: 3}
       propertyPath: enemiesToSpawn.Array.data[0].allowedTargetNodes.Array.data[3]
