@@ -4610,8 +4610,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 9d97ac0a22ab2064b81f5d5c544c7f2c, type: 3}
     looped: 0
   - name: ComputerBeep
-    volume: 0.6
-    pitch: 1
+    volume: 0.55
+    pitch: 1.3
     panning: 0
     randomPitchRange: {x: 0.8, y: 1}
     clip: {fileID: 8300000, guid: ad675a28b99806b438f5188b597ec33d, type: 3}
