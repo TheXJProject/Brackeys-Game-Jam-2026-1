@@ -186,6 +186,8 @@ MonoBehaviour:
   moveSpeed: 5
   playerTransform: {fileID: 5478972161475034933}
   playerRB: {fileID: 3598774336771721369}
+  animator: {fileID: 0}
+  spriteRenderer: {fileID: 0}
 --- !u!1 &7326797010739572918
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +261,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 6
-  m_Sprite: {fileID: 408429066, guid: 892b8a0ed97a2a847be20be178ab41a6, type: 3}
+  m_Sprite: {fileID: 1031433476, guid: e26017aa8c25bc443a601910f130fc00, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
