@@ -35,7 +35,7 @@ public class TransitionManager : MonoBehaviour
 
     [Header("Order the indicies for asleep scenes in order of play")]
     [SerializeField] List<int> orderedAsleepScenesToLoad;
-    private int currentLevelSceneIndex = 0;
+    [SerializeField] private int currentLevelSceneIndex = 0;
 
     public bool gameStarted = false;
     public bool wakeUpTextShownThisGame = false;
